@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$primary-color: #f78300;
+$secondary-color: #f44336;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+  background: #e2e2e2;
+  font-size: 14px;
+}
+
+.primary-text {
+  color: $primary-color !important;
+}
+
+.secondary-text {
+  color: $secondary-color !important;
+}
+
+.primary-btn {
+  background: $primary-color !important;
+  color: #ffffff !important;
+}
+
+input {
+  position: inherit;
+  bottom: 8px;
+}
+
+.outlet-height {
+  height: calc(100vh - 50px);
+}
+
+.outlet-overflow {
+  overflow: auto;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.p-default {
+  padding: 7px;
+}
+
+.mat-mdc-form-field-flex {
+  height: 42px;
+}
+
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
+  top: 20px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 0 !important;
+}
+
+.mat-mdc-select-trigger {
+  bottom: 6px;
+}

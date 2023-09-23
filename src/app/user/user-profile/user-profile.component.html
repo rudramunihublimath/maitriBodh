@@ -1,0 +1,203 @@
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="flex-center">
+    <!-- container rounded bg-white mt-5 mb-5 -->
+    <mat-card class="profile-card">
+        <div *ngIf="userDetail" class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-3">
+                    <img class="rounded-circle mt-3" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <span class="font-weight-bold">
+                        {{userDetail.firstname}} {{userDetail.lastname}}
+                        <span class="text-black-50">({{userDetail.nameofMyTeam}})</span>
+                    </span>
+                    <!-- <span class="text-black-50">OutReach</span> -->
+                    <!-- edogaru@mail.com.my -->
+                    <span class="text-black-50">{{userDetail.mbpcode}}</span>
+                    <span> </span>
+                    <!-- <mat-list class="font-weight-bold col-md-12">
+                        <mat-list-item class="mli-ht">
+                            <h6 class="mb-0 col-md-8"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram me-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
+						    <span class="text-secondary col-md-4">bootdey</span>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item class="mli-ht">Item 2</mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item class="mli-ht">Item 3</mat-list-item>
+                      </mat-list> -->
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="text-right mb-cust-11">Profile Settings</h2>
+                    </div>
+                    <form class="personal-detail-form" [formGroup]="userProfileForm">
+                        <div class="row mt-2">
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>First Name</mat-label>
+                                <input type="text" matInput placeholder="First Name" formControlName="firstname" required>
+                            </mat-form-field>
+                      
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Last Name</mat-label>
+                                <input type="text" matInput placeholder="Last Name" formControlName="lastname" required>
+                            </mat-form-field>
+                  
+
+                        </div>
+                        <div class="row">
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>UserId</mat-label>
+                                <input type="text" matInput placeholder="UserId" formControlName="email" required>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Birth Date</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="dob">
+                                <mat-datepicker-toggle matIconSuffix [for]="picker">
+                                    <mat-icon class="up-calender-icon" matDatepickerToggleIcon>today</mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Manager Id</mat-label>
+                                <input type="text" matInput placeholder="Manager Id" formControlName="reportingmanagerId" required>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Allocated Cities</mat-label>
+                                <mat-select formControlName="citiesAllocated" multiple required>
+                                  <mat-option *ngFor="let city of cities" [value]="city">
+                                    {{city}}
+                                  </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>PAN Id</mat-label>
+                                <input type="text" matInput placeholder="PAN Id" formControlName="pannum" required>
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>FaceBook ID</mat-label>
+                                <input type="text" matInput placeholder="FaceBook ID" formControlName="facebookID">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>LinkedIn ID</mat-label>
+                                <input type="text" matInput placeholder="LinkedIn ID" formControlName="linkdinID">
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Insta ID</mat-label>
+                                <input type="text" matInput placeholder="Insta ID" formControlName="instaID">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Mobile No. 1</mat-label>
+                                <input type="text" matInput placeholder="Mobile No. 1" formControlName="contactNum1" required>
+                            </mat-form-field>
+                      
+                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Mobile No. 2</mat-label>
+                                <input type="text" matInput placeholder="Mobile No. 2" formControlName="contactNum2">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="row">
+                            <mat-form-field class="col-md-12 up-form-field up-gender" appearance="outline">
+                              <mat-label>Gender</mat-label>
+                              <mat-select formControlName="gender" required>
+                                <mat-option *ngFor="let gender of genderArr" [value]="gender">
+                                  {{gender}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-3 addr-container">
+                    <div class="d-flex justify-content-between align-items-center addr-wrapper mb-cust-10">
+                        <span class="fw-medium">Address Details</span>
+                    </div><br>
+
+                    <form class="personal-detail-form row" [formGroup]="userProfileForm">
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>Country</mat-label>
+                            <mat-icon matSuffix class="up-search-icon">search</mat-icon>
+                            <input type="text" placeholder="Country" aria-label="Number" matInput 
+                              formControlName="country" [matAutocomplete]="ctry"
+                            >
+                            <mat-autocomplete #ctry="matAutocomplete">
+                              <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+                                {{country}}
+                              </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+    
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>Address Line 1</mat-label>
+                            <input type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
+                        </mat-form-field>
+                  
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>Address Line 2</mat-label>
+                            <input type="text" matInput placeholder="Address Line 2" formControlName="address2">
+                        </mat-form-field>
+                          
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>State</mat-label>
+                            <mat-select formControlName="state" required>
+                              <mat-option *ngFor="let state of states" [value]="state">
+                                {{state}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+            
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>City</mat-label>
+                            <mat-select formControlName="city" required>
+                              <mat-option *ngFor="let city of cities" [value]="city">
+                                {{city}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+    
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>PIN Code</mat-label>
+                            <input type="text" matInput placeholder="PIN Code" formControlName="pincode" required>
+                        </mat-form-field>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- <div class="col-md-12">
+                <div class="col-md-4"></div>
+                <div class="col-md-8 text-end btn-container">
+                    <button (click)="updateUser()" class="save-btn" mat-flat-button color="warn">Save Profile</button>
+                </div>
+            </div> -->
+        </div>
+
+        <div *ngIf="isAuthorized" class="col-md-12 text-center btn-container">
+            <button (click)="updateUser()" class="save-btn" mat-flat-button color="warn">Save Profile</button>
+            <!-- <div class="col-md-4"></div>
+            <div class="col-md-8 text-end btn-container">
+            </div>       -->
+        </div>
+    </mat-card>
+</div>
