@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RegistrationComponent } from 'src/app/credComponent/registration/registration.component';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
-import { UserReq, UserTableDto } from 'src/app/types';
+import { ResponseDto, UserReq, UserTableDto } from 'src/app/types';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class UserTableViewComponent implements OnInit {
   displayFilterColumns = ['positionFilter', 'firstnameFilter', 'lastnameFilter', 'emailFilter', 'actionFilter']
   dataSource: UserTableDto[] = [];
   allUsersDetail: UserTableDto[] = [];
-  loggedInUserDetails: any = null;
+  loggedInUserDetails!: UserReq;
 
   firstNameControl = new FormControl('');
   lastNameControl = new FormControl('');
@@ -42,16 +42,16 @@ export class UserTableViewComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
 
-    this.getAllUsersById(this.loggedInUserDetails.email); 
+    this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId); 
     this.searchUserByFirstName();
     this.searchUserByLastName();
     this.searchUserByEmail();
   }
 
 
-  getAllUsersById(emailId: string) {
+  getAllUsersById(id: number) {
     this.spinner.show();
-    this.userService.getAllUsersById(emailId).subscribe((resp: Array<UserTableDto>) => {
+    this.userService.getAllUsersById(id).subscribe((resp: UserTableDto[]) => {
       this.dataSource = resp;
       this.allUsersDetail = resp;
       this.spinner.hide();
@@ -65,7 +65,7 @@ export class UserTableViewComponent implements OnInit {
     const dialog = this.dialog.open(RegistrationComponent, config);
 
     dialog.afterClosed().subscribe(resp => {
-      this.getAllUsersById(this.loggedInUserDetails.email);
+      this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId);
     })
 
   }

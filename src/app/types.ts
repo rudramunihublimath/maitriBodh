@@ -1,3 +1,8 @@
+
+export interface ResponseDto<T> {
+    message: T;
+    status: boolean
+}
 export interface UserLoginReq {
     email: string;
     password: string;
@@ -29,11 +34,12 @@ export interface UserReq {
     dob: string;
     profileActive?: string;
 
-    reportingmanagerId?: string;
+    reportingmanagerId: number;
     reportingmanagerName?: string,
     nameofMyTeam?: string,
     citiesAllocated?: Array<string>
     mbpcode?: string;
+    jwtToken?: string;
 }
 
 export interface UserTableDto {

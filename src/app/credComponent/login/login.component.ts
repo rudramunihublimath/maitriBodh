@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { ResponseDto, UserReq } from 'src/app/types';
 
 @Component({
   selector: 'app-login',
@@ -32,9 +33,9 @@ export class LoginComponent implements OnInit {
 
   login() {
     
-      this.loginService.login(this.loginForm.value).subscribe((res: any) => {
-        this.loginService.userToken(res?.jwtToken);
-        this.loginService.setUserDetails(res);
+      this.loginService.login(this.loginForm.value).subscribe((res: ResponseDto<UserReq>) => {
+        this.loginService.userToken(res?.message?.jwtToken as string);
+        this.loginService.setUserDetails(res.message);
         this.router.navigate(['/user-details'])
 
       },

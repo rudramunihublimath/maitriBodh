@@ -7,7 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable, map, startWith } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { UserService } from 'src/app/services/user.service';
-import { UserReq } from 'src/app/types';
+import { ResponseDto, UserReq } from 'src/app/types';
 
 @Component({
   selector: 'app-user-profile',
@@ -104,8 +104,8 @@ export class UserProfileComponent implements OnInit {
 
   getUserByEmail(email: string) {
     this.spinner.show();
-    this.userService.getUserByEmail(email).subscribe((resp: UserReq) => {
-      this.userDetail = resp;
+    this.userService.getUserByEmail(email).subscribe((resp: ResponseDto<UserReq>) => {
+      this.userDetail = resp.message;
       this.initializeUserProfileForm();
       this.spinner.hide();
     })

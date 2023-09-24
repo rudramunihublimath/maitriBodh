@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ChangePassword, UserLoginReq, UserReq } from '../types';
+import { ChangePassword, ResponseDto, UserLoginReq, UserReq } from '../types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -22,7 +22,7 @@ export class LoginService {
   ) { }
 
   login(loginDetails: UserLoginReq) {
-    return this.http.post(`${environment.baseUrl}/Login/LoginUser`, loginDetails);
+    return this.http.post<ResponseDto<UserReq>>(`${environment.baseUrl}/Login/LoginUser`, loginDetails);
   }
 
   register(registrationDetails: UserReq) {

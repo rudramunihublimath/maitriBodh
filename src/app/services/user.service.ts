@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { UserReq, UserTableDto } from '../types';
+import { ResponseDto, UserReq, UserTableDto } from '../types';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -15,9 +15,10 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  getAllUsersById(email: string) {
-    let params = new HttpParams().set('email', email);
-    return this.http.get<Array<UserTableDto>>(`${environment.securedBaseUrl}/Login/findUserReportingMe`, {params});
+  getAllUsersById(id: number) {
+    console.log('id', id)
+    let params = new HttpParams().set('id', id);
+    return this.http.get<UserTableDto[]>(`${environment.securedBaseUrl}/Login/findUserReportingMe`, {params});
   }
 
   getUserByMobile(contactNum: string) {
@@ -27,7 +28,7 @@ export class UserService {
 
   getUserByEmail(email: string) {
     let params = new HttpParams().set('email', email);
-    return this.http.get<UserReq>(`${environment.securedBaseUrl}/Login/findByEmail`, {params});
+    return this.http.get<ResponseDto<UserReq>>(`${environment.securedBaseUrl}/Login/findByEmail`, {params});
   }
 
   updateUser(userDetails: UserReq) {
