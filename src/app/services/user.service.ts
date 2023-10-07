@@ -16,7 +16,6 @@ export class UserService {
   ) { }
 
   getAllUsersById(id: number) {
-    console.log('id', id)
     let params = new HttpParams().set('id', id);
     return this.http.get<UserTableDto[]>(`${environment.securedBaseUrl}/Login/findUserReportingMe`, {params});
   }

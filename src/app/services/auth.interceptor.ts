@@ -22,8 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
     this.token = this.loginService.getToken();
     if(this.token) {
         this.token = this.token.replace(/^"(.*)"$/, '$1');
-        console.log('this.token', this.token)
-        console.log('type', typeof this.token)
     }
 
     if (!req.headers.has('Content-Type')) {

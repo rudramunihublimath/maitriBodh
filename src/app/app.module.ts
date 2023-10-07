@@ -17,6 +17,49 @@ import { UserTableViewComponent } from './user/user-table-view/user-table-view.c
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ForgotPasswordComponent } from './credComponent/forgot-password/forgot-password.component';
+import { RegisterSchoolComponent } from './school/register-school/register-school.component';
+import { SchoolDetailsComponent } from './school/school-details/school-details.component';
+import { SchoolTableViewComponent } from './school/school-table-view/school-table-view.component';
+import { SchoolInformationComponent } from './school/school-details/school-information/school-information.component';
+import { SchoolPOCComponent } from './school/school-details/school-poc/school-poc.component';
+import { SchoolMeetingNotesComponent } from './school/school-details/school-meeting-notes/school-meeting-notes.component';
+import { OutreachInformationComponent } from './school/school-details/outreach-information/outreach-information.component';
+import { MbpFlagComponent } from './school/school-details/mbp-flag/mbp-flag.component';
+import { PocDialogComponent } from './school/school-details/school-poc/poc-dialog/poc-dialog.component';
+import { SchoolAgreementComponent } from './school/school-details/school-agreement/school-agreement.component';
+import { MeetingDialogComponent } from './school/school-details/school-meeting-notes/meeting-dialog/meeting-dialog.component';
+import { OutreachDialogComponent } from './school/school-details/outreach-information/outreach-dialog/outreach-dialog.component';
+import { TrainingDialogComponent } from './school/school-details/training-information/training-dialog/training-dialog.component';
+import { TrainingInformationComponent } from './school/school-details/training-information/training-information.component';
+import { OutreachTrainerInfoComponent } from './school/school-details/outreach-trainer-info/outreach-trainer-info.component';
+import { FlagDialogComponent } from './school/school-details/mbp-flag/flag-dialog/flag-dialog.component';
+import { AgreementDialogComponent } from './school/school-details/mbp-flag/agreement-dialog/agreement-dialog.component';
+import { NgxMatDateFormats, NgxMatNativeDateModule, NGX_MAT_DATE_FORMATS, NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+
+
+const INTL_DATE_INPUT_FORMAT = {
+
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hourCycle: 'h23',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+}
+
+const MAT_DATE_FORMATS: NgxMatDateFormats =  {
+
+  parse: {
+    dateInput: INTL_DATE_INPUT_FORMAT,
+  },
+  display: {
+    dateInput: INTL_DATE_INPUT_FORMAT,
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
+  }
+};
 
 @NgModule({
   declarations: [
@@ -26,7 +69,24 @@ import { ForgotPasswordComponent } from './credComponent/forgot-password/forgot-
     UserProfileComponent,
     HomeComponent,
     UserTableViewComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RegisterSchoolComponent,
+    SchoolDetailsComponent,
+    SchoolTableViewComponent,
+    SchoolInformationComponent,
+    SchoolPOCComponent,
+    SchoolMeetingNotesComponent,
+    OutreachInformationComponent,
+    MbpFlagComponent,
+    PocDialogComponent,
+    SchoolAgreementComponent,
+    MeetingDialogComponent,
+    OutreachDialogComponent,
+    TrainingInformationComponent,
+    TrainingDialogComponent,
+    OutreachTrainerInfoComponent,
+    FlagDialogComponent,
+    AgreementDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,9 +99,14 @@ import { ForgotPasswordComponent } from './credComponent/forgot-password/forgot-
     HttpClientModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule
     
   ],
-  providers: [authInterceptorProviders], //authInterceptorProviders
+  providers: [authInterceptorProviders,
+    {provide: NGX_MAT_DATE_FORMATS, useValue: NGX_MAT_DATE_FORMATS}
+  ], //authInterceptorProviders
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -46,10 +46,104 @@ export interface UserTableDto {
     firstname: string;
     lastname: string;
     email: string;
+    id: number;
 }
 
 export interface ChangePassword {
     email: string;
     oldPWD: string;
     newPWD: string;
+}
+
+export interface SchoolDetail {
+    name: string,
+    email: string;
+    country: string;
+    state: string;
+    city: string;
+    board: Array<string>;  
+    contactNum1: string;
+    contactNum2: string;
+    chainofID: Array<number>;
+    address1: string;
+    address2: string;
+    pincode: string;
+    websiteURL: string;
+    linkdinID: string;
+    facebookID: string;
+    instaID: string;
+    targetPhase: string;
+    mbpPersonName: string;
+    mbpPersonContactNum: string;
+    mbpPersonEmail: string;
+    refPersonName: string;
+    refPersonContactNum: string;
+    id: number;
+}
+
+export interface SchoolTableDetail {
+    id: number;
+    name: string;
+    email: string;
+    city: string;
+    contactNum1: string;
+    pincode: string;
+
+}
+
+export interface SchoolPOC {
+    teacherfirstname: string;
+    teacherlastname: string;
+    designation: string;
+    contactNum1: string;
+    contactNum2: string;
+    linkdinID: string;
+    email:string;
+    schoolNameRequest: any;
+    id?: number;
+}
+
+export interface SchoolMOM {
+    id: number;
+    meetingDateTime: string;
+    nextAppointment: string;
+    mom: string;
+    feedback_Whatwentwell: string;
+    feedback_Improvement: string;  
+    schoolNmReq?: any;
+    schoolNameRequest?: any;
+}
+export interface OutReach {
+    id?: string;
+    outreachuserid: string;
+    outreach_assigneddate: string;
+    outreachheaduserid: string;
+    outreachHead_assigneddate: string;
+}
+export interface Trainer {
+    id?: string;
+    trainTheTrainersId?: string;
+    trainTheTrainerHeadId?: string;
+    trainingPartCompleted?: string
+    dateofCompletion?: string
+    dataValidated?: string
+}
+
+export interface MBPFlag {
+    id?: string;
+    schoolActive: string;
+    schoolInterested: string;
+    dealClosed: string;
+    isDiscontinued: string;
+    discontinuedDate: string;
+    reasonForDiscontinue: string;
+    reasonValidated: string;
+}
+
+export interface Agreement {
+    id?: string;
+    agreementCompleted: string;
+    agreementCompletedDate: string;
+    agreementScanCopyLink: string;
+    uploadedByUserId: string;
 }

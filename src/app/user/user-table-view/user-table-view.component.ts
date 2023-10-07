@@ -27,6 +27,8 @@ export class UserTableViewComponent implements OnInit {
   lastNameControl = new FormControl('');
   emailControl = new FormControl(''); 
 
+  userFilterControl = new FormControl(''); 
+
   isAuthorized = false;
   constructor(
     private userService: UserService,
@@ -42,18 +44,19 @@ export class UserTableViewComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
 
-    this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId); 
-    this.searchUserByFirstName();
-    this.searchUserByLastName();
-    this.searchUserByEmail();
+    this.getAllUsersById(this.loggedInUserDetails?.id as number); 
+    this.searchUser();
+    // this.searchUserByFirstName();
+    // this.searchUserByLastName();
+    // this.searchUserByEmail();
   }
 
 
   getAllUsersById(id: number) {
     this.spinner.show();
     this.userService.getAllUsersById(id).subscribe((resp: UserTableDto[]) => {
-      this.dataSource = resp;
-      this.allUsersDetail = resp;
+      this.dataSource = resp.filter(elt => elt.id !== this.loggedInUserDetails.id);
+      this.allUsersDetail = resp.filter(elt => elt.id !== this.loggedInUserDetails.id);
       this.spinner.hide();
     })
   }
@@ -68,6 +71,12 @@ export class UserTableViewComponent implements OnInit {
       this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId);
     })
 
+  }
+
+  searchUser() {
+    this.userFilterControl.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allUsersDetail.filter(usr => usr.firstname.toLowerCase().includes(val.toLowerCase()) || usr.lastname.toLowerCase().includes(val.toLowerCase()) || usr.email.toLowerCase().includes(val.toLowerCase())) : this.allUsersDetail;
+    })
   }
 
   searchUserByFirstName() {

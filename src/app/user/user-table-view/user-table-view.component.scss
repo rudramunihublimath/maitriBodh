@@ -104,11 +104,19 @@
   height: 0;
 }
 
+.mr-4 {
+  margin-right: 16px;
+}
+.align-center {
+  display: flex;
+  align-items: center;
+}
+
 .example-container {
-    // height: 400px;
-    overflow: auto;
-  }
+  // height: 400px;
+  overflow: auto;
+}
   
-  table {
-    width: 100%;
-  }
+table {
+  width: 100%;
+}

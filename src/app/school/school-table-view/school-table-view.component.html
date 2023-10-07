@@ -1,0 +1,89 @@
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+<div class="flex-center h-100 user-details-main">
+  <mat-card class="table-card">
+    <div class="table-title">
+      <span class="utv-title">School Details</span>
+      <span class="align-center">
+        <div class="flex-center mr-4">
+          <mat-form-field class="col-md-8 stv-form-field utv w-100" appearance="outline" floatLabel="always" >
+            <!-- <mat-label>Filter By First Name</mat-label> -->
+            <input [formControl]="schoolFilterControl" type="text" matInput placeholder="Search School">
+          </mat-form-field>
+        </div>
+        <button *ngIf="isAuthorized" (click)="addNewSchool()" class="add-btn" mat-raised-button color="warn">Add New School</button>
+      </span>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> No. </th>
+          <td class="text-center" mat-cell *matCellDef="let element; let i=index"> {{i+1}} </td>
+        </ng-container>
+
+        <!-- School Name Column -->
+        <ng-container matColumnDef="name">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> School Name </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Contact Column -->
+        <ng-container matColumnDef="contactNum">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Contact No. </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.contactNum1}} </td>
+        </ng-container>
+
+        <!-- City Column -->
+        <ng-container matColumnDef="city">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> City </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.city}} </td>
+        </ng-container>
+
+        <!-- PinCode Column -->
+        <ng-container matColumnDef="pincode">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Pin Code </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.pincode}} </td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Email </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Actions </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> 
+            <mat-icon (click)="navigateToSchoolDetails(element.id)" class="material-symbols-outlined utv-edit-icon">
+              edit
+            </mat-icon>
+            <!-- <mat-icon class="material-symbols-outlined utv-delete-icon">
+              delete
+            </mat-icon> -->
+          </td>
+        </ng-container>
+
+        <!-- Action Filter -->
+        <ng-container matColumnDef="actionFilter">
+          <th mat-header-cell *matHeaderCellDef> </th>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="h-42 utv-header-row" ></tr>
+        <tr class="h-42" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <div *ngIf="!dataSource.length" class="no-record-msg">
+        No Records Available 
+      </div>
+    </div>
+    
+    
+    
+    
+    
+  </mat-card>
+</div>
+
+  

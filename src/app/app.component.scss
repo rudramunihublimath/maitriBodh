@@ -73,6 +73,28 @@
     }
 }
 
+.active {
+    border-bottom: 3px solid orange;
+    display: flex;
+    align-items: center;
+    background: orange;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    transition: 0.5s ease;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    font-size: 12px;
+    color: darkorange;
+    padding-right: 4px;
+    padding-top: 3px;
+}
 
 ::ng-deep .user-acct-btn.mat-mdc-menu-item {
     min-height: 28px !important;

@@ -3,8 +3,16 @@
 <div class="flex-center user-details-main">
   <mat-card class="table-card">
     <div class="table-title">
-      <span class="utv-title">User Details</span>
-      <button *ngIf="isAuthorized" (click)="addNewMember()" class="add-btn" mat-raised-button color="warn">Add New Member</button>
+      <span class="utv-title">Team Details</span>
+      <span class="align-center">
+        <div class="flex-center mr-4">
+          <mat-form-field class="col-md-8 up-form-field utv w-100" appearance="outline" floatLabel="always" >
+            <input [formControl]="userFilterControl" type="text" matInput placeholder="Search Member">
+          </mat-form-field>
+        </div>
+        <button *ngIf="isAuthorized" (click)="addNewMember()" class="add-btn" mat-raised-button color="warn">Add New Member</button>
+      </span>
+      
     </div>
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -87,9 +95,9 @@
             <mat-icon (click)="navigateToUserDetails(element.email)" class="material-symbols-outlined utv-edit-icon">
               edit
             </mat-icon>
-            <mat-icon class="material-symbols-outlined utv-delete-icon">
+            <!-- <mat-icon class="material-symbols-outlined utv-delete-icon">
               delete
-            </mat-icon>
+            </mat-icon> -->
           </td>
         </ng-container>
 
@@ -99,7 +107,7 @@
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" class="h-42 utv-header-row" ></tr>
-        <tr mat-header-row *matHeaderRowDef="displayFilterColumns; sticky: true" class="h-42" ></tr>
+        <!-- <tr mat-header-row *matHeaderRowDef="displayFilterColumns; sticky: true" class="h-42" ></tr> -->
         <tr class="h-42" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <div *ngIf="!dataSource.length" class="no-record-msg">

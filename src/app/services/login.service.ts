@@ -55,31 +55,31 @@ export class LoginService {
 
   userToken(token: string) {
     this.userLoginStatus.next(token ? true : false);
-    localStorage.setItem('token', JSON.stringify(token));
+    sessionStorage.setItem('token', JSON.stringify(token));
     return true;
   }
 
   isLoggedIn() {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return token ? true:false;
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     this.router.navigate(['']);
   }
 
   getToken() {
-    return JSON.parse(JSON.stringify(localStorage.getItem('token')));
+    return JSON.parse(JSON.stringify(sessionStorage.getItem('token')));
   }
 
   setUserDetails(user: any) {
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
 
   getUserDetails() {
-    return JSON.parse(JSON.stringify(localStorage.getItem('user')));
+    return JSON.parse(JSON.stringify(sessionStorage.getItem('user')));
   }
 
   getUserRole() {
@@ -94,5 +94,9 @@ export class LoginService {
   }
   showSuccess(msg: string) {
     this.toastr.success(msg, 'Success');
+  }
+
+  showError(msg: string) {
+    this.toastr.error(msg, 'Error');
   }
 }

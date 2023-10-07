@@ -20,22 +20,18 @@ export class AppComponent implements OnInit{
     private loginService: LoginService,
     private dialog: MatDialog,
     ) {
-      console.log('APP__', this.route.snapshot);
   }
 
   ngOnInit(): void {
-    console.log('this.currentRoute', this.currentRoute)
     this.showNav();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('event', event)
         this.currentRoute = event.url;
       }
    });
 
    this.isUserLoggedIn = this.loginService.getUserDetails() ? true : false;
    this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-   console.log('this.isUserLoggedIn', this.isUserLoggedIn)
   }
 
   showNav() {
@@ -43,7 +39,7 @@ export class AppComponent implements OnInit{
     this.loginService.userLoginStatus.subscribe(sts => {
       this.isUserLoggedIn = sts;
       this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-      console.log('this.isUserLoggedIn', this.isUserLoggedIn)
+      console.log('this.loggedInUserDetails', this.loggedInUserDetails)
     })
     // return !(this.currentRoute === '/login' || this.currentRoute === '/register' || this.currentRoute === '/')
   }

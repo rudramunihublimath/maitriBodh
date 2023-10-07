@@ -34,6 +34,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 const materialModules = [
@@ -72,6 +73,7 @@ const materialModules = [
   MatTooltipModule,
   MatStepperModule,
   MatDialogModule,
+  MatSlideToggleModule,
 
 ];
 @NgModule({
