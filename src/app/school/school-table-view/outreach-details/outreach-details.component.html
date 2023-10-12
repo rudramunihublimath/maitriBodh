@@ -1,0 +1,53 @@
+<div class="od-wrapper">
+    <!-- fxLayout="row" fxLayoutAlign="center center" -->
+    <section class="od-parent-card">
+        <div class="od-header">
+            <mat-card class="od-header-card">
+                <mat-card-content class="od-header-title secondary-text">
+                    <span class="title-text">Outreach Detail</span>
+                    <mat-icon (click)="close()" class="material-symbols-outlined close-icon">close</mat-icon>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div class="row od-padding ft-sz-16">
+            <div class="col-md-4 col-12">
+                Name
+            </div>
+            <div class="col-md-8 col-12">
+                {{data.firstname}} {{data.lastname}}
+            </div>
+            <div class="col-12 mb-10">
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="col-md-4 col-12">
+                Email
+            </div>
+            <div class="col-md-8 col-12">
+                {{data.email}}
+            </div>
+            <div class="col-12 mb-10">
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="col-md-4 col-12">
+                Contact Number
+            </div>
+            <div class="col-md-8 col-12">
+                {{data.contactNum1}}
+            </div>
+            <div class="col-12 mb-10">
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+       
+
+        
+
+       
+        <div class="col-md-12 text-center btn-container">
+            <button (click)="close()" class="save-btn" mat-flat-button color="warn">Ok</button>
+        </div>
+    </section>
+</div>

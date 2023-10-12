@@ -53,11 +53,25 @@
           <td class="text-center" mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
+        <!-- Outreach Column -->
+        <ng-container matColumnDef="outreach">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Outreach Person </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> 
+            <mat-icon (click)="getOutReachDetails(element)" class="material-symbols-outlined utv-edit-icon"
+              matTooltip="Show Outreach Details"
+            >
+              person
+            </mat-icon>  
+          </td>
+        </ng-container>
+
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
           <th class="text-center" mat-header-cell *matHeaderCellDef> Actions </th>
           <td class="text-center" mat-cell *matCellDef="let element"> 
-            <mat-icon (click)="navigateToSchoolDetails(element.id)" class="material-symbols-outlined utv-edit-icon">
+            <mat-icon (click)="navigateToSchoolDetails(element.id)" class="material-symbols-outlined utv-edit-icon"
+            matTooltip="Show School Details"
+            >
               edit
             </mat-icon>
             <!-- <mat-icon class="material-symbols-outlined utv-delete-icon">

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Agreement, MBPFlag, OutReach, ResponseDto, SchoolDetail, SchoolMOM, SchoolPOC, SchoolTableDetail, Trainer } from '../types';
+import { Agreement, MBPFlag, OutReach, ResponseDto, SchoolDetail, SchoolGrade, SchoolMOM, SchoolPOC, SchoolTableDetail, Trainer } from '../types';
 
 @Injectable({
   providedIn: 'root'
@@ -130,4 +130,20 @@ export class SchoolService {
         let params = new HttpParams().set('schoolId', schoolId);
     return this.http.put<ResponseDto<Agreement>>(`${environment.securedBaseUrl}/School/EditAgreementInfo`, agreementDetails, {params});
   }
+
+    // ---------- Grade Endpoints ------------------ //
+    getGradeBySchoolId(id: number) {
+      let params = new HttpParams().set('id', id);
+      return this.http.get<Array<SchoolGrade>>(`${environment.securedBaseUrl}/School/FindSchoolGrades`, {params});
+    }
+  
+    saveGrade(gradeDetails: SchoolGrade) {
+      // let params = new HttpParams().set('schoolId', schoolId);
+      return this.http.post<ResponseDto<SchoolGrade>>(`${environment.securedBaseUrl}/School/AddSchoolGrades`, gradeDetails);
+    }
+  
+    updateGrade(gradeDetails: SchoolGrade) {
+      // let params = new HttpParams().set('schoolId', schoolId);
+      return this.http.put<ResponseDto<SchoolGrade>>(`${environment.securedBaseUrl}/School/EditSchoolGrades`, gradeDetails);
+    }
 }

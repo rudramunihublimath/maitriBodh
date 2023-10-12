@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
   currentRoute = ''; 
   isUserLoggedIn = false;
   loggedInUserDetails: any = null;
+  isAuthorized = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit{
 
    this.isUserLoggedIn = this.loginService.getUserDetails() ? true : false;
    this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
+   this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head' || this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head';
   }
 
   showNav() {
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit{
     this.loginService.userLoginStatus.subscribe(sts => {
       this.isUserLoggedIn = sts;
       this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
+      this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
       console.log('this.loggedInUserDetails', this.loggedInUserDetails)
     })
     // return !(this.currentRoute === '/login' || this.currentRoute === '/register' || this.currentRoute === '/')

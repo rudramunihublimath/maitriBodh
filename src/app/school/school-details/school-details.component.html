@@ -4,8 +4,10 @@
         <div *ngIf="schoolDetails" class="flex-center h-100 sd-main-padding">
             <mat-tab-group class="w-100" color="warn" mat-stretch-tabs="false" mat-align-tabs="start">
                 <mat-tab label="School Information" labelClass="custom-label"> 
-
                     <app-school-information [schoolDetails]="schoolDetails"></app-school-information> 
+                </mat-tab>
+                <mat-tab label="School Grades" labelClass="custom-label"> 
+                    <app-school-grade [schoolDetails]="schoolDetails"></app-school-grade> 
                 </mat-tab>
                 <mat-tab label="Point Of Contact" labelClass="custom-label"> 
                     <app-school-poc [schoolDetails]="schoolDetails"></app-school-poc>
@@ -22,9 +24,9 @@
                 <mat-tab label="Trainer Information" labelClass="custom-label"> 
                     <app-training-information [schoolDetails]="schoolDetails"></app-training-information>
                 </mat-tab> -->
-                <mat-tab label="MBP Flags and Agreement" labelClass="custom-label"> 
+                <!-- <mat-tab label="MBP Flags and Agreement" labelClass="custom-label"> 
                     <app-mbp-flag [schoolDetails]="schoolDetails"></app-mbp-flag>
-                </mat-tab>
+                </mat-tab> -->
                 <!-- <mat-tab label="Agreement" labelClass="custom-label"> 
                     <app-school-agreement></app-school-agreement>
                 </mat-tab> -->

@@ -9,7 +9,7 @@
       </div>
       <ul *ngIf="isUserLoggedIn && !(currentRoute === '/home' || currentRoute === '/')" class="nav-item-options primary-text">
         <li class="nav-item-list ft-sz-500" routerLink="/school">Home</li>
-        <li class="nav-item-list ft-sz-500" routerLink="/user-details">My Team</li>
+        <li *ngIf="isAuthorized" class="nav-item-list ft-sz-500" routerLink="/user-details">My Team</li>
         <li class="nav-item-list ft-sz-500" (click)="navigateToProfile()">My Profile</li>
       </ul>
       <span *ngIf="!isUserLoggedIn || (currentRoute === '/home' || currentRoute === '/')" class="nav-tool-items">

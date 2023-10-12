@@ -67,7 +67,7 @@ export class AgreementDialogComponent implements OnInit {
 
   submitAgreement() {
     const payload: Agreement = this.agreementForm.getRawValue(); 
-    if(typeof this.agreementForm.controls['agreementCompletedDate'].value !== 'string') {
+    if(this.agreementForm.controls['agreementCompletedDate'].value && typeof this.agreementForm.controls['agreementCompletedDate'].value !== 'string') {
       payload.agreementCompletedDate = this.formatDate(this.agreementForm.controls['agreementCompletedDate'].value);
     }
     this.agreementDetails?.id ? this.updateAgreement(payload) : this.saveAgreement(payload);
@@ -77,7 +77,7 @@ export class AgreementDialogComponent implements OnInit {
   saveAgreement(payload: Agreement) {
     this.spinner.show();
 
-    this.schoolService.saveAgreement(payload, this.agreementDetails.id).subscribe((resp: any) => {
+    this.schoolService.saveAgreement(payload, this.agreementDetails.schoolId).subscribe((resp: any) => {
       this.spinner.hide();
       this.loginService.showSuccess('Agreement Completed Successfully');
     })
@@ -85,7 +85,7 @@ export class AgreementDialogComponent implements OnInit {
 
   updateAgreement(payload: Agreement) {
     this.spinner.show();
-    this.schoolService.updateAgreement(payload, this.agreementDetails.id).subscribe((resp: any) => {
+    this.schoolService.updateAgreement(payload, this.agreementDetails.schoolId).subscribe((resp: any) => {
       this.spinner.hide();
       this.loginService.showSuccess('Agreement Updated Successfully');
     })

@@ -68,7 +68,9 @@ export class UserTableViewComponent implements OnInit {
     const dialog = this.dialog.open(RegistrationComponent, config);
 
     dialog.afterClosed().subscribe(resp => {
-      this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId);
+      if(resp) {
+        this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId);
+      }
     })
 
   }
@@ -88,7 +90,7 @@ export class UserTableViewComponent implements OnInit {
   searchUserByLastName() {
     this.lastNameControl.valueChanges.subscribe(val => {
       this.dataSource = val ? this.allUsersDetail.filter(usr => usr.lastname.toLowerCase().includes(val.toLowerCase())) : this.allUsersDetail;
-    })
+    })  
   }
 
   searchUserByEmail() {

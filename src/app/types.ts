@@ -101,6 +101,7 @@ export interface SchoolPOC {
     email:string;
     schoolNameRequest: any;
     id?: number;
+    firstContact?: string;
 }
 
 export interface SchoolMOM {
@@ -146,4 +147,13 @@ export interface Agreement {
     agreementCompletedDate: string;
     agreementScanCopyLink: string;
     uploadedByUserId: string;
+}
+
+export interface SchoolGrade {
+    id?: string;
+    year?: number;
+    gradeName?: string;
+    totalStudentCount?: string;
+    booksGivenCount?: string;
+    schoolNmReq2?: any;
 }

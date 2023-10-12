@@ -13,7 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SchoolPOCComponent implements OnInit {
 
-  displayedColumns = ['position', 'firstname', 'lastname', 'designation', 'contactNum', 'email', 'actions'];
+  displayedColumns = ['position', 'firstname', 'lastname', 'designation', 'contactNum', 'email', 'firstContact', 'actions'];
   // displayFilterColumns = ['positionFilter', 'firstnameFilter', 'lastnameFilter', 'emailFilter', 'actionFilter']
   dataSource: SchoolPOC[] = [];
   allPOCDetail: SchoolPOC[] = [];
@@ -21,6 +21,7 @@ export class SchoolPOCComponent implements OnInit {
 
   isAuthorized = false;
 
+  isPrimaryPOCAvaialable = false;
   @Input() schoolDetails!: SchoolDetail;
 
   constructor(
@@ -44,6 +45,7 @@ export class SchoolPOCComponent implements OnInit {
     this.spinner.hide();
     console.log('resp', resp);
     this.dataSource = resp;
+    this.isPrimaryPOCAvaialable = resp?.some(elt => elt.firstContact === 'Yes');
     // this.allPOCDetail = resp;
     })
   }
@@ -52,7 +54,7 @@ export class SchoolPOCComponent implements OnInit {
     const config = new MatDialogConfig(); 
     config.width= "60vw";
     config.disableClose=true;
-    config.data = isEditMode ? {schoolId: this.schoolDetails.id, ...pocDetail} : {schoolId: this.schoolDetails.id};
+    config.data = isEditMode ? {schoolId: this.schoolDetails.id, isPrimaryPOCAvaialable: this.isPrimaryPOCAvaialable, ...pocDetail} : {schoolId: this.schoolDetails.id, isPrimaryPOCAvaialable: this.isPrimaryPOCAvaialable};
     const dialog = this.dialog.open(PocDialogComponent, config);
 
     dialog.afterClosed().subscribe(resp => {

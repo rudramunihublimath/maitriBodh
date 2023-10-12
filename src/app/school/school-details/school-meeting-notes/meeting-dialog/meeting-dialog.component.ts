@@ -56,12 +56,11 @@ export class MeetingDialogComponent implements OnInit {
     const payload: SchoolMOM = this.momForm.getRawValue();
     payload.meetingDateTime = new Date(this.momForm.controls['meetingDateTime']?.value).toISOString();
     payload.nextAppointment = new Date(this.momForm.controls['nextAppointment']?.value).toISOString();
-
+    payload.schoolNmReq = {id: this.data.schoolId};
     this.data['id'] ? this.updateMOM(payload) : this.saveMOM(payload);
   }
 
   saveMOM(payload: SchoolMOM) {
-    payload.schoolNmReq = {id: this.data.schoolId};
     this.schoolService.saveMOM(payload).subscribe((resp: ResponseDto<SchoolMOM>) => {
       this.loginService.showSuccess('Meeting Notes Added Successfully');
       this.dialogRef.close(true);
@@ -72,7 +71,6 @@ export class MeetingDialogComponent implements OnInit {
   }
 
   updateMOM(payload: SchoolMOM) {
-    payload.schoolNameRequest = {id: this.data.schoolId};
     payload.id = this.data.id;
     this.schoolService.updateMOM(payload).subscribe((resp: ResponseDto<SchoolMOM>) => {
       this.loginService.showSuccess('Meeting Notes Updated Successfully');

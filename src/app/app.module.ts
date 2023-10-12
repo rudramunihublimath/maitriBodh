@@ -35,6 +35,9 @@ import { OutreachTrainerInfoComponent } from './school/school-details/outreach-t
 import { FlagDialogComponent } from './school/school-details/mbp-flag/flag-dialog/flag-dialog.component';
 import { AgreementDialogComponent } from './school/school-details/mbp-flag/agreement-dialog/agreement-dialog.component';
 import { NgxMatDateFormats, NgxMatNativeDateModule, NGX_MAT_DATE_FORMATS, NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { OutreachDetailsComponent } from './school/school-table-view/outreach-details/outreach-details.component';
+import { SchoolGradeComponent } from './school/school-details/school-grade/school-grade.component';
+import { GradeDialogComponent } from './school/school-details/school-grade/grade-dialog/grade-dialog.component';
 
 
 const INTL_DATE_INPUT_FORMAT = {
@@ -87,6 +90,9 @@ const MAT_DATE_FORMATS: NgxMatDateFormats =  {
     OutreachTrainerInfoComponent,
     FlagDialogComponent,
     AgreementDialogComponent,
+    OutreachDetailsComponent,
+    SchoolGradeComponent,
+    GradeDialogComponent,
   ],
   imports: [
     BrowserModule,

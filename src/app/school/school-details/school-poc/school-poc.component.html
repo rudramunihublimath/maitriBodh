@@ -45,6 +45,12 @@
           <th class="text-center" mat-header-cell *matHeaderCellDef> Email </th>
           <td class="text-center" mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
+
+        <!-- First Contact Column -->
+        <ng-container matColumnDef="firstContact">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> First Contact </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element.firstContact === 'Yes' ? 'Yes' : 'No'}} </td>
+        </ng-container>
   
         <!-- Action Column -->
         <ng-container matColumnDef="actions">

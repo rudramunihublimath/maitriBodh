@@ -20,6 +20,8 @@ export class PocDialogComponent implements OnInit {
   isAuthorized = false;
 
   header = 'Add POC';
+
+  levels = ['Yes', 'No'];
   
   constructor(
     private fb: FormBuilder,
@@ -49,6 +51,7 @@ export class PocDialogComponent implements OnInit {
       contactNum2: [pocDetail.id ? pocDetail.contactNum2 : ''],
       linkdinID: [pocDetail.id ? pocDetail.linkdinID : ''],
       email: [pocDetail.id ? pocDetail.email : ''],
+      firstContact: [pocDetail.id ? pocDetail.firstContact : ''],
     })
   }
 
