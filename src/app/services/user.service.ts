@@ -31,6 +31,6 @@ export class UserService {
   }
 
   updateUser(userDetails: UserReq) {
-    return this.http.patch(`${environment.securedBaseUrl}/Login/UpdateUserData`, userDetails);
+    return this.http.put(`${environment.securedBaseUrl}/Login/UpdateUserData`, userDetails);
   }
 }

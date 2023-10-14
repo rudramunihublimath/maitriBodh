@@ -79,6 +79,7 @@ export interface SchoolDetail {
     refPersonName: string;
     refPersonContactNum: string;
     id: number;
+    code?: string;
 }
 
 export interface SchoolTableDetail {

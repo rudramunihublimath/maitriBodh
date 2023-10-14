@@ -4,7 +4,7 @@
   <div class="table-card">
     <div class="table-title">
       <span class="utv-title">Outreach Information</span>
-      <button *ngIf="isAuthorized" (click)="openOutreachDetails(false)" class="add-btn" mat-raised-button color="warn">Add Outreach</button>
+      <button *ngIf="isAuthorized && !dataSource[0]?.id" (click)="openOutreachDetails(false)" class="add-btn" mat-raised-button color="warn">Add Outreach</button>
     </div>
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">  

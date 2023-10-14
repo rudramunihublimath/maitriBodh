@@ -141,26 +141,18 @@
                             <input type="text" placeholder="Country" aria-label="Number" matInput 
                               formControlName="country" [matAutocomplete]="ctry"
                             >
-                            <mat-autocomplete #ctry="matAutocomplete">
+                            <mat-autocomplete #ctry="matAutocomplete" (optionSelected)="selectedCountry($event)">
                               <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
                                 {{country}}
                               </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
-    
-                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
-                            <mat-label>Address Line 1</mat-label>
-                            <input type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
-                        </mat-form-field>
-                  
-                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
-                            <mat-label>Address Line 2</mat-label>
-                            <input type="text" matInput placeholder="Address Line 2" formControlName="address2">
-                        </mat-form-field>
-                          
+
                         <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>State</mat-label>
-                            <mat-select formControlName="state" required>
+                            <mat-select formControlName="state" required
+                                (selectionChange)="selectedState($event)"
+                            >
                               <mat-option *ngFor="let state of states" [value]="state">
                                 {{state}}
                               </mat-option>
@@ -175,7 +167,17 @@
                               </mat-option>
                             </mat-select>
                         </mat-form-field>
-    
+
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>Address Line 1</mat-label>
+                            <input type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
+                        </mat-form-field>
+                  
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>Address Line 2</mat-label>
+                            <input type="text" matInput placeholder="Address Line 2" formControlName="address2">
+                        </mat-form-field>
+                          
                         <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>PIN Code</mat-label>
                             <input type="text" matInput placeholder="PIN Code" formControlName="pincode" required>

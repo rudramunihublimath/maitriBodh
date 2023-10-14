@@ -52,7 +52,6 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
   ngOnChanges() {
     const params = this.activatedRoute.snapshot.params;
     if(params['id']) {
-      console.log('this.schoolDetails_INFO', this.schoolDetails)
       this.initializeForm();
     }
   }
@@ -102,8 +101,13 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
       mbpPersonContactNum: [this.schoolDetails.mbpPersonContactNum],
       mbpPersonEmail: [this.schoolDetails.mbpPersonEmail],
       refPersonName: [this.schoolDetails.refPersonName],
-      refPersonContactNum: [this.schoolDetails.refPersonContactNum]
+      refPersonContactNum: [this.schoolDetails.refPersonContactNum],
+      code: [this.schoolDetails.code],
     })
+
+    if(!this.isAuthorized) {
+      this.schoolForm.disable();
+    }
 
     this.searchCountry();
   }

@@ -38,6 +38,9 @@ export class SchoolTableViewComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
+    if(this.loggedInUserDetails?.nameofMyTeam === 'OutReach') {
+      this.displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'actions'];
+    }
     this.getAllSchollByCity()
   }
 

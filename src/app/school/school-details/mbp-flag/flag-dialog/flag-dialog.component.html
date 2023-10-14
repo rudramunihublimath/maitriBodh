@@ -44,7 +44,7 @@
     
                 <mat-form-field class="col-md-6 col-12 flag-form-field" appearance="outline">
                     <mat-label>School Discontinued</mat-label>
-                    <mat-select formControlName="isDiscontinued">
+                    <mat-select (selectionChange)="selectedSchoolDiscontinued($event)" formControlName="isDiscontinued">
                       <mat-option *ngFor="let level of levels" [value]="level">
                         {{level}}
                       </mat-option>
@@ -52,7 +52,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="row">
+            <div *ngIf="showSchollDiscontinuedFields" class="row">
                 <mat-form-field class="col-md-6 col-12 flag-form-field" appearance="outline">
                     <mat-label>Reason Validated</mat-label>
                     <mat-select formControlName="reasonValidated">
@@ -72,7 +72,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="row">
+            <div *ngIf="showSchollDiscontinuedFields" class="row">
                 <mat-form-field class="col-md-12 col-12 flag-form-field flag-container" appearance="outline">
                     <mat-label>Reason for Discontinue</mat-label>
                     <textarea rows="4" matInput placeholder="Reason for Discontinue" formControlName="reasonForDiscontinue"></textarea>

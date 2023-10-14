@@ -6,6 +6,8 @@ import { SchoolService } from 'src/app/services/school.service';
 import { SchoolGrade, UserReq, SchoolDetail, ResponseDto } from 'src/app/types';
 import { PocDialogComponent } from '../school-poc/poc-dialog/poc-dialog.component';
 import { GradeDialogComponent } from './grade-dialog/grade-dialog.component';
+import { FormControl } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-school-grade',
@@ -14,15 +16,20 @@ import { GradeDialogComponent } from './grade-dialog/grade-dialog.component';
 })
 export class SchoolGradeComponent implements OnInit {
 
-  displayedColumns = ['position', 'year', 'gradeName', 'totalStudentCount', 'booksGivenCount', 'actions'];
+  displayedColumns = ['position', 'gradeName', 'totalStudentCount', 'booksGivenCount', 'actions'];
   dataSource: SchoolGrade[] = [];
-  allPOCDetail: SchoolGrade[] = [];
+  allGrades: SchoolGrade[] = [];
   loggedInUserDetails!: UserReq;
 
   isAuthorized = false;
 
   isPrimaryPOCAvaialable = false;
   @Input() schoolDetails!: SchoolDetail;
+
+  currentYear = new Date().getFullYear();
+
+  yearControl!: FormControl;
+  gradeYears: Array<number> = [];
 
   constructor(
     private dialog: MatDialog,
@@ -37,7 +44,15 @@ export class SchoolGradeComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     
+    this.yearControl = new FormControl(this.currentYear);
+    this.getGradeYears();
     this.getGradeBySchoolId();
+  }
+
+  getGradeYears() {
+    this.schoolService.getGradeYears().subscribe(resp => {
+      this.gradeYears = resp.message;
+    })
   }
 
   getGradeBySchoolId() {
@@ -46,7 +61,8 @@ export class SchoolGradeComponent implements OnInit {
     if(!resp?.length) {
       this.saveGrade();
     }
-    this.dataSource = resp;
+    this.allGrades = JSON.parse(JSON.stringify(resp));
+    this.dataSource = resp.filter(elt => elt.year === this.currentYear);
     })
   }
 
@@ -56,6 +72,10 @@ export class SchoolGradeComponent implements OnInit {
     }
     this.schoolService.saveGrade(payload).subscribe(resp => {
     })
+  }
+
+  selectedYear(evt: MatSelectChange) {
+    this.dataSource = this.allGrades.filter(elt => elt.year == evt.value);
   }
 
   openGradeDetails(isEditMode: boolean, gradeDetail?: SchoolGrade) {
@@ -70,6 +90,13 @@ export class SchoolGradeComponent implements OnInit {
         this.getGradeBySchoolId();
       }
     })
+  }
+
+  getTotalStudentCount() {
+    return this.dataSource.map(elt => elt.totalStudentCount ? +elt.totalStudentCount : 0).reduce((acc, val) => acc + (val), 0)
+  }
+  getTotalBooksCount() {
+    return this.dataSource.map(elt => elt.booksGivenCount ? +elt.booksGivenCount : 0).reduce((acc, val) => acc + val, 0)
   }
 
 

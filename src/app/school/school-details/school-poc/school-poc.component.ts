@@ -36,7 +36,9 @@ export class SchoolPOCComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
-    
+    if(!this.isAuthorized) {
+      this.displayedColumns.pop();
+    }
     this.getPOCBySchoolId();
   }
 

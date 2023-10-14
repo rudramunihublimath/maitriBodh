@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoginService } from 'src/app/services/login.service';
 import { SchoolService } from 'src/app/services/school.service';
-import { UserReq, OutReach, ResponseDto, MBPFlag, SchoolDetail } from 'src/app/types';
+import { UserReq, MBPFlag } from 'src/app/types';
 
 @Component({
   selector: 'app-flag-dialog',
@@ -25,6 +26,8 @@ export class FlagDialogComponent implements OnInit {
 
   // flagDetails!: MBPFlag;
   isFlagLoaded = false;
+
+  showSchollDiscontinuedFields = false;
 
   
   constructor(
@@ -102,5 +105,11 @@ export class FlagDialogComponent implements OnInit {
       this.padTo2Digits(dob.getDate()),
     ].join('-');
   }
+
+  selectedSchoolDiscontinued(evt: MatSelectChange) {
+
+    this.showSchollDiscontinuedFields = evt.value === 'Yes';
+    
+   }
 
 }

@@ -20,7 +20,13 @@ export class MbpFlagComponent implements OnInit {
   agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'uploadedByUserId', 'actions'];
 
   dataSource: MBPFlag[] = [];
-  agreementDataSource: Agreement[] = [];
+  agreementDataSource: Agreement[] = [{
+
+    agreementCompleted: 'No',
+    agreementCompletedDate: '',
+    agreementScanCopyLink: '',
+    uploadedByUserId: ''
+  }];
 
   loggedInUserDetails!: UserReq;
 
@@ -44,6 +50,10 @@ export class MbpFlagComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
+    if(!this.isAuthorized) {
+      this.displayedColumns.pop();
+      this.agreementDisplayedColumns.pop();
+    }
     this.getFlagBySchoolId();
     this.getAgreementBySchoolId();
   }

@@ -146,4 +146,8 @@ export class SchoolService {
       // let params = new HttpParams().set('schoolId', schoolId);
       return this.http.put<ResponseDto<SchoolGrade>>(`${environment.securedBaseUrl}/School/EditSchoolGrades`, gradeDetails);
     }
+
+    getGradeYears() {
+      return this.http.get<any>(`${environment.securedBaseUrl}/School/FindAllGradesYear`);
+    }
 }
