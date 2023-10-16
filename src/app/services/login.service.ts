@@ -99,4 +99,8 @@ export class LoginService {
   showError(msg: string) {
     this.toastr.error(msg, 'Error');
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

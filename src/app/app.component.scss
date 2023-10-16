@@ -67,6 +67,8 @@
         font-weight: 400;
 
         .nav-item-list {
+            display: flex;
+            align-items: center;
             cursor: pointer;
             margin: 0 10px;
         }
@@ -94,6 +96,21 @@
     color: darkorange;
     padding-right: 4px;
     padding-top: 3px;
+}
+
+.nav-item-icon {
+    font-size: 17px;
+    height: 17px;
+    width: 17px;
+}
+.nav-item-grp-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 22px;
+}
+
+.mr-1 {
+    margin-right: 4px !important;
 }
 
 ::ng-deep .user-acct-btn.mat-mdc-menu-item {
