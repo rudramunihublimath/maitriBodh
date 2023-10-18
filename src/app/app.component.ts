@@ -37,18 +37,18 @@ export class AppComponent implements OnInit{
   }
 
   showNav() {
-    // console.log('this.currentRoute', this.currentRoute)
+    // //console.log('this.currentRoute', this.currentRoute)
     this.loginService.userLoginStatus.subscribe(sts => {
       this.isUserLoggedIn = sts;
       this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
       this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
-      console.log('this.loggedInUserDetails', this.loggedInUserDetails)
+      //console.log('this.loggedInUserDetails', this.loggedInUserDetails)
     })
     // return !(this.currentRoute === '/login' || this.currentRoute === '/register' || this.currentRoute === '/')
   }
 
   navigateToProfile() {
-    console.log('navigateToProfile')
+    //console.log('navigateToProfile')
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
    this.router.navigate(['/user-profile']));
   }
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit{
     const dialog = this.dialog.open(ForgotPasswordComponent, config);
 
     dialog.afterClosed().subscribe(resp => {
-      console.log('resp', resp);
+      //console.log('resp', resp);
       // API CALL
     })
   }

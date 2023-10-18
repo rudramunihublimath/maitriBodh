@@ -148,7 +148,7 @@ export class RegisterSchoolComponent implements OnInit {
     addSchool() {
       const payload = this.registerSchoolForm.getRawValue();
       payload['chainofID'] = [0];
-      payload.board = this.registerSchoolForm.controls['board'].value.split();
+      payload.board = this.registerSchoolForm.controls['board'].value;
       this.spinner.show();
       this.schoolService.saveSchool(payload).subscribe((resp: any) => {
         this.spinner.hide();

@@ -45,7 +45,7 @@ export class SchoolPOCComponent implements OnInit {
   getPOCBySchoolId() {
     this.schoolService.getPOCBySchoolId(this.schoolDetails.id).subscribe((resp: Array<SchoolPOC>) => {
     this.spinner.hide();
-    console.log('resp', resp);
+    //console.log('resp', resp);
     this.dataSource = resp;
     this.isPrimaryPOCAvaialable = resp?.some(elt => elt.firstContact === 'Yes');
     // this.allPOCDetail = resp;

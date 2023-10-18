@@ -69,7 +69,7 @@
 
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Allocated Cities</mat-label>
-                                <mat-select formControlName="citiesAllocated" multiple required>
+                                <mat-select (selectionChange)="selectedCities($event)" formControlName="citiesAllocated" multiple required>
                                   <mat-option *ngFor="let city of cities" [value]="city">
                                     {{city}}
                                   </mat-option>
@@ -182,6 +182,14 @@
                             <mat-label>PIN Code</mat-label>
                             <input type="text" matInput placeholder="PIN Code" formControlName="pincode" required>
                         </mat-form-field>
+                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                            <mat-label>Allocated Schools</mat-label>
+                            <mat-select multiple formControlName="schoolAllocated" required>
+                              <mat-option *ngFor="let school of schools" [value]="school.id">
+                                {{school?.name}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
                     </form>
 
                 </div>

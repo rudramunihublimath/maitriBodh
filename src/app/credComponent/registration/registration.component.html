@@ -190,9 +190,19 @@
 
               <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Allocated Cities</mat-label>
-                <mat-select multiple formControlName="citiesAllocated" required>
+                <mat-select (selectionChange)="selectedCities($event)" multiple formControlName="citiesAllocated" required>
                   <mat-option *ngFor="let city of cities" [value]="city">
                     {{city}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="flex-between">
+              <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Allocated Schools</mat-label>
+                <mat-select multiple formControlName="schoolAllocated" required>
+                  <mat-option *ngFor="let school of schools" [value]="school.id">
+                    {{school?.name}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

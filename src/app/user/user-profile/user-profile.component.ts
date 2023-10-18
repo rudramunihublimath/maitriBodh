@@ -6,8 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable, map, startWith } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
+import { SchoolService } from 'src/app/services/school.service';
 import { UserService } from 'src/app/services/user.service';
-import { ResponseDto, UserReq } from 'src/app/types';
+import { ResponseDto, SchoolTableDetail, UserReq } from 'src/app/types';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,6 +23,7 @@ export class UserProfileComponent implements OnInit {
   countries: Array<string> = [];
   states: Array<string> = [];
   cities: Array<string> = [];
+  schools: Array<SchoolTableDetail> = [];
 
   countriesObject: any = null;
   statesObject: any = null;
@@ -36,6 +38,7 @@ export class UserProfileComponent implements OnInit {
   isInitialCountryLoad = true;
   isInitialStateLoad = true;
   isInitialCityLoad = true;
+  isInitialAllocatedSchoolLoad = true;
 
   isAuthorized = false;
   constructor(
@@ -44,6 +47,7 @@ export class UserProfileComponent implements OnInit {
     private userService: UserService,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
+    private schoolService: SchoolService,
   ) {
     
   }
@@ -52,8 +56,8 @@ export class UserProfileComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     const queryParams = this.route.snapshot.queryParams;
-    if(queryParams['email']) {
-      this.getUserByEmail(queryParams['email']);
+    if(queryParams['id']) {
+      this.getUserById(queryParams['id']);
     } else {
       this.spinner.show();
       this.userDetail = JSON.parse(this.loginService.getUserDetails());
@@ -63,8 +67,6 @@ export class UserProfileComponent implements OnInit {
         this.spinner.hide();
       }, 500);
     }
-
-    this.patchLocationDetails();
   }
 
   initializeUserProfileForm() {
@@ -88,9 +90,10 @@ export class UserProfileComponent implements OnInit {
       dob: [{value: this.userDetail?.dob, disabled: !this.isAuthorized}],
       citiesAllocated: [{value: this.userDetail?.citiesAllocated, disabled: !this.isAuthorized}],
       reportingmanagerId: [{value: this.userDetail?.reportingmanagerId, disabled: !this.isAuthorized}],
-
+      schoolAllocated: [{value: this.userDetail?.schoolAllocated, disabled: !this.isAuthorized}],
     })
 
+    this.getAllSchoolByCity(this.userProfileForm.controls['citiesAllocated']?.value);
     this.getCountries();
     this.searchCountry();
 
@@ -105,6 +108,15 @@ export class UserProfileComponent implements OnInit {
   getUserByEmail(email: string) {
     this.spinner.show();
     this.userService.getUserByEmail(email).subscribe((resp: ResponseDto<UserReq>) => {
+      this.userDetail = resp.message;
+      this.initializeUserProfileForm();
+      this.spinner.hide();
+    })
+  }
+
+  getUserById(id: string) {
+    this.spinner.show();
+    this.userService.getUserById(id).subscribe((resp: ResponseDto<UserReq>) => {
       this.userDetail = resp.message;
       this.initializeUserProfileForm();
       this.spinner.hide();
@@ -232,8 +244,19 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
-  patchLocationDetails() {
-
-  }
+  selectedCities(evt: MatSelectChange) {
+    if(evt.value) {
+      this.getAllSchoolByCity(evt.value);
+    }
+      
+    }
+  
+    getAllSchoolByCity(cities: Array<string>) {
+      //console.log('cities', cities)
+      this.schoolService.getAllSchoolByCity(cities).subscribe((resp: any) => {
+        this.schools = Object.values(resp);
+        //console.log('this.schools', this.schools)
+      })
+    }
 
 }

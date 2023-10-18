@@ -212,13 +212,13 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
       payload.board = this.schoolForm.controls['board'].value;
       // delete payload.state;
       // delete payload.country;
-      console.log('payload', payload);
+      //console.log('payload', payload);
       this.spinner.show();
       this.schoolService.updateSchool(payload, this.schoolDetails.id).subscribe((resp: any) => {
         this.spinner.hide();
         this.loginService.showSuccess('School Details Updated Successfully');
         this.router.navigate(['/school']);
-        console.log('resp', resp);
+        //console.log('resp', resp);
       })
     }
 

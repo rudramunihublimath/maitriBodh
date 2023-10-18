@@ -44,7 +44,7 @@ export class OutreachInformationComponent implements OnInit {
   getOutreachBySchoolId() {
     this.schoolService.getOutreachBySchoolId(this.schoolDetails.id).subscribe((resp: ResponseDto<OutReach>) => {
     this.spinner.hide();
-    console.log('resp', resp);
+    //console.log('resp', resp);
     this.dataSource = [resp.message];
     // this.allPOCDetail = resp;
     })

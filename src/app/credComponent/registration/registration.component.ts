@@ -6,6 +6,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { Observable, map, startWith } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
+import { SchoolService } from 'src/app/services/school.service';
+import { SchoolDetail, SchoolTableDetail, UserReq } from 'src/app/types';
 
 @Component({
   selector: 'app-registration',
@@ -42,16 +44,22 @@ export class RegistrationComponent implements OnInit {
 
   isLinear = false;
 
+  schools: Array<SchoolTableDetail> = [];
+
+  loggedInUserDetails: UserReq | null = null; 
+
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
     private dialogRef: MatDialogRef<RegistrationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private schoolService: SchoolService,
   ) {
 
   }
 
   ngOnInit(): void {
+    this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.getMBPTeam();
     this.getCountries();
     // this.getCountries();
@@ -85,9 +93,10 @@ export class RegistrationComponent implements OnInit {
       linkdinID: [''],
       facebookID: [''],
       instaID: [''],
-      reportingmanagerId: [''],
+      reportingmanagerId: [this.loggedInUserDetails?.email],
       nameofMyTeam: [''],
       citiesAllocated: [''],
+      schoolAllocated: [''],
     });
 
     this.searchCountry();
@@ -110,6 +119,7 @@ export class RegistrationComponent implements OnInit {
   saveRegistration() {
     const payload = {...this.personalDetailsForm.getRawValue(), ...this.contactDetailsForm.getRawValue(), ...this.socialInfoForm.getRawValue()};
     payload.dob = this.formatDate(this.personalDetailsForm.controls['dob'].value);
+    // payload.reportingmanagerId = 
     
     this.loginService.register(payload).subscribe(resp => {
       this.loginService.showSuccess('Member Added Sucessfully')
@@ -174,6 +184,19 @@ export class RegistrationComponent implements OnInit {
     this.loginService.getCities(stateId).subscribe(resp => {
       this.cities = Object.values(resp);
 
+    })
+  }
+
+  selectedCities(evt: MatSelectChange) {
+  if(evt.value) {
+    this.getAllSchoolByCity(evt.value);
+  }
+    
+  }
+
+  getAllSchoolByCity(cities: Array<string>) {
+    this.schoolService.getAllSchoolByCity(cities).subscribe((resp: any) => {
+      this.schools = resp;
     })
   }
 

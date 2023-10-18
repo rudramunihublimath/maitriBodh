@@ -66,7 +66,7 @@ export class FlagDialogComponent implements OnInit {
     if(typeof this.flagForm.controls['discontinuedDate'].value !== 'string') {
       payload.discontinuedDate = this.formatDate(this.flagForm.controls['discontinuedDate'].value);
     }
-    console.log('payload', payload)
+    //console.log('payload', payload)
     this.flagDetails?.id ? this.updateFlag(payload) : this.saveFlag(payload);
 
   }
@@ -74,7 +74,7 @@ export class FlagDialogComponent implements OnInit {
   saveFlag(payload: MBPFlag) {
     this.spinner.show();
     this.schoolService.saveFlag(payload, this.flagDetails.schoolId).subscribe((resp: any) => {
-      console.log('resp', resp);
+      //console.log('resp', resp);
       this.spinner.hide();
       this.loginService.showSuccess('MBP Flags Added Successfully');
     })
@@ -83,7 +83,7 @@ export class FlagDialogComponent implements OnInit {
   updateFlag(payload: MBPFlag) {
     this.spinner.show();
     this.schoolService.updateFlag(payload, this.flagDetails.schoolId).subscribe((resp: any) => {
-      console.log('resp', resp);
+      //console.log('resp', resp);
       this.spinner.hide();
       this.loginService.showSuccess('MBP Flags Updated Successfully');
     })

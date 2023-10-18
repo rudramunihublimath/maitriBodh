@@ -20,9 +20,14 @@ export class SchoolService {
     return this.http.get<ResponseDto<SchoolDetail>>(`${environment.securedBaseUrl}/School/FindSchoolBoard`);
   }
 
-  getAllSchollByCity(cities: Array<string>) {
+  getAllSchoolByCity(cities: Array<string>) {
     let params = new HttpParams().set('cities', cities.toString());
     return this.http.get<Array<SchoolTableDetail>>(`${environment.securedBaseUrl}/School/findAllSchoolInCity`, {params});
+  }
+
+  getAllocatedSchools(schoolId: Array<number>) {
+    let params = new HttpParams().set('schoolId', schoolId.toString());
+    return this.http.get<Array<SchoolTableDetail>>(`${environment.securedBaseUrl}/School/findAllSchoolForGivenCityndSchoolName`, {params});
   }
 
   getSchoolById(id: number) {

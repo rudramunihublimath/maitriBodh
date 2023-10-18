@@ -45,7 +45,7 @@ export class  TrainingInformationComponent implements OnInit  {
   getTrainerBySchoolId() {
     this.schoolService.getTrainerBySchoolId(this.schoolDetails.id).subscribe((resp: ResponseDto<Trainer>) => {
     this.spinner.hide();
-    console.log('resp', resp);
+    //console.log('resp', resp);
     this.dataSource = [resp.message];
     // this.allPOCDetail = resp;
     })

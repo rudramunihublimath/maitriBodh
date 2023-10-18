@@ -99,8 +99,8 @@ export class UserTableViewComponent implements OnInit {
     })
   }
 
-  navigateToUserDetails(email: string) {
-    this.router.navigate(['/user-profile'], {queryParams: {email}});
+  navigateToUserDetails(id: string) {
+    this.router.navigate(['/user-profile'], {queryParams: {id}});
     // this.userService.emitEmail.next(email);
   }
 
@@ -108,7 +108,7 @@ export class UserTableViewComponent implements OnInit {
   //   this.spinner.show();
   //   this.userService.getUserByEmail(email).subscribe((resp: UserReq) => {
   //     this.userDetail = resp;
-  //     console.log('this.userDetail', this.userDetail)
+  //     //console.log('this.userDetail', this.userDetail)
   //     this.spinner.hide();
   //   })
   // }

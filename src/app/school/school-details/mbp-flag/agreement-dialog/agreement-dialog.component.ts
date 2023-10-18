@@ -44,7 +44,7 @@ export class AgreementDialogComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     this.header = this.agreementDetails['id'] ? 'Edit Agreement' : 'Add Agreement';
-    console.log('this.agreementDetails', this.agreementDetails)
+    //console.log('this.agreementDetails', this.agreementDetails)
 
     this.initializeForm();
   }
@@ -87,7 +87,7 @@ export class AgreementDialogComponent implements OnInit {
 
   updateAgreement(payload: Agreement) {
     payload.id = this.agreementDetails?.id;
-    console.log('payload', payload)
+    //console.log('payload', payload)
     this.spinner.show();
     this.schoolService.updateAgreement(payload, this.agreementDetails.schoolId).subscribe((resp: any) => {
       this.spinner.hide();

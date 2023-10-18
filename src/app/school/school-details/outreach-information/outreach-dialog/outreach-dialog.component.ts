@@ -86,7 +86,7 @@ export class OutreachDialogComponent implements OnInit {
       this.dialogRef.close(true);
 
     }, (err) => {
-      console.log('err', err)
+      //console.log('err', err)
       this.loginService.showError('Something went wrong')
       this.spinner.hide();
     })

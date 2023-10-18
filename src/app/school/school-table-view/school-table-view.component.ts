@@ -37,20 +37,35 @@ export class SchoolTableViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
+    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head' || this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head';
     if(this.loggedInUserDetails?.nameofMyTeam === 'OutReach') {
       this.displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'actions'];
     }
-    this.getAllSchollByCity()
+
+    this.isAuthorized ? this.getAllSchoolByCity() : this.getAllocatedSchools();
+    
+  }
+
+  getAllocatedSchools() {
+    const schoolAllocated = this.loggedInUserDetails?.schoolAllocated;
+    // ['Pune', 'Mumbai'];
+    
+    this.spinner.show();
+    this.schoolService.getAllocatedSchools(schoolAllocated).subscribe((resp: any) => {
+      this.spinner.hide();
+      this.allSchoolDetail = JSON.parse(JSON.stringify(resp));
+      this.dataSource = resp;
+      this.searchSchool();
+    })
   }
 
 
-  getAllSchollByCity() {
+  getAllSchoolByCity() {
     const cities = this.loggedInUserDetails.citiesAllocated ? this.loggedInUserDetails.citiesAllocated : ['Pune'];
     // ['Pune', 'Mumbai'];
     
     this.spinner.show();
-    this.schoolService.getAllSchollByCity(cities).subscribe((resp: any) => {
+    this.schoolService.getAllSchoolByCity(cities).subscribe((resp: any) => {
       this.spinner.hide();
       this.allSchoolDetail = JSON.parse(JSON.stringify(resp));
       this.dataSource = resp;
@@ -76,7 +91,7 @@ export class SchoolTableViewComponent implements OnInit {
   getOutReachDetails(schoolDetail: SchoolDetail) {
     this.spinner.show();
     this.schoolService.getOutreachBySchoolId(schoolDetail.id).subscribe((resp: ResponseDto<any>) => {
-      console.log('resp', resp);
+      //console.log('resp', resp);
       const outreachDetail = resp.message;
       if(outreachDetail) {
         this.getUserByEmail(outreachDetail);
@@ -93,7 +108,7 @@ export class SchoolTableViewComponent implements OnInit {
   }
 
   openOutreachDetails(userDetail: UserReq) {
-    console.log('userDetail', userDetail);
+    //console.log('userDetail', userDetail);
     const config = new MatDialogConfig(); 
       config.width= "50vw";
       config.disableClose=true;
@@ -101,7 +116,7 @@ export class SchoolTableViewComponent implements OnInit {
       const dialog = this.dialog.open(OutreachDetailsComponent, config);
   
       dialog.afterClosed().subscribe(resp => {
-        console.log('resp', resp)
+        //console.log('resp', resp)
       })
     }
 }

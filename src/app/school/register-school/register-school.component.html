@@ -17,7 +17,7 @@
                         </mat-form-field>
                         <mat-form-field class="col-md-3 col-12 rs-form-field" appearance="outline">
                             <mat-label>Board</mat-label>
-                            <mat-select formControlName="board" required>
+                            <mat-select multiple formControlName="board" required>
                               <mat-option *ngFor="let board of boards" [value]="board">
                                 {{board}}
                               </mat-option>

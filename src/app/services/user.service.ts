@@ -30,6 +30,11 @@ export class UserService {
     return this.http.get<ResponseDto<UserReq>>(`${environment.securedBaseUrl}/Login/findByEmail`, {params});
   }
 
+  getUserById(id: string) {
+    let params = new HttpParams().set('id', id);
+    return this.http.get<ResponseDto<UserReq>>(`${environment.securedBaseUrl}/Login/findUserId`, {params});
+  }
+
   updateUser(userDetails: UserReq) {
     return this.http.put(`${environment.securedBaseUrl}/Login/UpdateUserData`, userDetails);
   }

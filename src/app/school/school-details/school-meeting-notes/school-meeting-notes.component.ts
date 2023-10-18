@@ -42,7 +42,7 @@ export class SchoolMeetingNotesComponent implements OnInit {
   getMOMBySchoolId() {
     this.schoolService.getMOMBySchoolId(this.schoolDetails.id).subscribe((resp: Array<SchoolMOM>) => {
     this.spinner.hide();
-    console.log('resp', resp);
+    //console.log('resp', resp);
     this.dataSource = resp;
     // this.allPOCDetail = resp;
     })
