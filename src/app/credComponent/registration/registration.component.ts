@@ -95,8 +95,8 @@ export class RegistrationComponent implements OnInit {
       instaID: [''],
       reportingmanagerId: [this.loggedInUserDetails?.email],
       nameofMyTeam: [''],
-      citiesAllocated: [''],
-      schoolAllocated: [''],
+      citiesAllocated: [[]],
+      schoolAllocated: [[]],
     });
 
     this.searchCountry();
@@ -119,11 +119,11 @@ export class RegistrationComponent implements OnInit {
   saveRegistration() {
     const payload = {...this.personalDetailsForm.getRawValue(), ...this.contactDetailsForm.getRawValue(), ...this.socialInfoForm.getRawValue()};
     payload.dob = this.formatDate(this.personalDetailsForm.controls['dob'].value);
-    // payload.reportingmanagerId = 
+    payload.reportingmanagerId = this.loggedInUserDetails?.id;
     
     this.loginService.register(payload).subscribe(resp => {
       this.loginService.showSuccess('Member Added Sucessfully')
-      this.dialogRef.close();
+      this.dialogRef.close(true);
       // this.router.navigate(['/user-details'])
     },
     (err) => {

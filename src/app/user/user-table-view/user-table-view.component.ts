@@ -69,7 +69,7 @@ export class UserTableViewComponent implements OnInit {
 
     dialog.afterClosed().subscribe(resp => {
       if(resp) {
-        this.getAllUsersById(this.loggedInUserDetails?.reportingmanagerId);
+        this.getAllUsersById(this.loggedInUserDetails?.id as number);
       }
     })
 

@@ -44,9 +44,9 @@ export class OutreachDialogComponent implements OnInit {
     const outReachDetail = this.data;
     this.outReachForm = this.fb.group({
       outreachuserid: [outReachDetail.id ? outReachDetail.outreachuserid : ''],
-      outreach_assigneddate: [outReachDetail.id ? outReachDetail.outreach_assigneddate : new Date()],
+      outreach_assigneddate: [outReachDetail.id ? outReachDetail.outreach_assigneddate : ''],
       outreachheaduserid: [outReachDetail.id ? outReachDetail.outreachheaduserid : this.loggedInUserDetails?.email],
-      outreachHead_assigneddate: [outReachDetail.id ? outReachDetail.outreachHead_assigneddate : new Date()],
+      outreachHead_assigneddate: [outReachDetail.id ? outReachDetail.outreachHead_assigneddate : ''],
     })
   }
 
