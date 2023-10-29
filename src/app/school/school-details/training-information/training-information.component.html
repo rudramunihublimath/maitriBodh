@@ -18,14 +18,22 @@
             <!-- Trainer Column -->
             <ng-container matColumnDef="trainTheTrainersId">
                 <th class="text-center" mat-header-cell *matHeaderCellDef> Trainer </th>
-                <td class="text-center" mat-cell *matCellDef="let element"> {{element.trainTheTrainersId}} </td>
+                <td class="text-center" mat-cell *matCellDef="let element"> 
+                    <a class="a-link" (click)="getUserByEmail(element?.trainTheTrainersId)">
+                        {{element.trainTheTrainersId}} 
+                    </a>
+                </td>
             </ng-container>
 
            
             <!-- Trainer Head Column -->
             <ng-container matColumnDef="trainTheTrainerHeadId">
                 <th class="text-center" mat-header-cell *matHeaderCellDef> Trainer Head </th>
-                <td class="text-center" mat-cell *matCellDef="let element"> {{element.trainTheTrainerHeadId}} </td>
+                <td class="text-center" mat-cell *matCellDef="let element"> 
+                    <a class="a-link" (click)="getUserByEmail(element?.trainTheTrainerHeadId)">
+                        {{element.trainTheTrainerHeadId}} 
+                    </a>
+                </td>
             </ng-container>
         
             <!-- Action Column -->

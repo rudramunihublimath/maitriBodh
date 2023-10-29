@@ -6,6 +6,8 @@ import { SchoolService } from 'src/app/services/school.service';
 import { UserReq, SchoolDetail, ResponseDto, Trainer } from 'src/app/types';
 import { OutreachDialogComponent } from '../outreach-information/outreach-dialog/outreach-dialog.component';
 import { TrainingDialogComponent } from './training-dialog/training-dialog.component';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-training-information',
@@ -29,6 +31,8 @@ export class  TrainingInformationComponent implements OnInit  {
     private loginService: LoginService,
     private schoolService: SchoolService,
     private spinner: NgxSpinnerService,
+    private userService: UserService,
+    private router: Router,
   ) {
 
   }
@@ -62,6 +66,18 @@ export class  TrainingInformationComponent implements OnInit  {
       if(resp) {
         this.getTrainerBySchoolId();
       }
+    })
+  }
+
+  getUserByEmail(email: string) {
+    this.spinner.show();
+    this.userService.getUserByEmail(email).subscribe((resp: ResponseDto<UserReq>) => {
+      this.spinner.hide();
+      const id = resp?.message?.id;
+      this.router.navigate(['/user-profile'], {queryParams: {id}});
+    }, err => {
+      this.spinner.hide();
+      this.loginService.showError('No Data Available')
     })
   }
 

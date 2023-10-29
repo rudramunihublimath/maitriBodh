@@ -47,7 +47,7 @@ export class SchoolTableViewComponent implements OnInit {
   }
 
   getAllocatedSchools() {
-    const schoolAllocated = this.loggedInUserDetails?.schoolAllocated;
+    const schoolAllocated = this.loggedInUserDetails?.schoolAllocated ?? 0;
     // ['Pune', 'Mumbai'];
     
     this.spinner.show();
@@ -96,6 +96,9 @@ export class SchoolTableViewComponent implements OnInit {
       if(outreachDetail) {
         this.getUserByEmail(outreachDetail);
       }
+      }, err => {
+        this.loginService.showError('No Details Available');
+        this.spinner.hide();
       })
   }
 
@@ -104,6 +107,9 @@ export class SchoolTableViewComponent implements OnInit {
       this.spinner.hide();
       const userDetail = resp.message;
       this.openOutreachDetails(userDetail);
+    }, err => {
+      this.loginService.showError('No Details Available');
+      this.spinner.hide();
     })
   }
 

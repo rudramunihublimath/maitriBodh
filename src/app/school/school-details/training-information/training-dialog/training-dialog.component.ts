@@ -57,7 +57,7 @@ export class TrainingDialogComponent implements OnInit {
   submitTrainer() {
     this.spinner.show();
     const payload: Trainer = this.trainerForm.getRawValue();
-    if(typeof this.trainerForm.controls['dateofCompletion'].value !== 'string') {
+    if(this.trainerForm.controls['dateofCompletion'].value && typeof this.trainerForm.controls['dateofCompletion'].value !== 'string') {
       payload.dateofCompletion = this.formatDate(this.trainerForm.controls['dateofCompletion'].value);
     }
     this.data['id'] ? this.updateTrainer(payload) : this.saveTrainer(payload);

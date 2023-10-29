@@ -36,7 +36,11 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.loginForm.value).subscribe((res: ResponseDto<UserReq>) => {
         this.loginService.setUserDetails(res.message);
         this.loginService.userToken(res?.message?.jwtToken as string);
-        this.router.navigate(['/school'])
+        if(res?.message?.nameofMyTeam === 'Central_Mool') {
+          this.router.navigate(['/user-details'])
+        } else {
+          this.router.navigate(['/school'])
+        }
 
       },
       (err) => {

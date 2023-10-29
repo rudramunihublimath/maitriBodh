@@ -5,6 +5,8 @@ import { LoginService } from 'src/app/services/login.service';
 import { SchoolService } from 'src/app/services/school.service';
 import { OutReach, ResponseDto, SchoolDetail, UserReq } from 'src/app/types';
 import { OutreachDialogComponent } from './outreach-dialog/outreach-dialog.component';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-outreach-information',
@@ -28,6 +30,8 @@ export class OutreachInformationComponent implements OnInit {
     private loginService: LoginService,
     private schoolService: SchoolService,
     private spinner: NgxSpinnerService,
+    private userService: UserService,
+    private router: Router,
   ) {
 
   }
@@ -61,6 +65,19 @@ export class OutreachInformationComponent implements OnInit {
       if(resp) {
         this.getOutreachBySchoolId();
       }
+    })
+  }
+
+
+  getUserByEmail(email: string) {
+    this.spinner.show();
+    this.userService.getUserByEmail(email).subscribe((resp: ResponseDto<UserReq>) => {
+      this.spinner.hide();
+      const id = resp?.message?.id;
+      this.router.navigate(['/user-profile'], {queryParams: {id}});
+    }, err => {
+      this.spinner.hide();
+      this.loginService.showError('No Data Available')
     })
   }
 

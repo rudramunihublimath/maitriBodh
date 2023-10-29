@@ -51,10 +51,10 @@ export class FlagDialogComponent implements OnInit {
 
   initializeForm() {
     this.flagForm = this.fb.group({
-      schoolActive: [{value: this.flagDetails?.id ? this.flagDetails.schoolActive : '', disabled: !this.isAuthorized}],
-      schoolInterested: [{value: this.flagDetails?.id ? this.flagDetails.schoolInterested : '', disabled: !this.isAuthorized}],
-      dealClosed: [{value: this.flagDetails?.id ? this.flagDetails.dealClosed : '', disabled: !this.isAuthorized}],
-      isDiscontinued: [{value: this.flagDetails?.id ? this.flagDetails.isDiscontinued : '', disabled: !this.isAuthorized}],
+      schoolActive: [{value: this.flagDetails?.id ? this.flagDetails.schoolActive : 'Yes', disabled: !this.isAuthorized}],
+      schoolInterested: [{value: this.flagDetails?.id ? this.flagDetails.schoolInterested : 'Yes', disabled: !this.isAuthorized}],
+      dealClosed: [{value: this.flagDetails?.id ? this.flagDetails.dealClosed : 'No', disabled: !this.isAuthorized}],
+      isDiscontinued: [{value: this.flagDetails?.id ? this.flagDetails.isDiscontinued : 'No', disabled: !this.isAuthorized}],
       discontinuedDate: [{value: this.flagDetails?.id ? this.flagDetails.discontinuedDate : '', disabled: !this.isAuthorized}],
       reasonForDiscontinue: [{value: this.flagDetails?.id ? this.flagDetails.reasonForDiscontinue : '', disabled: !this.isAuthorized}],
       reasonValidated: [{value: this.flagDetails?.id ? this.flagDetails.reasonValidated : '', disabled: !this.isAuthorized}],
@@ -63,7 +63,7 @@ export class FlagDialogComponent implements OnInit {
 
   submitFlag() {
     const payload: MBPFlag = this.flagForm.getRawValue(); 
-    if(typeof this.flagForm.controls['discontinuedDate'].value !== 'string') {
+    if(this.flagForm.controls['discontinuedDate'].value && typeof this.flagForm.controls['discontinuedDate'].value !== 'string') {
       payload.discontinuedDate = this.formatDate(this.flagForm.controls['discontinuedDate'].value);
     }
     //console.log('payload', payload)
@@ -75,6 +75,7 @@ export class FlagDialogComponent implements OnInit {
     this.spinner.show();
     this.schoolService.saveFlag(payload, this.flagDetails.schoolId).subscribe((resp: any) => {
       //console.log('resp', resp);
+      this.dialogRef.close(resp);
       this.spinner.hide();
       this.loginService.showSuccess('MBP Flags Added Successfully');
     })
@@ -84,6 +85,7 @@ export class FlagDialogComponent implements OnInit {
     this.spinner.show();
     this.schoolService.updateFlag(payload, this.flagDetails.schoolId).subscribe((resp: any) => {
       //console.log('resp', resp);
+      this.dialogRef.close(resp);
       this.spinner.hide();
       this.loginService.showSuccess('MBP Flags Updated Successfully');
     })

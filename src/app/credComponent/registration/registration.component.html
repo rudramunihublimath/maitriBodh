@@ -25,8 +25,8 @@
               </mat-form-field>
   
               <mat-form-field class="field-width" appearance="outline">
-                <mat-label>UserId</mat-label>
-                <input type="text" matInput placeholder="UserId" formControlName="email" required>
+                <mat-label>Email ID</mat-label>
+                <input type="text" matInput placeholder="Email ID" formControlName="email" required>
               </mat-form-field>
             </div>
 
@@ -190,7 +190,8 @@
 
               <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Allocated Cities</mat-label>
-                <mat-select (selectionChange)="selectedCities($event)" multiple formControlName="citiesAllocated" required>
+                <mat-select (selectionChange)="selectedCities($event)" multiple formControlName="citiesAllocated">
+                  <mat-option>-- None --</mat-option>
                   <mat-option *ngFor="let city of cities" [value]="city">
                     {{city}}
                   </mat-option>
@@ -200,7 +201,8 @@
             <div class="flex-between">
               <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Allocated Schools</mat-label>
-                <mat-select multiple formControlName="schoolAllocated" required>
+                <mat-select multiple formControlName="schoolAllocated">
+                  <mat-option>-- None --</mat-option>
                   <mat-option *ngFor="let school of schools" [value]="school.id">
                     {{school?.name}}
                   </mat-option>

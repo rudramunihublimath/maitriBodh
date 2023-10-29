@@ -44,21 +44,22 @@ export class OutreachDialogComponent implements OnInit {
     const outReachDetail = this.data;
     this.outReachForm = this.fb.group({
       outreachuserid: [outReachDetail.id ? outReachDetail.outreachuserid : ''],
-      outreach_assigneddate: [outReachDetail.id ? outReachDetail.outreach_assigneddate : ''],
-      outreachheaduserid: [outReachDetail.id ? outReachDetail.outreachheaduserid : ''],
-      outreachHead_assigneddate: [outReachDetail.id ? outReachDetail.outreachHead_assigneddate : ''],
+      outreach_assigneddate: [outReachDetail.id ? outReachDetail.outreach_assigneddate : new Date()],
+      outreachheaduserid: [outReachDetail.id ? outReachDetail.outreachheaduserid : this.loggedInUserDetails?.email],
+      outreachHead_assigneddate: [outReachDetail.id ? outReachDetail.outreachHead_assigneddate : new Date()],
     })
   }
 
   submitOutReach() {
     this.spinner.show();
     const payload: OutReach = this.outReachForm.getRawValue();
+    console.log('this.outReachForm.getRawValue()', this.outReachForm.getRawValue())
 
-    if(typeof this.outReachForm.controls['outreach_assigneddate'].value !== 'string') {
+    if(this.outReachForm.controls['outreach_assigneddate'].value && typeof this.outReachForm.controls['outreach_assigneddate'].value !== 'string') {
       payload.outreach_assigneddate = this.formatDate(this.outReachForm.controls['outreach_assigneddate'].value);
     }
 
-    if(typeof this.outReachForm.controls['outreachHead_assigneddate'].value !== 'string') {
+    if(this.outReachForm.controls['outreachHead_assigneddate'].value && typeof this.outReachForm.controls['outreachHead_assigneddate'].value !== 'string') {
       payload.outreachHead_assigneddate = this.formatDate(this.outReachForm.controls['outreachHead_assigneddate'].value);
     }
 
@@ -75,6 +76,7 @@ export class OutreachDialogComponent implements OnInit {
       this.dialogRef.close(true);
 
     }, err => {
+      this.loginService.showError('Something went wrong')
       this.spinner.hide();
     })
   }

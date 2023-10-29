@@ -130,3 +130,12 @@ input {
 input[type=radio].default {
   accent-color: $secondary-color;
 }
+
+.a-link { 
+  text-decoration: none;
+}
+
+.a-link:hover { 
+  text-decoration: underline;
+  cursor: pointer;
+}

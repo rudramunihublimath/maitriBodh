@@ -18,7 +18,11 @@
         <!-- Outreach Column -->
         <ng-container matColumnDef="outreachuserid">
             <th class="text-center" mat-header-cell *matHeaderCellDef> Outreach Person </th>
-            <td class="text-center" mat-cell *matCellDef="let element"> {{element.outreachuserid}} </td>
+            <td class="text-center" mat-cell *matCellDef="let element"> 
+              <a class="a-link" (click)="getUserByEmail(element?.outreachuserid)">
+                {{element.outreachuserid}} 
+              </a>
+            </td>
         </ng-container>
 
         <!-- Outreach Assign Column -->
@@ -30,7 +34,11 @@
         <!-- Outreach Head Column -->
         <ng-container matColumnDef="outreachheaduserid">
             <th class="text-center" mat-header-cell *matHeaderCellDef> Outreach Head </th>
-            <td class="text-center" mat-cell *matCellDef="let element"> {{element.outreachheaduserid}} </td>
+            <td class="text-center" mat-cell *matCellDef="let element"> 
+              <a class="a-link" (click)="getUserByEmail(element?.outreachheaduserid)">
+                {{element.outreachheaduserid}} 
+              </a>
+            </td>
         </ng-container>
       
         <!-- Outreach Head Assign Column -->

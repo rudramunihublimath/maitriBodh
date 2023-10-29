@@ -51,7 +51,7 @@ export class AgreementDialogComponent implements OnInit {
 
   initializeForm() {
     this.agreementForm = this.fb.group({
-      agreementCompleted: [{value: this.agreementDetails?.id ? this.agreementDetails?.agreementCompleted : '', disabled: !this.isAuthorized}],
+      agreementCompleted: [{value: this.agreementDetails?.id ? this.agreementDetails?.agreementCompleted : 'No', disabled: !this.isAuthorized}],
       agreementCompletedDate: [{value: this.agreementDetails?.id ? this.agreementDetails?.agreementCompletedDate : '', disabled: !this.isAuthorized}],
       agreementScanCopyLink: [{value: this.agreementDetails?.id ? this.agreementDetails?.agreementScanCopyLink : '', disabled: !this.isAuthorized}],
       uploadedByUserId: [{value: this.agreementDetails?.id ? this.agreementDetails?.uploadedByUserId : '', disabled: !this.isAuthorized}],
@@ -63,6 +63,10 @@ export class AgreementDialogComponent implements OnInit {
       this.agreementForm.controls['agreementCompletedDate'].reset();
       this.agreementForm.controls['agreementScanCopyLink'].reset();
       this.agreementForm.controls['uploadedByUserId'].reset();
+    }
+    else {
+      const loggedInUser = `${this.loggedInUserDetails?.firstname} ${this.loggedInUserDetails?.lastname}`
+      this.agreementForm?.controls['uploadedByUserId']?.patchValue(loggedInUser);
     }
   }
 
