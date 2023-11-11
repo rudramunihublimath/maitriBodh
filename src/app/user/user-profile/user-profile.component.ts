@@ -41,6 +41,10 @@ export class UserProfileComponent implements OnInit {
   isInitialAllocatedSchoolLoad = true;
 
   isAuthorized = false;
+
+  url: any = null;
+  defaultImg: any = null;
+  isUserLogoChanged = false;
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -55,6 +59,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
+    this.defaultImg = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
     const queryParams = this.route.snapshot.queryParams;
     if(queryParams['id']) {
       this.getUserById(queryParams['id']);
@@ -90,7 +95,7 @@ export class UserProfileComponent implements OnInit {
       dob: [{value: this.userDetail?.dob, disabled: !this.isAuthorized}],
       citiesAllocated: [{value: this.userDetail?.citiesAllocated, disabled: !this.isAuthorized}],
       reportingmanagerId: [{value: this.userDetail?.reportingmanagerId, disabled: !this.isAuthorized}],
-      schoolAllocated: [{value: this.userDetail?.schoolAllocated, disabled: !this.isAuthorized}],
+      // schoolAllocated: [{value: this.userDetail?.schoolAllocated, disabled: !this.isAuthorized}],
     })
 
     this.getAllSchoolByCity(this.userProfileForm.controls['citiesAllocated']?.value);
@@ -249,14 +254,41 @@ export class UserProfileComponent implements OnInit {
       this.getAllSchoolByCity(evt.value);
     }
       
-    }
+  }
   
-    getAllSchoolByCity(cities: Array<string>) {
-      //console.log('cities', cities)
-      this.schoolService.getAllSchoolByCity(cities).subscribe((resp: any) => {
-        this.schools = Object.values(resp);
-        //console.log('this.schools', this.schools)
-      })
+  getAllSchoolByCity(cities: Array<string>) {
+    //console.log('cities', cities)
+    this.schoolService.getAllSchoolByCity(cities).subscribe((resp: any) => {
+      this.schools = Object.values(resp);
+      //console.log('this.schools', this.schools)
+    })
+  }
+
+  addUserImage(evt: any) {
+    // console.log('evt', evt)
+    if(evt.target.files && evt.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(evt.target.files[0]); //read file as data url
+      // console.log('evt.target.files', evt.target.files)
+
+      reader.onload = () => {
+        this.url = reader.result;
+        // console.log('reader', reader)
+        this.isUserLogoChanged = true;
+        this.uploadUserImage(evt.target.files[0]);
+      }
     }
+  }
+
+  removeUserImage() {
+    this.url = null;
+  }
+
+  uploadUserImage(file: any) {
+    // console.log('file', file)
+    this.userService.uploadUserImage(this.loggedInUserDetails?.id as number, file).subscribe(resp => {
+      // console.log('resp', resp)
+    })
+  }
 
 }

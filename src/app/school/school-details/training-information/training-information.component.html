@@ -3,8 +3,8 @@
 <div class="flex-center ti-details-main">
     <div class="table-card">
         <div class="table-title">
-        <span class="utv-title">Trainer Information</span>
-        <button *ngIf="isAuthorized && !dataSource[0]?.id" (click)="openTrainerDetails(false)" class="add-btn" mat-raised-button color="warn">Add Trainer</button>
+        <span class="utv-title">Training Information</span>
+        <button *ngIf="isAuthorized && !dataSource[0]?.id" (click)="openTrainerDetails(false)" class="add-btn" mat-raised-button color="warn">Add Training Info</button>
         </div>
         <div class="table-container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">  
@@ -15,24 +15,28 @@
             </ng-container>
 
         
-            <!-- Trainer Column -->
-            <ng-container matColumnDef="trainTheTrainersId">
-                <th class="text-center" mat-header-cell *matHeaderCellDef> Trainer </th>
+            <!-- dateValidated Column -->
+            <ng-container matColumnDef="dataValidated">
+                <th class="text-center" mat-header-cell *matHeaderCellDef> Date Validated </th>
                 <td class="text-center" mat-cell *matCellDef="let element"> 
-                    <a class="a-link" (click)="getUserByEmail(element?.trainTheTrainersId)">
-                        {{element.trainTheTrainersId}} 
-                    </a>
+                    {{element.dataValidated}} 
+                </td>
+            </ng-container>
+
+            <!-- trainingPartCompleted Column -->
+            <ng-container matColumnDef="trainingPartCompleted">
+                <th class="text-center" mat-header-cell *matHeaderCellDef> Training Part Completed </th>
+                <td class="text-center" mat-cell *matCellDef="let element"> 
+                    {{element.trainingPartCompleted}} 
                 </td>
             </ng-container>
 
            
-            <!-- Trainer Head Column -->
-            <ng-container matColumnDef="trainTheTrainerHeadId">
-                <th class="text-center" mat-header-cell *matHeaderCellDef> Trainer Head </th>
+            <!-- dateOfCompletion Column -->
+            <ng-container matColumnDef="dateofCompletion">
+                <th class="text-center" mat-header-cell *matHeaderCellDef> Completion date </th>
                 <td class="text-center" mat-cell *matCellDef="let element"> 
-                    <a class="a-link" (click)="getUserByEmail(element?.trainTheTrainerHeadId)">
-                        {{element.trainTheTrainerHeadId}} 
-                    </a>
+                    {{element.dateofCompletion | date: 'longDate'}} 
                 </td>
             </ng-container>
         

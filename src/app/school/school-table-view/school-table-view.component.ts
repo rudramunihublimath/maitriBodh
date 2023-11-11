@@ -9,6 +9,7 @@ import { OutReach, ResponseDto, SchoolDetail, SchoolTableDetail, UserReq } from 
 import { TrainingDialogComponent } from '../school-details/training-information/training-dialog/training-dialog.component';
 import { UserService } from 'src/app/services/user.service';
 import { OutreachDetailsComponent } from './outreach-details/outreach-details.component';
+import { AddTeamComponent } from './add-team/add-team.component';
 
 @Component({
   selector: 'app-school-table-view',
@@ -42,22 +43,23 @@ export class SchoolTableViewComponent implements OnInit {
       this.displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'actions'];
     }
 
-    this.isAuthorized ? this.getAllSchoolByCity() : this.getAllocatedSchools();
+    this.getAllSchoolByCity()
+    // this.isAuthorized ? this.getAllSchoolByCity() : this.getAllocatedSchools();
     
   }
 
-  getAllocatedSchools() {
-    const schoolAllocated = this.loggedInUserDetails?.schoolAllocated ?? 0;
-    // ['Pune', 'Mumbai'];
+  // getAllocatedSchools() {
+  //   const schoolAllocated = this.loggedInUserDetails?.schoolAllocated ?? 0;
+  //   // ['Pune', 'Mumbai'];
     
-    this.spinner.show();
-    this.schoolService.getAllocatedSchools(schoolAllocated).subscribe((resp: any) => {
-      this.spinner.hide();
-      this.allSchoolDetail = JSON.parse(JSON.stringify(resp));
-      this.dataSource = resp;
-      this.searchSchool();
-    })
-  }
+  //   this.spinner.show();
+  //   this.schoolService.getAllocatedSchools(schoolAllocated).subscribe((resp: any) => {
+  //     this.spinner.hide();
+  //     this.allSchoolDetail = JSON.parse(JSON.stringify(resp));
+  //     this.dataSource = resp;
+  //     this.searchSchool();
+  //   })
+  // }
 
 
   getAllSchoolByCity() {
@@ -102,6 +104,23 @@ export class SchoolTableViewComponent implements OnInit {
       })
   }
 
+  getUsersAllocatedToSchool(schoolDetail: SchoolDetail) {
+    this.spinner.show();
+    this.schoolService.getUsersAllocatedToSchool(schoolDetail.id).subscribe((resp: ResponseDto<any>) => {
+      this.spinner.hide();
+      const userId = Object.keys(resp.message);
+      // console.log('userId', userId)
+      const userDetail: any = Object.values(resp.message)
+      userDetail.forEach((elt: any, idx: number) => {
+        elt['id'] = userId[idx];
+      });
+      this.openOutreachDetails(userDetail);
+    }, err => {
+      this.loginService.showError('No Details Available');
+      this.spinner.hide();
+    })
+  }
+
   getUserByEmail(user: OutReach) {
     this.userService.getUserByEmail(user.outreachuserid).subscribe((resp: ResponseDto<UserReq>) => {
       this.spinner.hide();
@@ -113,16 +132,29 @@ export class SchoolTableViewComponent implements OnInit {
     })
   }
 
-  openOutreachDetails(userDetail: UserReq) {
+  openOutreachDetails(userDetail: any) {
     //console.log('userDetail', userDetail);
-    const config = new MatDialogConfig(); 
-      config.width= "50vw";
+    const config = new MatDialogConfig();
+      config.width= "80vw";
       config.disableClose=true;
-      config.data = userDetail;
+      config.data = userDetail ? userDetail : [];
       const dialog = this.dialog.open(OutreachDetailsComponent, config);
   
       dialog.afterClosed().subscribe(resp => {
         //console.log('resp', resp)
       })
-    }
+  }
+
+  addPerson(schoolId: number) {
+    const config = new MatDialogConfig(); 
+      config.width= "50vw";
+      config.disableClose=true;
+      config.data = null;
+      const dialogRef = this.dialog.open(AddTeamComponent, config);
+      dialogRef.componentInstance.schoolId = schoolId;
+  
+      dialogRef.afterClosed().subscribe(resp => {
+        //console.log('resp', resp)
+      })
+  }
 }

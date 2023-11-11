@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ResponseDto, UserReq, UserTableDto } from '../types';
@@ -37,5 +37,22 @@ export class UserService {
 
   updateUser(userDetails: UserReq) {
     return this.http.put(`${environment.securedBaseUrl}/Login/UpdateUserData`, userDetails);
+  }
+
+  uploadUserImage(userId: number, file: any) {
+    // console.log('file', file);
+    // console.log('file', typeof file)
+    const httpOptions = {
+      headers: new HttpHeaders({"Content-Type": "multipart/form-data"})
+    };
+    
+    
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return this.http
+        .patch(`${environment.securedBaseUrl}/Login/Image?userId=${userId}`,
+        formData) // 👈 pass the http options 
+        
   }
 }

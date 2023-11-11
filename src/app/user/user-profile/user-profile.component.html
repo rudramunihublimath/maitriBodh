@@ -5,25 +5,15 @@
         <div *ngIf="userDetail" class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-3">
-                    <img class="rounded-circle mt-3" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                    <span class="font-weight-bold">
+                    <span class="img-container">
+                        <ng-container *ngTemplateOutlet="userImageContainer"></ng-container>
+                    </span>
+                    <span class="font-weight-bold pb-20">
                         {{userDetail.firstname}} {{userDetail.lastname}}
                         <span class="text-black-50">({{userDetail.nameofMyTeam}})</span>
                     </span>
-                    <!-- <span class="text-black-50">OutReach</span> -->
-                    <!-- edogaru@mail.com.my -->
                     <span class="text-black-50">{{userDetail.mbpcode}}</span>
                     <span> </span>
-                    <!-- <mat-list class="font-weight-bold col-md-12">
-                        <mat-list-item class="mli-ht">
-                            <h6 class="mb-0 col-md-8"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram me-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
-						    <span class="text-secondary col-md-4">bootdey</span>
-                        </mat-list-item>
-                        <mat-divider></mat-divider>
-                        <mat-list-item class="mli-ht">Item 2</mat-list-item>
-                        <mat-divider></mat-divider>
-                        <mat-list-item class="mli-ht">Item 3</mat-list-item>
-                      </mat-list> -->
                 </div>
             </div>
             <div class="col-md-5 border-right">
@@ -182,14 +172,14 @@
                             <mat-label>PIN Code</mat-label>
                             <input type="text" matInput placeholder="PIN Code" formControlName="pincode" required>
                         </mat-form-field>
-                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                        <!-- <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>Allocated Schools</mat-label>
                             <mat-select multiple formControlName="schoolAllocated" required>
                               <mat-option *ngFor="let school of schools" [value]="school.id">
                                 {{school?.name}}
                               </mat-option>
                             </mat-select>
-                          </mat-form-field>
+                          </mat-form-field> -->
                     </form>
 
                 </div>
@@ -211,3 +201,28 @@
         </div>
     </mat-card>
 </div>
+
+<ng-template #userImageContainer>
+    <span>
+        <img class="rounded-circle border border-dark mt-3 img-asp-ratio" width="150" height="150" [src]="url ? url : defaultImg"
+            [ngClass]="{'cover-img': !url}"
+        >
+        <!-- src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" -->
+    </span>
+    <span (click)="removeUserImage()" *ngIf="url" class="material-icons material-icons-outlined close-btn"
+        matTooltip="Remove Image"
+    >
+        refresh
+    </span>
+    <span class="upload-icon" *ngIf="!url" (click)="userImage.click()">
+        <span class="material-icons material-icons-outlined" style="cursor: pointer;">
+            cloud_upload
+        </span>
+
+        <input #userImage type="file" (change)="addUserImage($event)" style="display: none;">
+    </span>
+    <!-- <p *ngIf="!url">User Image</p> -->
+
+
+</ng-template>
+

@@ -71,6 +71,7 @@ export class SchoolGradeComponent implements OnInit {
       schoolNmReq2: {id: this.schoolDetails.id}
     }
     this.schoolService.saveGrade(payload).subscribe(resp => {
+      this.getGradeBySchoolId();
     })
   }
 

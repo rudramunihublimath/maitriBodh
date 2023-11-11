@@ -62,7 +62,7 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
 
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
-    console.log('this.isAuthorized', this.isAuthorized)
+    // console.log('this.isAuthorized', this.isAuthorized)
    
     this.getTargetPhase();
     this.getBoards();
@@ -109,7 +109,7 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
     })
 
     if(!this.isAuthorized) {
-      console.log('this.isAuthorized----1', this.isAuthorized)
+      // console.log('this.isAuthorized----1', this.isAuthorized)
       this.schoolForm.disable();
     }
 

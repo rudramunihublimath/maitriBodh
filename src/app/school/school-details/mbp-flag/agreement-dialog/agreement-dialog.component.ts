@@ -65,13 +65,16 @@ export class AgreementDialogComponent implements OnInit {
       this.agreementForm.controls['uploadedByUserId'].reset();
     }
     else {
+      // console.log('this.agreementDetails?.uploadedByUserId', this.agreementDetails?.uploadedByUserId)
       const loggedInUser = `${this.loggedInUserDetails?.firstname} ${this.loggedInUserDetails?.lastname}`
+      // console.log('loggedInUser', loggedInUser)
       this.agreementForm?.controls['uploadedByUserId']?.patchValue(loggedInUser);
     }
   }
 
   submitAgreement() {
     const payload: Agreement = this.agreementForm.getRawValue(); 
+    payload.uploadedByUserId = this.loggedInUserDetails?.id ? this.loggedInUserDetails.id.toString() : '';
     if(this.agreementForm.controls['agreementCompletedDate'].value && typeof this.agreementForm.controls['agreementCompletedDate'].value !== 'string') {
       payload.agreementCompletedDate = this.formatDate(this.agreementForm.controls['agreementCompletedDate'].value);
     }
@@ -86,6 +89,10 @@ export class AgreementDialogComponent implements OnInit {
       this.spinner.hide();
       this.loginService.showSuccess('Agreement Completed Successfully');
       this.dialogRef.close(true);
+    }, err => {
+      this.spinner.hide();
+      this.loginService.showError('Something went wrong')
+      // this.dialogRef.close(false);
     })
   }
 
@@ -97,6 +104,10 @@ export class AgreementDialogComponent implements OnInit {
       this.spinner.hide();
       this.loginService.showSuccess('Agreement Updated Successfully');
       this.dialogRef.close(true);
+    }, err => {
+      this.spinner.hide();
+      this.loginService.showError('Something went wrong')
+      // this.dialogRef.close(false);
     })
   }
 

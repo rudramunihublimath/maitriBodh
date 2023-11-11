@@ -38,7 +38,7 @@ export interface UserReq {
     reportingmanagerName?: string,
     nameofMyTeam?: string,
     citiesAllocated?: Array<string>
-    schoolAllocated: Array<number>;
+    schoolAllocated?: Array<number>;
     mbpcode?: string;
     jwtToken?: string;
 }

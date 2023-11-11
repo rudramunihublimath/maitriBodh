@@ -53,7 +53,7 @@ export class OutreachDialogComponent implements OnInit {
   submitOutReach() {
     this.spinner.show();
     const payload: OutReach = this.outReachForm.getRawValue();
-    console.log('this.outReachForm.getRawValue()', this.outReachForm.getRawValue())
+    // console.log('this.outReachForm.getRawValue()', this.outReachForm.getRawValue())
 
     if(this.outReachForm.controls['outreach_assigneddate'].value && typeof this.outReachForm.controls['outreach_assigneddate'].value !== 'string') {
       payload.outreach_assigneddate = this.formatDate(this.outReachForm.controls['outreach_assigneddate'].value);

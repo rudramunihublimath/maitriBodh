@@ -12,7 +12,7 @@
 
         <form [formGroup]="trainerForm" class="trainer-form-container">
         
-            <div class="row">
+            <!-- <div class="row">
                 <mat-form-field class="col-md-6 col-12 trainer-form-field" appearance="outline">
                     <mat-label>Trainer Email</mat-label>
                     <input type="text" matInput placeholder="Trainer Email" formControlName="trainTheTrainersId" required>
@@ -25,9 +25,9 @@
 
                 
                 
-            </div>
+            </div> -->
 
-            <div class="row" *ngIf="data?.id">
+            <div class="row">
                 <mat-form-field class="col-md-4 col-12 trainer-form-field" appearance="outline">
                     <mat-label>Date of Completion</mat-label>
                     <input matInput [matDatepicker]="picker1" formControlName="dateofCompletion">

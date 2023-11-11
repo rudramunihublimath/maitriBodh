@@ -57,8 +57,8 @@
         <ng-container matColumnDef="outreach">
           <th class="text-center" mat-header-cell *matHeaderCellDef> Outreach Person </th>
           <td class="text-center" mat-cell *matCellDef="let element"> 
-            <mat-icon (click)="getOutReachDetails(element)" class="material-symbols-outlined utv-edit-icon"
-              matTooltip="Show Outreach Details"
+            <mat-icon (click)="getUsersAllocatedToSchool(element)" class="material-symbols-outlined utv-edit-icon"
+              matTooltip="Show Team Details"
             >
               person
             </mat-icon>  
@@ -73,6 +73,11 @@
             matTooltip="Show School Details"
             >
               edit
+            </mat-icon>
+            <mat-icon (click)="addPerson(element.id)" class="material-symbols-outlined utv-edit-icon"
+            matTooltip="Add/Edit Team"
+            >
+              person_add
             </mat-icon>
             <!-- <mat-icon class="material-symbols-outlined utv-delete-icon">
               delete

@@ -103,6 +103,35 @@
     height: 32px !important;
 }
 
+.img-asp-ratio  {
+    aspect-ratio: attr(width) / attr(height);
+}
+
+.img-container {
+    position: relative;
+    .upload-icon {
+        position: absolute;
+        bottom: -9%;
+        right: 43%;
+    }
+    .close-btn {
+        position: absolute;
+        right: 0%;
+        top: 5%;
+        font-size: 20px;
+        color: red;
+        cursor: pointer;
+    }
+
+    .cover-img {
+        object-fit: cover;
+    }
+}
+
+.pb-20 {
+    padding-top: 20px;
+}
+
 ::ng-deep .mli-ht .mat-mdc-list-item-unscoped-content {
     font-size: 13px;
 }

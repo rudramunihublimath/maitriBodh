@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.token = this.token.replace(/^"(.*)"$/, '$1');
     }
 
-    if (!req.headers.has('Content-Type')) {
+    if (!req.headers.has('Content-Type') && !req.url.includes('/Login/Image')) {
       req = req.clone({
         headers: req.headers.set('Content-Type', 'application/json')
       });

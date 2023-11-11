@@ -96,7 +96,7 @@ export class RegistrationComponent implements OnInit {
       reportingmanagerId: [this.loggedInUserDetails?.email],
       nameofMyTeam: [''],
       citiesAllocated: [[]],
-      schoolAllocated: [[]],
+      // schoolAllocated: [[]],
     });
 
     this.searchCountry();

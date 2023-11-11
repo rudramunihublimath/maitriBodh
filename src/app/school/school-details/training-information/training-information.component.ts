@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class  TrainingInformationComponent implements OnInit  {
 
-  displayedColumns = ['position', 'trainTheTrainersId', 'trainTheTrainerHeadId', 'actions'];
+  displayedColumns = ['position', 'dataValidated', 'trainingPartCompleted', 'dateofCompletion', 'actions'];
   // displayFilterColumns = ['positionFilter', 'firstnameFilter', 'lastnameFilter', 'emailFilter', 'actionFilter']
   dataSource: Trainer[] = [];
   allPOCDetail: Trainer[] = [];
@@ -56,17 +56,34 @@ export class  TrainingInformationComponent implements OnInit  {
   }
 
   openTrainerDetails(isEditMode: boolean, trainerDetail?: Trainer) {
-    const config = new MatDialogConfig(); 
-    config.width= "60vw";
-    config.disableClose=true;
-    config.data = isEditMode ? {schoolId: this.schoolDetails.id, ...trainerDetail} : {schoolId: this.schoolDetails.id};
-    const dialog = this.dialog.open(TrainingDialogComponent, config);
-
-    dialog.afterClosed().subscribe(resp => {
-      if(resp) {
-        this.getTrainerBySchoolId();
+    this.spinner.show();
+    this.schoolService.getUsersAllocatedToSchool(this.schoolDetails.id).subscribe((resp: ResponseDto<any>) => {
+      
+      const teamDetail = resp?.message;
+      const isHeadTrainerAndTrainerAvailable = teamDetail?.trainingHeadAllocated && teamDetail?.trainingAllocated;
+      if(isHeadTrainerAndTrainerAvailable) {
+        this.spinner.hide();
+        const config = new MatDialogConfig(); 
+        config.width= "60vw";
+        config.disableClose=true;
+        config.data = isEditMode ? {schoolId: this.schoolDetails.id, ...trainerDetail} : {schoolId: this.schoolDetails.id};
+        const dialog = this.dialog.open(TrainingDialogComponent, config);
+    
+        dialog.afterClosed().subscribe(resp => {
+          if(resp) {
+            this.getTrainerBySchoolId();
+          }
+        })
+      } 
+      else {
+        this.loginService.showError('Please add trainer data');
+        this.spinner.hide();
       }
+    }, err => {
+      this.loginService.showError('Something went wrong');
+      this.spinner.hide();
     })
+    
   }
 
   getUserByEmail(email: string) {

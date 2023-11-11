@@ -46,8 +46,8 @@ export class TrainingDialogComponent implements OnInit {
   initializeForm() {
     const trainerDetail = this.data;
     this.trainerForm = this.fb.group({
-      trainTheTrainersId: [trainerDetail.id ? trainerDetail.trainTheTrainersId : ''],
-      trainTheTrainerHeadId: [trainerDetail.id ? trainerDetail.trainTheTrainerHeadId : ''],
+      // trainTheTrainersId: [trainerDetail.id ? trainerDetail.trainTheTrainersId : ''],
+      // trainTheTrainerHeadId: [trainerDetail.id ? trainerDetail.trainTheTrainerHeadId : ''],
       trainingPartCompleted: [trainerDetail.id ? trainerDetail.trainingPartCompleted : ''],
       dateofCompletion: [trainerDetail.id ? trainerDetail.dateofCompletion : ''],
       dataValidated: [trainerDetail.id ? trainerDetail.dataValidated : ''],

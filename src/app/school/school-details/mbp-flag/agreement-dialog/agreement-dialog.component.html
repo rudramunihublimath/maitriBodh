@@ -51,7 +51,7 @@
                     *ngIf="agreementForm.controls['agreementCompleted'].value === 'Yes'"
                 >
                     <mat-label>Uploaded By</mat-label>
-                    <input type="text" matInput placeholder="Uploaded By UserId" formControlName="uploadedByUserId" 
+                    <input readonly type="text" matInput placeholder="Uploaded By UserId" formControlName="uploadedByUserId" 
                         [required]="agreementForm.controls['agreementCompleted'].value === 'Yes'"
                     >
                 </mat-form-field>

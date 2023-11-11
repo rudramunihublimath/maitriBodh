@@ -29,7 +29,7 @@ export class SchoolService {
     let params = new HttpParams().set('schoolId', schoolId.toString());
     return this.http.get<Array<SchoolTableDetail>>(`${environment.securedBaseUrl}/School/findAllSchoolForGivenCityndSchoolName`, {params});
   }
-
+ 
   getSchoolById(id: number) {
     let params = new HttpParams().set('id', id);
     return this.http.get<ResponseDto<SchoolDetail>>(`${environment.securedBaseUrl}/School/FindSchoolById`, {params});
@@ -154,5 +154,25 @@ export class SchoolService {
 
     getGradeYears() {
       return this.http.get<any>(`${environment.securedBaseUrl}/School/FindAllGradesYear`);
+    }
+
+    getUsersAllocatedToSchool(schoolId: number) {
+      let params = new HttpParams().set('schoolId', schoolId);
+      return this.http.get<any>(`${environment.securedBaseUrl}/School/findUsersAllocatedToSchool`, {params});
+    }
+
+    addUserToSchool(schoolId: number, userId: number) {
+      let params = new HttpParams();
+      params = params.set('schoolId', schoolId);
+      params = params.set('userId', userId);
+      return this.http.post<ResponseDto<any>>(`${environment.securedBaseUrl}/School/AddUserToSchool`, null, {params});
+    }
+
+    editUserToSchool(schoolId: number, userId: number, newUserId: number) {
+      let params = new HttpParams();
+      params = params.set('schoolId', schoolId);
+      params = params.set('userId', userId);
+      params = params.set('newUserId', newUserId);
+      return this.http.put<ResponseDto<any>>(`${environment.securedBaseUrl}/School/AddUserToSchool`, null, {params});
     }
 }
