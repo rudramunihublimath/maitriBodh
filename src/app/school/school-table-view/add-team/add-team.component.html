@@ -39,7 +39,7 @@
         </form>
         <div *ngIf="isAuthorized" class="col-md-12 text-center btn-container">
             <button [disabled]="teamForm.invalid" (click)="saveTeam(true)" class="save-btn mr-16" mat-flat-button color="warn">Save</button>
-            <button [disabled]="teamForm.invalid" (click)="saveTeam(false)" class="save-btn" mat-flat-button color="warn">Save And Add Other</button>
+            <!-- <button [disabled]="teamForm.invalid" (click)="saveTeam(false)" class="save-btn" mat-flat-button color="warn">Save And Add Other</button> -->
         </div>
     </section>
 </div>
