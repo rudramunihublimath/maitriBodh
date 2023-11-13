@@ -50,9 +50,7 @@ export class UserService {
     const formData = new FormData();
     formData.append("file", file);
 
-    return this.http
-        .patch(`${environment.securedBaseUrl}/Login/Image?userId=${userId}`,
-        formData) // 👈 pass the http options 
+    return this.http.patch(`${environment.securedBaseUrl}/Login/Image?userId=${userId}`, formData) // 👈 pass the http options 
         
   }
 }

@@ -66,6 +66,14 @@ export class UserProfileComponent implements OnInit {
     } else {
       this.spinner.show();
       this.userDetail = JSON.parse(this.loginService.getUserDetails());
+      // 'https://maitribodh.org/images/header/logo_side.png?v=20231112201126'
+      if(this.userDetail?.imageName?.includes('http') || this.userDetail?.imageName?.includes('https')) {
+        this.url = this.userDetail?.imageName;
+      } else {
+        const imageName = this.userDetail?.imageName?.split("\\").pop();
+        this.url = `/assets/Maitribodh_Photo/${imageName}` ?? null;
+      }
+      console.log('this.url', this.url)
       this.initializeUserProfileForm();
 
       setTimeout(() => {
@@ -123,6 +131,15 @@ export class UserProfileComponent implements OnInit {
     this.spinner.show();
     this.userService.getUserById(id).subscribe((resp: ResponseDto<UserReq>) => {
       this.userDetail = resp.message;
+      if(this.userDetail?.imageName?.includes('http') || this.userDetail?.imageName?.includes('https')) {
+        this.url = this.userDetail?.imageName;
+      } else {
+        const imageName = this.userDetail?.imageName?.split("\\").pop();
+        this.url = `/assets/Maitribodh_Photo/${imageName}` ?? null;
+      }
+      if(this.loggedInUserDetails?.id === this.userDetail?.id) {
+        this.loginService.setUserDetails(this.userDetail);
+      }
       this.initializeUserProfileForm();
       this.spinner.hide();
     })
@@ -141,6 +158,9 @@ export class UserProfileComponent implements OnInit {
     this.spinner.show();
     this.userService.updateUser(payload).subscribe(resp => {
       this.loginService.showSuccess('User Details Updated');
+      if(this.loggedInUserDetails?.id === this.userDetail?.id) {
+        this.getUserById(this.loggedInUserDetails?.id as any);
+      }
       this.spinner.hide();
     })
    
@@ -285,9 +305,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   uploadUserImage(file: any) {
-    // console.log('file', file)
+    this.spinner.show();
     this.userService.uploadUserImage(this.loggedInUserDetails?.id as number, file).subscribe(resp => {
       // console.log('resp', resp)
+      this.spinner.hide();
+      this.loginService.showSuccess('Profile Added Successfully');
+      if(this.loggedInUserDetails?.id === this.userDetail?.id) {
+        this.getUserById(this.loggedInUserDetails?.id as any);
+      }
     })
   }
 

@@ -33,6 +33,7 @@ export interface UserReq {
     pincode: string;
     dob: string;
     profileActive?: string;
+    imageName?: string;
 
     reportingmanagerId: number;
     reportingmanagerName?: string,
@@ -148,7 +149,7 @@ export interface Agreement {
     agreementCompleted: string;
     agreementCompletedDate: string;
     agreementScanCopyLink: string;
-    uploadedByUserId: string;
+    uploadedByUserId?: string;
 }
 
 export interface SchoolGrade {

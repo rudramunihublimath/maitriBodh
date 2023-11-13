@@ -17,7 +17,7 @@ import { FlagDialogComponent } from './flag-dialog/flag-dialog.component';
 export class MbpFlagComponent implements OnInit {
 
   displayedColumns = ['schoolActive', 'schoolInterested', 'dealClosed', 'isDiscontinued', 'discontinuedDate', 'reasonValidated', 'actions'];
-  agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'uploadedByUserId', 'actions'];
+  agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'actions'];
 
   dataSource: MBPFlag[] = [];
   agreementDataSource: Agreement[] = [{
@@ -25,7 +25,7 @@ export class MbpFlagComponent implements OnInit {
     agreementCompleted: 'No',
     agreementCompletedDate: '',
     agreementScanCopyLink: '',
-    uploadedByUserId: ''
+    // uploadedByUserId: ''
   }];
 
   loggedInUserDetails!: UserReq;

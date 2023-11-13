@@ -20,6 +20,7 @@ export class SchoolMeetingNotesComponent implements OnInit {
   loggedInUserDetails!: UserReq;
 
   isAuthorized = false;
+  isBtnShow = true;
 
   @Input() schoolDetails!: SchoolDetail;
 
@@ -36,6 +37,10 @@ export class SchoolMeetingNotesComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     
+    if(this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head') {
+      this.isBtnShow = false;
+      this.displayedColumns?.pop();
+    }
     this.getMOMBySchoolId();
   }
 

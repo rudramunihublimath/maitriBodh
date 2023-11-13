@@ -20,7 +20,7 @@ export class TrainingDialogComponent implements OnInit {
 
   isAuthorized = false;
 
-  header = 'Add Trainer';
+  header = 'Add Training Info';
 
   binaryAns = ['Yes', 'No'];
   
@@ -37,8 +37,8 @@ export class TrainingDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
-    this.header = this.data['id'] ? 'Edit Trainer' : 'Add Trainer';
+    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head' || this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head';
+    this.header = this.data['id'] ? 'Edit Training Info' : 'Add Training Info';
 
     this.initializeForm();
   }

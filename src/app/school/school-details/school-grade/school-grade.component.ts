@@ -44,6 +44,10 @@ export class SchoolGradeComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     
+    if(this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head') {
+      this.displayedColumns?.pop();
+    }
+
     this.yearControl = new FormControl(this.currentYear);
     this.getGradeYears();
     this.getGradeBySchoolId();

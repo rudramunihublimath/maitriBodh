@@ -39,7 +39,7 @@ export class  TrainingInformationComponent implements OnInit  {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
+    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head' || this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head';
     if(!this.isAuthorized) {
       this.displayedColumns.pop();
     }
@@ -56,13 +56,7 @@ export class  TrainingInformationComponent implements OnInit  {
   }
 
   openTrainerDetails(isEditMode: boolean, trainerDetail?: Trainer) {
-    this.spinner.show();
-    this.schoolService.getUsersAllocatedToSchool(this.schoolDetails.id).subscribe((resp: ResponseDto<any>) => {
-      
-      const teamDetail = resp?.message;
-      const isHeadTrainerAndTrainerAvailable = teamDetail?.trainingHeadAllocated && teamDetail?.trainingAllocated;
-      if(isHeadTrainerAndTrainerAvailable) {
-        this.spinner.hide();
+    this.spinner.hide();
         const config = new MatDialogConfig(); 
         config.width= "60vw";
         config.disableClose=true;
@@ -74,15 +68,6 @@ export class  TrainingInformationComponent implements OnInit  {
             this.getTrainerBySchoolId();
           }
         })
-      } 
-      else {
-        this.loginService.showError('Please add trainer data');
-        this.spinner.hide();
-      }
-    }, err => {
-      this.loginService.showError('Something went wrong');
-      this.spinner.hide();
-    })
     
   }
 

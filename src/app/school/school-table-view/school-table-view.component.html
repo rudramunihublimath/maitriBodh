@@ -74,7 +74,7 @@
             >
               edit
             </mat-icon>
-            <mat-icon (click)="addPerson(element.id)" class="material-symbols-outlined utv-edit-icon"
+            <mat-icon *ngIf="isAuthorized" (click)="addPerson(element.id)" class="material-symbols-outlined utv-edit-icon"
             matTooltip="Add/Edit Team"
             >
               person_add
