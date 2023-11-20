@@ -175,4 +175,11 @@ export class SchoolService {
       params = params.set('newUserId', newUserId);
       return this.http.put<ResponseDto<any>>(`${environment.securedBaseUrl}/School/AddUserToSchool`, null, {params});
     }
+
+    getUserSearchBook(nameofMyTeam: string, name: string) {
+      let params = new HttpParams();
+      params = params.set('nameofMyTeam', nameofMyTeam);
+      params = params.set('name', name);
+      return this.http.get<any>(`${environment.securedBaseUrl}/Login/searchBook`, {params});
+    }
 }

@@ -23,17 +23,44 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="col-md-6 col-12 at-form-field" appearance="outline">
+                <!-- <mat-form-field class="col-md-6 col-12 at-form-field" appearance="outline">
                     <mat-label>User Id</mat-label>
                     <input type="text" matInput placeholder="User Id" formControlName="userId" required>
-                </mat-form-field>
+                </mat-form-field> -->
 
-                <mat-form-field *ngIf="existingUser?.id" class="col-md-6 col-12 at-form-field" appearance="outline">
+                <mat-form-field class="col-md-6 col-12 at-form-field" appearance="outline">
+                    <mat-label>User</mat-label>
+                    <mat-icon matSuffix class="search-icon">search</mat-icon>
+                    <input type="text" placeholder="User" aria-label="Number" matInput 
+                      formControlName="userId" [matAutocomplete]="usr"
+                      required
+                    >
+                    <mat-autocomplete #usr="matAutocomplete" [displayWith]="displayUser" (optionSelected)="selectedUser($event)">
+                      <mat-option *ngFor="let user of filteredUser" [value]="user">
+                        {{user.firstname}} {{user.lastname}} ({{user.id}})
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                <!-- <mat-form-field *ngIf="existingUser?.id" class="col-md-6 col-12 at-form-field" appearance="outline">
                     <mat-label>New User Id</mat-label>
                     <input type="text" matInput placeholder="New User Id" formControlName="newUserId"
                         [required]="existingUser?.id"
                     >
-                </mat-form-field>
+                </mat-form-field> -->
+                <mat-form-field *ngIf="existingUser?.id"  class="col-md-6 col-12 at-form-field" appearance="outline">
+                    <mat-label>New User</mat-label>
+                    <mat-icon matSuffix class="search-icon">search</mat-icon>
+                    <input type="text" placeholder="New User" aria-label="Number" matInput 
+                      formControlName="newUserId" [matAutocomplete]="nusr"
+                      [required]="existingUser?.id"
+                    >
+                    <mat-autocomplete #nusr="matAutocomplete" [displayWith]="displayNewUser" (optionSelected)="selectedUser($event)">
+                      <mat-option *ngFor="let user of filteredUser" [value]="user">
+                        {{user.firstname}} {{user.lastname}} ({{user.id}})
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
             </div>
 
         </form>

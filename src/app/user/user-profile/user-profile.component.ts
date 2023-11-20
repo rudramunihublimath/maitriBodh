@@ -58,7 +58,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
+    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head' || this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head';
     this.defaultImg = "https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
     const queryParams = this.route.snapshot.queryParams;
     if(queryParams['id']) {
@@ -73,7 +73,6 @@ export class UserProfileComponent implements OnInit {
         const imageName = this.userDetail?.imageName?.split("\\").pop();
         this.url = `/assets/Maitribodh_Photo/${imageName}` ?? null;
       }
-      console.log('this.url', this.url)
       this.initializeUserProfileForm();
 
       setTimeout(() => {

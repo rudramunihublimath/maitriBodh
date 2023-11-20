@@ -1,9 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatOptionSelectionChange } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { LoginService } from 'src/app/services/login.service';
 import { SchoolService } from 'src/app/services/school.service';
 import { ResponseDto, UserReq } from 'src/app/types';
@@ -22,6 +24,7 @@ export class AddTeamComponent implements OnInit {
   teamList: Array<string> = [];
   schoolId!: number;
   existingUser:any = null;
+  filteredUser: any = [];
   constructor(
     private dialogRef: MatDialogRef<AddTeamComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -39,7 +42,7 @@ export class AddTeamComponent implements OnInit {
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     this.header = this.data?.id ? 'Edit Team' : 'Add Team';
 
-    this.getMBPTeam();    
+    this.getMBPTeam();  
   }
 
   getMBPTeam() {
@@ -48,6 +51,7 @@ export class AddTeamComponent implements OnInit {
       this.spinner.hide();
       this.teamList = Object.values(resp).filter(val => val !== 'Central_Mool');
       this.initializeForm();
+      this.searchUsers();
     })
   }
 
@@ -74,7 +78,7 @@ export class AddTeamComponent implements OnInit {
   }
 
   addUserToSchool(closeDialog: boolean) {
-    const userId = this.teamForm.controls['userId']?.getRawValue();
+    const userId = this.teamForm.controls['userId']?.value?.id;
     this.schoolService.addUserToSchool(this.schoolId, userId).subscribe(resp => {
     // console.log('resp', resp);
     if(closeDialog) {
@@ -82,12 +86,14 @@ export class AddTeamComponent implements OnInit {
     }
     this.loginService.showSuccess(`${this.teamForm.controls['team']?.value} Added Successfully`);
 
+    }, err => {
+      this.loginService.showError('Something Went Wrong');
     })
   }
 
   editUserToSchool(closeDialog: boolean) {
-    const userId = this.teamForm.controls['userId']?.getRawValue();
-    const newUserId = this.teamForm.controls['newUserId']?.getRawValue();
+    const userId = this.teamForm.controls['userId']?.value?.id;
+    const newUserId = this.teamForm.controls['newUserId']?.value?.id;
     this.schoolService.editUserToSchool(this.schoolId, userId, newUserId).subscribe(resp => {
     // console.log('resp', resp);
     if(closeDialog) {
@@ -95,6 +101,8 @@ export class AddTeamComponent implements OnInit {
     }
     this.loginService.showSuccess(`${this.teamForm.controls['team']?.value} Edited Successfully`);
 
+    }, err => {
+      this.loginService.showError('Something Went Wrong');
     })
   }
 
@@ -113,10 +121,55 @@ export class AddTeamComponent implements OnInit {
       this.existingUser = userDetail?.find((elt: any) =>  elt?.nameofMyTeam === this.teamForm.controls['team']?.value);
       // console.log('this.existingUser', this.existingUser)
       if(this.existingUser) {
-        this.teamForm.controls['userId']?.patchValue(this.existingUser?.id);
+        this.teamForm.controls['userId']?.patchValue(this.existingUser);
         this.teamForm.controls['userId']?.disable();
       }
     })
+  }
+
+  selectedUser(evt: MatAutocompleteSelectedEvent) {
+    // console.log('evt', evt)
+  }
+
+  searchUsers() {
+
+    this.teamForm.controls['userId']?.valueChanges
+    .pipe(debounceTime(500), distinctUntilChanged())
+    .subscribe(val => {
+      if(val) {
+        // this.spinner.show();
+        this.getUserSearchBook(val);
+
+      }
+    })
+
+    this.teamForm.controls['newUserId']?.valueChanges
+    .pipe(debounceTime(500), distinctUntilChanged())
+    .subscribe(val => {
+      if(val) {
+        // this.spinner.show();
+        this.getUserSearchBook(val);
+
+      }
+    })
+  }
+
+  getUserSearchBook(name: string) {
+    this.schoolService.getUserSearchBook(this.teamForm.controls['team']?.value, name).subscribe(resp => {
+      this.filteredUser = resp;
+      // this.spinner.hide();
+
+    }, err => {
+      this.loginService.showError('Something Went Wrong');
+    })
+  }
+
+  displayUser(user: any) {
+    return user ? `${user.firstname} ${user.lastname}` : '';
+  }
+
+  displayNewUser(user: any) {
+    return user ? `${user.firstname} ${user.lastname}` : '';
   }
 
   close() {
