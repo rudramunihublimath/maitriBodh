@@ -16,7 +16,7 @@
 
                 <mat-form-field class="col-md-6 col-12 at-form-field" appearance="outline">
                     <mat-label>Select Team</mat-label>
-                    <mat-select formControlName="team" (selectionChange)="selectedTeam($event)">
+                    <mat-select formControlName="teamName" (selectionChange)="selectedTeam($event)">
                       <mat-option *ngFor="let team of teamList" [value]="team">
                         {{team}}
                       </mat-option>

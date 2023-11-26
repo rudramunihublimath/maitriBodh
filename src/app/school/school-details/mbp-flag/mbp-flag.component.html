@@ -115,11 +115,15 @@
             </ng-container>
 
             <!-- uploaded By UserId Column -->
-            <!-- <ng-container matColumnDef="uploadedByUserId">
+            <ng-container matColumnDef="uploadedByUserId">
                 <th class="text-center" mat-header-cell *matHeaderCellDef> Uploaded By </th>
-                <td class="text-center" mat-cell *matCellDef="let element"> {{element.uploadedByUserId
-                }} </td>
-            </ng-container> -->
+                <td class="text-center" mat-cell *matCellDef="let element"> 
+                  <a class="a-link" *ngIf="element.uploadedByUserId" (click)="navigateToProfile(element.uploadedByUserId)">
+                    <!-- {{element.uploadedByUserId}}  -->
+                    {{loggedInUserDetails.firstname}} {{loggedInUserDetails.lastname}}
+                  </a> 
+                </td>
+            </ng-container>
 
             <!-- Action Column -->
           <ng-container matColumnDef="actions">

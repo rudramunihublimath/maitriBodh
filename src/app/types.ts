@@ -147,9 +147,9 @@ export interface MBPFlag {
 export interface Agreement {
     id?: string;
     agreementCompleted: string;
-    agreementCompletedDate: string;
-    agreementScanCopyLink: string;
-    uploadedByUserId?: string;
+    agreementCompletedDate: string | null;
+    agreementScanCopyLink: string | null;
+    uploadedByUserId?: string | null;
 }
 
 export interface SchoolGrade {

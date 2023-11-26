@@ -56,7 +56,7 @@
   }
 
   .mat-mdc-table {
-    width: 100%;
+    width: 130%;
     max-height: 300px;
     overflow: auto;
   }
@@ -92,6 +92,19 @@
     align-items: center;
   }
 
+  .search-icon {
+    padding: 18px 0 6px !important;
+    font-size: 18px !important;
+  }
+
+  .w-50 {
+    width: 50%;
+  }
+
+  .w-90 {
+    width: 90%;
+  }
+
   ::ng-deep .stv-form-field.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
     font-size: 12px !important;
     top: 25px !important;
@@ -114,6 +127,6 @@
       font-size: 14px;
   }
   
-  ::ng-deep .utv .mat-mdc-form-field-subscript-wrapper {
+  ::ng-deep .stv-form-field .mat-mdc-form-field-subscript-wrapper {
     height: 0;
   }

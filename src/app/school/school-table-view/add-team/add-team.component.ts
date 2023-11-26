@@ -57,7 +57,7 @@ export class AddTeamComponent implements OnInit {
 
   initializeForm() {
     this.teamForm = this.fb.group({
-      team: ['', Validators.required],
+      teamName: ['', Validators.required],
       userId: [null, Validators.required],
       newUserId: [null],
     })
@@ -68,38 +68,42 @@ export class AddTeamComponent implements OnInit {
     this.teamForm.controls['userId']?.enable();
     this.teamForm.controls['userId']?.reset();
     this.getUsersAllocatedToSchool();
-    if(this.data) {
-
-    }
   }
 
   saveTeam(closeDialog: boolean) {
-    this.existingUser?.id ? this.editUserToSchool(closeDialog) : this.addUserToSchool(closeDialog)
+
+    const userId = this.teamForm.controls['userId']?.value?.id;
+    const payload = {
+      schoolId: this.schoolId,
+      teamName: this.teamForm.controls['teamName']?.value,
+      userId,
+    }
+
+    this.existingUser?.id ? this.editUserToSchool(closeDialog, payload) : this.addUserToSchool(closeDialog, payload)
   }
 
-  addUserToSchool(closeDialog: boolean) {
-    const userId = this.teamForm.controls['userId']?.value?.id;
-    this.schoolService.addUserToSchool(this.schoolId, userId).subscribe(resp => {
+  addUserToSchool(closeDialog: boolean, payload: any) {
+    
+    this.schoolService.addUserToSchool(payload).subscribe(resp => {
     // console.log('resp', resp);
     if(closeDialog) {
       this.dialogRef.close(true);
     }
-    this.loginService.showSuccess(`${this.teamForm.controls['team']?.value} Added Successfully`);
+    this.loginService.showSuccess(`${this.teamForm.controls['teamName']?.value} Added Successfully`);
 
     }, err => {
       this.loginService.showError('Something Went Wrong');
     })
   }
 
-  editUserToSchool(closeDialog: boolean) {
-    const userId = this.teamForm.controls['userId']?.value?.id;
+  editUserToSchool(closeDialog: boolean, payload: any) {
     const newUserId = this.teamForm.controls['newUserId']?.value?.id;
-    this.schoolService.editUserToSchool(this.schoolId, userId, newUserId).subscribe(resp => {
+    this.schoolService.editUserToSchool(payload, newUserId).subscribe(resp => {
     // console.log('resp', resp);
     if(closeDialog) {
       this.dialogRef.close(true);
     }
-    this.loginService.showSuccess(`${this.teamForm.controls['team']?.value} Edited Successfully`);
+    this.loginService.showSuccess(`${this.teamForm.controls['teamName']?.value} Edited Successfully`);
 
     }, err => {
       this.loginService.showError('Something Went Wrong');
@@ -118,7 +122,7 @@ export class AddTeamComponent implements OnInit {
         elt['id'] = userId[idx];
       });
       // console.log('userDetail', userDetail);
-      this.existingUser = userDetail?.find((elt: any) =>  elt?.nameofMyTeam === this.teamForm.controls['team']?.value);
+      this.existingUser = userDetail?.find((elt: any) =>  elt?.nameofMyTeam === this.teamForm.controls['teamName']?.value);
       // console.log('this.existingUser', this.existingUser)
       if(this.existingUser) {
         this.teamForm.controls['userId']?.patchValue(this.existingUser);
@@ -155,7 +159,7 @@ export class AddTeamComponent implements OnInit {
   }
 
   getUserSearchBook(name: string) {
-    this.schoolService.getUserSearchBook(this.teamForm.controls['team']?.value, name).subscribe(resp => {
+    this.schoolService.getUserSearchBook(this.teamForm.controls['teamName']?.value, name).subscribe(resp => {
       this.filteredUser = resp;
       // this.spinner.hide();
 

@@ -40,17 +40,12 @@ export class UserService {
   }
 
   uploadUserImage(userId: number, file: any) {
-    // console.log('file', file);
-    // console.log('file', typeof file)
-    const httpOptions = {
-      headers: new HttpHeaders({"Content-Type": "multipart/form-data"})
-    };
-    
-    
     const formData = new FormData();
     formData.append("file", file);
+    return this.http.patch(`${environment.securedBaseUrl}/Login/Image?userId=${userId}`, formData);
+  }
 
-    return this.http.patch(`${environment.securedBaseUrl}/Login/Image?userId=${userId}`, formData) // 👈 pass the http options 
-        
+  removeUserImage(userId: number) {
+    return this.http.patch(`${environment.securedBaseUrl}/Login/RemoveImage?userId=${userId}`, null);
   }
 }

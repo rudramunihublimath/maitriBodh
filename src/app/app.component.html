@@ -24,7 +24,7 @@
           <mat-icon class="material-symbols-outlined nav-item-icon">
             person
           </mat-icon>
-          My Profile
+          My Profile ({{loggedInUserDetails?.firstname}} {{loggedInUserDetails?.lastname}})
         </li>
       </ul>
       <span *ngIf="!isUserLoggedIn || (currentRoute === '/home' || currentRoute === '/')" class="nav-tool-items">

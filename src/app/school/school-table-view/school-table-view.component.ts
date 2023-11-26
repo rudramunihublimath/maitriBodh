@@ -17,7 +17,8 @@ import { AddTeamComponent } from './add-team/add-team.component';
   styleUrls: ['./school-table-view.component.scss']
 })
 export class SchoolTableViewComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'outreach', 'actions'];
+  displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'outreach', 'actions'];
+  displayedFilterColumns = ['position-filter', 'name-filter', 'contactNum-filter', 'city-filter', 'pincode-filter', 'email-filter', 'outReachAllocated-filter', 'outReachHeadAllocated-filter', 'trainingHeadAllocated-filter', 'outreach-filter', 'actions-filter'];
   dataSource: any[] = [];
   allSchoolDetail: any[] = [];
   loggedInUserDetails!: UserReq;
@@ -25,6 +26,15 @@ export class SchoolTableViewComponent implements OnInit {
 
   schoolFilterControl = new FormControl('');
 
+  filterBySchoolId = new FormControl('');
+  filterBySchoolName = new FormControl('');
+  filterByContact= new FormControl('');
+  filterByCity = new FormControl('');
+  filterByPinCode = new FormControl('');
+  filterByEmail = new FormControl('');
+  filterByOutreachAllocated = new FormControl('');
+  filterByOutreachHeadAllocated= new FormControl('');
+  filterByTrainingHeadAllocated = new FormControl('');
   constructor(
     private schoolService: SchoolService,
     private userService: UserService,
@@ -38,9 +48,10 @@ export class SchoolTableViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head' || this.loggedInUserDetails?.nameofMyTeam === 'TrainTheTrainer_Head';
+    this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     if(this.loggedInUserDetails?.nameofMyTeam === 'OutReach') {
-      this.displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'actions'];
+      this.displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'actions'];
+      this.displayedFilterColumns = ['position-filter', 'name-filter', 'contactNum-filter', 'city-filter', 'pincode-filter', 'email-filter', 'outReachAllocated-filter', 'outReachHeadAllocated-filter', 'trainingHeadAllocated-filter', 'actions-filter'];
     }
 
     this.getAllSchoolByCity()
@@ -72,6 +83,7 @@ export class SchoolTableViewComponent implements OnInit {
       this.allSchoolDetail = JSON.parse(JSON.stringify(resp));
       this.dataSource = resp;
       this.searchSchool();
+      this.searchByField();
     })
   }
 
@@ -156,5 +168,45 @@ export class SchoolTableViewComponent implements OnInit {
       dialogRef.afterClosed().subscribe(resp => {
         //console.log('resp', resp)
       })
+  }
+
+  searchByField() {
+    // console.log('allSchoolDetail', this.allSchoolDetail)
+    this.filterBySchoolId.valueChanges.subscribe(val => {
+      // console.log('val', val);
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.id.toString().includes(val)) : this.allSchoolDetail;
+    })
+
+    this.filterBySchoolName.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.name.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+    })
+
+    this.filterByContact.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.contactNum1.includes(val)) : this.allSchoolDetail;
+    })
+
+    this.filterByCity.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.city.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+    })
+
+    this.filterByPinCode.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.pincode.includes(val)) : this.allSchoolDetail;
+    })
+
+    this.filterByEmail.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.email.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+    })
+
+    this.filterByOutreachAllocated.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.outReachAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+    })
+
+    this.filterByOutreachHeadAllocated.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.outReachHeadAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+    })
+
+    this.filterByTrainingHeadAllocated.valueChanges.subscribe(val => {
+      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.trainingHeadAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+    })
   }
 }

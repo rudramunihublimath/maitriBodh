@@ -8,6 +8,7 @@ import { SchoolService } from 'src/app/services/school.service';
 import { UserReq, SchoolDetail, MBPFlag, ResponseDto, Agreement } from 'src/app/types';
 import { AgreementDialogComponent } from './agreement-dialog/agreement-dialog.component';
 import { FlagDialogComponent } from './flag-dialog/flag-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mbp-flag',
@@ -17,7 +18,7 @@ import { FlagDialogComponent } from './flag-dialog/flag-dialog.component';
 export class MbpFlagComponent implements OnInit {
 
   displayedColumns = ['schoolActive', 'schoolInterested', 'dealClosed', 'isDiscontinued', 'discontinuedDate', 'reasonValidated', 'actions'];
-  agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'actions'];
+  agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'uploadedByUserId', 'actions'];
 
   dataSource: MBPFlag[] = [];
   agreementDataSource: Agreement[] = [{
@@ -43,6 +44,7 @@ export class MbpFlagComponent implements OnInit {
     private schoolService: SchoolService,
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
+    private router: Router,
   ) {
 
   }
@@ -122,5 +124,9 @@ export class MbpFlagComponent implements OnInit {
         this.getAgreementBySchoolId();
       }
     })
+  }
+
+  navigateToProfile(id: number) {
+    this.router.navigate(['/user-profile'], {queryParams: {id}});
   }
 }

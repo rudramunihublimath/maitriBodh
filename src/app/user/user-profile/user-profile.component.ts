@@ -71,7 +71,7 @@ export class UserProfileComponent implements OnInit {
         this.url = this.userDetail?.imageName;
       } else {
         const imageName = this.userDetail?.imageName?.split("\\").pop();
-        this.url = `/assets/Maitribodh_Photo/${imageName}` ?? null;
+        this.url = imageName ? `/assets/Maitribodh_Photo/${imageName}` : null;
       }
       this.initializeUserProfileForm();
 
@@ -134,8 +134,9 @@ export class UserProfileComponent implements OnInit {
         this.url = this.userDetail?.imageName;
       } else {
         const imageName = this.userDetail?.imageName?.split("\\").pop();
-        this.url = `/assets/Maitribodh_Photo/${imageName}` ?? null;
+        this.url = imageName ? `/assets/Maitribodh_Photo/${imageName}` : null;
       }
+      // console.log('this.url', this.url)
       if(this.loggedInUserDetails?.id === this.userDetail?.id) {
         this.loginService.setUserDetails(this.userDetail);
       }
@@ -299,16 +300,24 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  removeUserImage() {
-    this.url = null;
-  }
-
+  
   uploadUserImage(file: any) {
     this.spinner.show();
     this.userService.uploadUserImage(this.loggedInUserDetails?.id as number, file).subscribe(resp => {
       // console.log('resp', resp)
       this.spinner.hide();
       this.loginService.showSuccess('Profile Added Successfully');
+      if(this.loggedInUserDetails?.id === this.userDetail?.id) {
+        this.getUserById(this.loggedInUserDetails?.id as any);
+      }
+    })
+  }
+  
+  removeUserImage() {
+    this.url = null;
+    this.userService.removeUserImage(this.loggedInUserDetails?.id as number).subscribe(resp => {
+      this.spinner.hide();
+      this.loginService.showSuccess('Profile Removed Successfully');
       if(this.loggedInUserDetails?.id === this.userDetail?.id) {
         this.getUserById(this.loggedInUserDetails?.id as any);
       }

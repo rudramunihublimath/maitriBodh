@@ -65,19 +65,25 @@ export class AgreementDialogComponent implements OnInit {
       this.agreementForm.controls['uploadedByUserId'].reset();
     }
     else {
-      // console.log('this.agreementDetails?.uploadedByUserId', this.agreementDetails?.uploadedByUserId)
       const loggedInUser = `${this.loggedInUserDetails?.firstname} ${this.loggedInUserDetails?.lastname}`
-      // console.log('loggedInUser', loggedInUser)
       this.agreementForm?.controls['uploadedByUserId']?.patchValue(loggedInUser);
     }
   }
 
   submitAgreement() {
     const payload: Agreement = this.agreementForm.getRawValue(); 
-    payload.uploadedByUserId = this.loggedInUserDetails?.id ? this.loggedInUserDetails.id.toString() : '';
+    payload.uploadedByUserId = this.loggedInUserDetails?.id ? this.loggedInUserDetails.id as any : '';
+    // payload.uploadedByUserId
     if(this.agreementForm.controls['agreementCompletedDate'].value && typeof this.agreementForm.controls['agreementCompletedDate'].value !== 'string') {
       payload.agreementCompletedDate = this.formatDate(this.agreementForm.controls['agreementCompletedDate'].value);
     }
+
+    if(payload.agreementCompleted === 'No') {
+      payload.agreementCompletedDate = null;
+      payload.agreementScanCopyLink = null;
+      payload.uploadedByUserId = null;
+    }
+
     this.agreementDetails?.id ? this.updateAgreement(payload) : this.saveAgreement(payload);
 
   }

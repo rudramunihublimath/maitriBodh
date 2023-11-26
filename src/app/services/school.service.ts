@@ -161,19 +161,19 @@ export class SchoolService {
       return this.http.get<any>(`${environment.securedBaseUrl}/School/findUsersAllocatedToSchool`, {params});
     }
 
-    addUserToSchool(schoolId: number, userId: number) {
-      let params = new HttpParams();
-      params = params.set('schoolId', schoolId);
-      params = params.set('userId', userId);
-      return this.http.post<ResponseDto<any>>(`${environment.securedBaseUrl}/School/AddUserToSchool`, null, {params});
+    addUserToSchool(payload: any) {
+      // let params = new HttpParams();
+      // params = params.set('schoolId', schoolId);
+      // params = params.set('userId', userId);
+      return this.http.post<ResponseDto<any>>(`${environment.securedBaseUrl}/School/AddUserToSchool`, payload);
     }
 
-    editUserToSchool(schoolId: number, userId: number, newUserId: number) {
+    editUserToSchool(payload: any, newUserId: number) {
       let params = new HttpParams();
-      params = params.set('schoolId', schoolId);
-      params = params.set('userId', userId);
+      // params = params.set('schoolId', schoolId);
+      // params = params.set('userId', userId);
       params = params.set('newUserId', newUserId);
-      return this.http.put<ResponseDto<any>>(`${environment.securedBaseUrl}/School/AddUserToSchool`, null, {params});
+      return this.http.put<ResponseDto<any>>(`${environment.securedBaseUrl}/School/EditUserToSchool`, payload, {params});
     }
 
     getUserSearchBook(nameofMyTeam: string, name: string) {
