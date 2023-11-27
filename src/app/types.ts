@@ -150,6 +150,7 @@ export interface Agreement {
     agreementCompletedDate: string | null;
     agreementScanCopyLink: string | null;
     uploadedByUserId?: string | null;
+    agreementReq?: {id: string};
 }
 
 export interface SchoolGrade {
