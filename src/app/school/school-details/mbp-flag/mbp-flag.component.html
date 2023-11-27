@@ -50,7 +50,19 @@
               <th class="text-center" mat-header-cell *matHeaderCellDef> Reason Validated </th>
               <td class="text-center" mat-cell *matCellDef="let element"> {{element.reasonValidated}} </td>
           </ng-container>
-        
+          reasonForDiscontinue
+
+          <!-- Reason For Discontinue Column -->
+          <ng-container matColumnDef="reasonForDiscontinue">
+            <th class="" mat-header-cell *matHeaderCellDef> Discontinue Reason</th>
+            <td class="" mat-cell *matCellDef="let element"> 
+              <div class="rdc-ellipsis" 
+                matTooltip="{{element.reasonForDiscontinue}}"
+              >
+                {{element.reasonForDiscontinue}} 
+              </div>
+            </td>
+        </ng-container>
   
           <!-- Action Column -->
           <ng-container matColumnDef="actions">

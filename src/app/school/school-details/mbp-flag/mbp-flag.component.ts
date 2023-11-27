@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class MbpFlagComponent implements OnInit {
 
-  displayedColumns = ['schoolActive', 'schoolInterested', 'dealClosed', 'isDiscontinued', 'discontinuedDate', 'reasonValidated', 'actions'];
+  displayedColumns = ['schoolActive', 'schoolInterested', 'dealClosed', 'isDiscontinued', 'discontinuedDate', 'reasonValidated', 'reasonForDiscontinue', 'actions'];
   agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'uploadedByUserId', 'actions'];
 
   dataSource: MBPFlag[] = [];

@@ -59,6 +59,8 @@ export class FlagDialogComponent implements OnInit {
       reasonForDiscontinue: [{value: this.flagDetails?.id ? this.flagDetails.reasonForDiscontinue : '', disabled: !this.isAuthorized}],
       reasonValidated: [{value: this.flagDetails?.id ? this.flagDetails.reasonValidated : '', disabled: !this.isAuthorized}],
     });
+
+    this.showSchollDiscontinuedFields = this.flagDetails.isDiscontinued === 'Yes';
   }
 
   submitFlag() {
