@@ -103,7 +103,7 @@ export class AgreementDialogComponent implements OnInit {
 
   updateAgreement(payload: Agreement) {
     // payload.id = this.agreementDetails?.id;
-    payload.agreementReq = {id: this.agreementDetails?.id};
+    payload.agreementReq = {id: this.agreementDetails?.schoolId};
 
     //console.log('payload', payload)
     this.spinner.show();
