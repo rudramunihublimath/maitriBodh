@@ -93,7 +93,7 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
       contactNum2: [this.schoolDetails.contactNum2],
       chainofID: [this.schoolDetails.chainofID],
       address1: [this.schoolDetails.address1],
-      address2: [this.schoolDetails.address2],
+      // address2: [this.schoolDetails.address2],
       pincode: [this.schoolDetails.pincode],
       websiteURL: [this.schoolDetails.websiteURL],
       linkdinID: [this.schoolDetails.linkdinID],

@@ -40,7 +40,7 @@ export class SchoolTableViewComponent implements OnInit {
   filterByTrainingHeadAllocated = new FormControl('');
 
  // pagination vars
-  pageSizeOptions = [1,2,3];
+  pageSizeOptions = [25, 50, 75, 100];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
@@ -196,7 +196,7 @@ export class SchoolTableViewComponent implements OnInit {
     })
 
     this.filterByAddress.valueChanges.subscribe(val => {
-      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr?.address?.toLowerCase()?.includes(val?.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr?.address1?.toLowerCase()?.includes(val?.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByCity.valueChanges.subscribe(val => {
@@ -225,43 +225,22 @@ export class SchoolTableViewComponent implements OnInit {
   }
 
   uploadSchoolCSV(evt: any) {
-    console.log('evt', evt)
-    // if(evt.target.files && evt.target.files[0]) {
-    //   console.log('evt.target.files', evt.target.files);
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(evt.target.files[0]); //read file as data url
-    //   // console.log('evt.target.files', evt.target.files)
-
-    //   reader.onload = () => {
-    //     // this.url = reader.result;
-    //     // console.log('reader', reader)
-    //     this.uploadCSV(evt.target.files[0]);
-    //   }
-    // }
-
     if(evt.target.files && evt.target.files.length > 0) {
       const file : File = evt.target.files.item(0); 
-        console.log(file.name);
-        console.log(file.size);
-        console.log(file.type);
         const reader: FileReader = new FileReader();
         reader.readAsText(file);
         reader.onload = (e) => {
            const csv: string = reader.result as string;
-           console.log(csv);
            this.uploadCSV(file);
         }
      }
   }
 
   uploadCSV(file: any) {
-    console.log('file', file)
     this.spinner.show();
     this.schoolService.uploadSchools(file).subscribe(resp => {
-      // console.log('resp', resp)
-      this.spinner.hide();
-      // this.loginService.showSuccess('Profile Added Successfully');
       this.getAllSchoolByCity()
+      this.spinner.hide();
     })
 
   }

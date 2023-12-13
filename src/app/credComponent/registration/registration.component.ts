@@ -83,7 +83,7 @@ export class RegistrationComponent implements OnInit {
       state: [''],
       city: [''],    
       address1: [''],
-      address2: [''],
+      // address2: [''],
       pincode: [''],
       contactNum1: [''],
       contactNum2: [''],

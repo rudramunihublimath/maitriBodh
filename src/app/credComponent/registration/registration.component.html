@@ -120,18 +120,6 @@
             </div>
 
             <div class="flex-between">
-              <mat-form-field class="addr-field-width" appearance="outline">
-                <mat-label>Address Line 1</mat-label>
-                <input type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
-              </mat-form-field>
-      
-              <mat-form-field class="addr-field-width" appearance="outline">
-                <mat-label>Address Line 2</mat-label>
-                <input type="text" matInput placeholder="Address Line 2" formControlName="address2">
-              </mat-form-field>
-            </div>
-
-            <div class="flex-between">
               <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Mobile No. 1</mat-label>
                 <input type="text" matInput placeholder="Mobile No. 1" formControlName="contactNum1" required>
@@ -148,6 +136,18 @@
               </mat-form-field>
             </div>
 
+            <div class="flex-between">
+              <mat-form-field class="addr-field-width" appearance="outline">
+                <mat-label>Address Line 1</mat-label>
+                <input type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
+              </mat-form-field>
+      
+              <!-- <mat-form-field class="addr-field-width" appearance="outline">
+                <mat-label>Address Line 2</mat-label>
+                <input type="text" matInput placeholder="Address Line 2" formControlName="address2">
+              </mat-form-field> -->
+            </div>
+
           </form>
           <div class="text-end">
             <button mat-stroked-button color="warn" matStepperPrevious>Back</button>
@@ -156,23 +156,7 @@
         </mat-step>
         <mat-step label="Ready" state="social">
           <form class="personal-detail-form" [formGroup]="socialInfoForm">
-            <div class="flex-between">
-              <mat-form-field class="field-width" appearance="outline">
-                <mat-label>FaceBook ID</mat-label>
-                <input type="text" matInput placeholder="FaceBook ID" formControlName="facebookID">
-              </mat-form-field>
-      
-              <mat-form-field class="field-width" appearance="outline">
-                <mat-label>LinkedIn ID</mat-label>
-                <input type="text" matInput placeholder="LinkedIn ID" formControlName="linkdinID">
-              </mat-form-field>
-  
-              <mat-form-field class="field-width" appearance="outline">
-                <mat-label>Insta ID</mat-label>
-                <input type="text" matInput placeholder="Insta ID" formControlName="instaID">
-              </mat-form-field>
-              
-            </div>
+            
             <div class="flex-between">
               <mat-form-field class="field-width" appearance="outline">
                 <mat-label>Manager ID</mat-label>
@@ -197,6 +181,23 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+            </div>
+            <div class="flex-between">
+              <mat-form-field class="field-width" appearance="outline">
+                <mat-label>FaceBook ID</mat-label>
+                <input type="text" matInput placeholder="FaceBook ID" formControlName="facebookID">
+              </mat-form-field>
+      
+              <mat-form-field class="field-width" appearance="outline">
+                <mat-label>LinkedIn ID</mat-label>
+                <input type="text" matInput placeholder="LinkedIn ID" formControlName="linkdinID">
+              </mat-form-field>
+  
+              <mat-form-field class="field-width" appearance="outline">
+                <mat-label>Insta ID</mat-label>
+                <input type="text" matInput placeholder="Insta ID" formControlName="instaID">
+              </mat-form-field>
+              
             </div>
             <!-- <div class="flex-between">
               <mat-form-field class="field-width" appearance="outline">

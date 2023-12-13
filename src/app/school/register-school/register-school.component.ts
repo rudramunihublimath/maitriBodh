@@ -65,7 +65,7 @@ export class RegisterSchoolComponent implements OnInit {
       contactNum2: [''],
       chainofID: [''],
       address1: [''],
-      address2: [''],
+      // address2: [''],
       pincode: [''],
       websiteURL: [''],
       linkdinID: [''],

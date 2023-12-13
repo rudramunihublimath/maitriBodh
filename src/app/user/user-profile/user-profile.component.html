@@ -31,8 +31,9 @@
                           
                         </mat-chip>
                     </mat-chip-listbox>
-                    <span *ngIf="userDetail.profileNOTActiveUpdatedby && userDetail.profileActive === 'No'">
-                        <small class="text-black-50">Status Updated By:</small> {{userDetail.profileNOTActiveUpdatedby}}
+                    <span *ngIf="userDetail.profileNOTActiveUpdatedby">
+                        <small class="text-black-50">Status Updated By:</small> 
+                        {{loggedInUserDetails?.id === userDetail.id ? userDetail.firstname + ' ' + userDetail.lastname  : userDetail.reportingmanagerName}}
                     </span>
                 </div>
             </div>
