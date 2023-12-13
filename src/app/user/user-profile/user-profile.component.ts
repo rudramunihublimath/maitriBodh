@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   userProfileForm!: FormGroup;
 
   genderArr: Array<string> = ['Male', 'Female'];
+  binaryQuetionArr: Array<string> = ['Yes', 'No'];
   countries: Array<string> = [];
   states: Array<string> = [];
   cities: Array<string> = [];
@@ -83,26 +84,27 @@ export class UserProfileComponent implements OnInit {
 
   initializeUserProfileForm() {
     this.userProfileForm = this.fb.group({
-      firstname: [{value: this.userDetail?.firstname, disabled: !this.isAuthorized}],
-      lastname: [{value: this.userDetail?.lastname, disabled: !this.isAuthorized}],
-      email: [{value: this.userDetail?.email, disabled: !this.isAuthorized}],
-      pannum: [{value: this.userDetail?.pannum, disabled: !this.isAuthorized}],
-      gender: [{value: this.userDetail?.gender === 'MALE' ? 'Male' : 'Female', disabled: !this.isAuthorized}],
-      country: [{value: this.userDetail?.country, disabled: !this.isAuthorized}],
-      state: [{value: this.userDetail?.state, disabled: !this.isAuthorized}],
-      city: [{value: this.userDetail?.city, disabled: !this.isAuthorized}],    
-      address1: [{value: this.userDetail?.address1, disabled: !this.isAuthorized}],
-      address2: [{value: this.userDetail?.address2, disabled: !this.isAuthorized}],
-      pincode: [{value: this.userDetail?.pincode, disabled: !this.isAuthorized}],
-      contactNum1: [{value: this.userDetail?.contactNum1, disabled: !this.isAuthorized}],
-      contactNum2: [{value: this.userDetail?.contactNum2, disabled: !this.isAuthorized}],
-      linkdinID: [{value: this.userDetail?.linkdinID, disabled: !this.isAuthorized}],
-      facebookID: [{value: this.userDetail?.facebookID, disabled: !this.isAuthorized}],
-      instaID: [{value: this.userDetail?.instaID, disabled: !this.isAuthorized}],
-      dob: [{value: this.userDetail?.dob, disabled: !this.isAuthorized}],
-      citiesAllocated: [{value: this.userDetail?.citiesAllocated, disabled: !this.isAuthorized}],
-      reportingmanagerId: [{value: this.userDetail?.reportingmanagerId, disabled: !this.isAuthorized}],
-      // schoolAllocated: [{value: this.userDetail?.schoolAllocated, disabled: !this.isAuthorized}],
+      firstname: [this.userDetail?.firstname],
+      lastname: [this.userDetail?.lastname],
+      email: [this.userDetail?.email],
+      pannum: [this.userDetail?.pannum],
+      gender: [this.userDetail?.gender === 'MALE' ? 'Male' : 'Female'],
+      country: [this.userDetail?.country],
+      state: [this.userDetail?.state],
+      city: [this.userDetail?.city],    
+      address1: [this.userDetail?.address1],
+      // address2: [this.userDetail?.address2],
+      pincode: [this.userDetail?.pincode],
+      contactNum1: [this.userDetail?.contactNum1],
+      contactNum2: [this.userDetail?.contactNum2],
+      linkdinID: [this.userDetail?.linkdinID],
+      facebookID: [this.userDetail?.facebookID],
+      instaID: [this.userDetail?.instaID],
+      dob: [this.userDetail?.dob],
+      citiesAllocated: [this.userDetail?.citiesAllocated],
+      reportingmanagerId: [this.userDetail?.reportingmanagerId],
+      profileActive: [this.userDetail?.profileActive],
+      // schoolAllocated: [this.userDetail?.schoolAllocated}],
     })
 
     this.getAllSchoolByCity(this.userProfileForm.controls['citiesAllocated']?.value);
@@ -153,11 +155,18 @@ export class UserProfileComponent implements OnInit {
       payload.dob = this.formatDate(this.userProfileForm.controls['dob'].value);
     }
 
+    if(this.userProfileForm.controls['profileActive'].value) {
+      payload.profileNOTActiveUpdatedby = this.loggedInUserDetails?.id === this.userDetail?.id ? this.userDetail?.id : this.userDetail?.reportingmanagerId;
+    }
+
     delete payload.jwtToken;
     delete payload.refreshToken;
     this.spinner.show();
     this.userService.updateUser(payload).subscribe(resp => {
       this.loginService.showSuccess('User Details Updated');
+      if(this.userDetail?.profileActive) {
+        this.userDetail.profileActive = this.userProfileForm.controls['profileActive'].value;
+      }
       if(this.loggedInUserDetails?.id === this.userDetail?.id) {
         this.getUserById(this.loggedInUserDetails?.id as any);
       }

@@ -182,4 +182,10 @@ export class SchoolService {
       params = params.set('name', name);
       return this.http.get<any>(`${environment.securedBaseUrl}/Login/searchBook`, {params});
     }
+
+    uploadSchools(file: any) {
+      const formData = new FormData();
+      formData.append("file", file);
+      return this.http.post(`${environment.securedBaseUrl}/School/ImportSchoolListInBulk`, formData);
+    }
 }

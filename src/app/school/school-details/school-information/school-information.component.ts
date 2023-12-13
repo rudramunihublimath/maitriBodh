@@ -108,10 +108,10 @@ export class SchoolInformationComponent implements OnInit, OnChanges {
       code: [this.schoolDetails.code],
     })
 
-    if(!this.isAuthorized) {
-      // console.log('this.isAuthorized----1', this.isAuthorized)
-      this.schoolForm.disable();
-    }
+    // if(!this.isAuthorized) {
+    //   // console.log('this.isAuthorized----1', this.isAuthorized)
+    //   this.schoolForm.disable();
+    // }
 
     this.searchCountry();
   }

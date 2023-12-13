@@ -21,6 +21,10 @@
     }
 }
 
+.si-select-readonly {
+    pointer-events: none;
+}
+
 ::ng-deep .si-form-field.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
     font-size: 12px !important;
     top: 25px !important;

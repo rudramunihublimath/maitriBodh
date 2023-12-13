@@ -1,8 +1,8 @@
 <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
-<div class="flex-center">
+<div class="flex-center h-100">
     <!-- container rounded bg-white mt-5 mb-5 -->
     <mat-card class="profile-card">
-        <div *ngIf="userDetail" class="row">
+        <div *ngIf="userDetail" class="row h-100 of-auto">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-3">
                     <span class="img-container">
@@ -13,7 +13,27 @@
                         <span class="text-black-50">({{userDetail.nameofMyTeam}})</span>
                     </span>
                     <span class="text-black-50">{{userDetail.mbpcode}}</span>
-                    <span> </span>
+                    <mat-chip-listbox aria-label="Dog selection">
+                        <mat-chip class="up-sts-chip"
+                        [ngClass]="userDetail.profileActive === 'Yes' ? 'green-chip' : 'red-chip'"
+                        >
+                            <span class="active-chip" 
+                                [ngClass]="userDetail.profileActive === 'Yes' ? 'green-text' : 'red-text'"
+                            >
+                                <mat-icon class="material-icons material-icons-outlined active-icon">
+                                    {{userDetail.profileActive === 'Yes' ? 'check' : 'close'}}
+                                </mat-icon>
+                                <span class="active-text">
+                                    {{userDetail.profileActive === 'Yes' ? 'ACTIVE' : 'INACTIVE'}}
+                                  
+                                </span> 
+                            </span>
+                          
+                        </mat-chip>
+                    </mat-chip-listbox>
+                    <span *ngIf="userDetail.profileNOTActiveUpdatedby && userDetail.profileActive === 'No'">
+                        <small class="text-black-50">Status Updated By:</small> {{userDetail.profileNOTActiveUpdatedby}}
+                    </span>
                 </div>
             </div>
             <div class="col-md-5 border-right">
@@ -25,12 +45,12 @@
                         <div class="row mt-2">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>First Name</mat-label>
-                                <input type="text" matInput placeholder="First Name" formControlName="firstname" required>
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="First Name" formControlName="firstname" required>
                             </mat-form-field>
                       
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Last Name</mat-label>
-                                <input type="text" matInput placeholder="Last Name" formControlName="lastname" required>
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="Last Name" formControlName="lastname" required>
                             </mat-form-field>
                   
 
@@ -38,12 +58,12 @@
                         <div class="row">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>UserId</mat-label>
-                                <input type="text" matInput placeholder="UserId" formControlName="email" required>
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="UserId" formControlName="email" required>
                             </mat-form-field>
 
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Birth Date</mat-label>
-                                <input matInput [matDatepicker]="picker" formControlName="dob">
+                                <input [readonly]="!isAuthorized" matInput [matDatepicker]="picker" formControlName="dob">
                                 <mat-datepicker-toggle matIconSuffix [for]="picker">
                                     <mat-icon class="up-calender-icon" matDatepickerToggleIcon>today</mat-icon>
                                 </mat-datepicker-toggle>
@@ -54,10 +74,10 @@
                         <div class="row">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Manager Id</mat-label>
-                                <input type="text" matInput placeholder="Manager Id" formControlName="reportingmanagerId" required>
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="Manager Id" formControlName="reportingmanagerId" required>
                             </mat-form-field>
 
-                            <mat-form-field class="col-md-6 up-form-field" appearance="outline">
+                            <mat-form-field [ngClass]="{'up-select-readonly': !isAuthorized}" class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Allocated Cities</mat-label>
                                 <mat-select (selectionChange)="selectedCities($event)" formControlName="citiesAllocated" multiple required>
                                   <mat-option *ngFor="let city of cities" [value]="city">
@@ -70,49 +90,52 @@
                         <div class="row">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>PAN Id</mat-label>
-                                <input type="text" matInput placeholder="PAN Id" formControlName="pannum" required>
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="PAN Id" formControlName="pannum" required>
                             </mat-form-field>
 
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>FaceBook ID</mat-label>
-                                <input type="text" matInput placeholder="FaceBook ID" formControlName="facebookID">
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="FaceBook ID" formControlName="facebookID">
                             </mat-form-field>
                         </div>
 
                         <div class="row">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>LinkedIn ID</mat-label>
-                                <input type="text" matInput placeholder="LinkedIn ID" formControlName="linkdinID">
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="LinkedIn ID" formControlName="linkdinID">
                             </mat-form-field>
 
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Insta ID</mat-label>
-                                <input type="text" matInput placeholder="Insta ID" formControlName="instaID">
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="Insta ID" formControlName="instaID">
                             </mat-form-field>
                         </div>
 
                         <div class="row">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Mobile No. 1</mat-label>
-                                <input type="text" matInput placeholder="Mobile No. 1" formControlName="contactNum1" required>
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="Mobile No. 1" formControlName="contactNum1" required>
                             </mat-form-field>
                       
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Mobile No. 2</mat-label>
-                                <input type="text" matInput placeholder="Mobile No. 2" formControlName="contactNum2">
+                                <input [readonly]="!isAuthorized" type="text" matInput placeholder="Mobile No. 2" formControlName="contactNum2">
                             </mat-form-field>
                         </div>
 
                         <div class="row">
-                            <mat-form-field class="col-md-12 up-form-field up-gender" appearance="outline">
-                              <mat-label>Gender</mat-label>
-                              <mat-select formControlName="gender" required>
-                                <mat-option *ngFor="let gender of genderArr" [value]="gender">
-                                  {{gender}}
-                                </mat-option>
-                              </mat-select>
+                            <mat-form-field [ngClass]="{'up-select-readonly': !isAuthorized}" class="col-md-6 up-form-field" appearance="outline">
+                                <mat-label>Activate Profile</mat-label>
+                                <mat-select formControlName="profileActive">
+                                  <mat-option *ngFor="let option of binaryQuetionArr" [value]="option">
+                                    {{option}}
+                                  </mat-option>
+                                </mat-select>
                             </mat-form-field>
+                    
                         </div>
+
+                        
 
                     </form>
                     
@@ -128,7 +151,7 @@
                         <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>Country</mat-label>
                             <mat-icon matSuffix class="up-search-icon">search</mat-icon>
-                            <input type="text" placeholder="Country" aria-label="Number" matInput 
+                            <input [readonly]="!isAuthorized" type="text" placeholder="Country" aria-label="Number" matInput 
                               formControlName="country" [matAutocomplete]="ctry"
                             >
                             <mat-autocomplete #ctry="matAutocomplete" (optionSelected)="selectedCountry($event)">
@@ -138,7 +161,7 @@
                             </mat-autocomplete>
                         </mat-form-field>
 
-                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                        <mat-form-field [ngClass]="{'up-select-readonly': !isAuthorized}" class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>State</mat-label>
                             <mat-select formControlName="state" required
                                 (selectionChange)="selectedState($event)"
@@ -149,7 +172,7 @@
                             </mat-select>
                         </mat-form-field>
             
-                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                        <mat-form-field [ngClass]="{'up-select-readonly': !isAuthorized}" class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>City</mat-label>
                             <mat-select formControlName="city" required>
                               <mat-option *ngFor="let city of cities" [value]="city">
@@ -160,18 +183,27 @@
 
                         <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>Address Line 1</mat-label>
-                            <input type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
+                            <input [readonly]="!isAuthorized" type="text" matInput placeholder="Address Line 1" formControlName="address1" required>
                         </mat-form-field>
                   
-                        <mat-form-field class="col-md-12 up-form-field" appearance="outline">
+                        <!-- <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>Address Line 2</mat-label>
-                            <input type="text" matInput placeholder="Address Line 2" formControlName="address2">
-                        </mat-form-field>
+                            <input [readonly]="!isAuthorized" type="text" matInput placeholder="Address Line 2" formControlName="address2">
+                        </mat-form-field> -->
                           
                         <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>PIN Code</mat-label>
-                            <input type="text" matInput placeholder="PIN Code" formControlName="pincode" required>
+                            <input [readonly]="!isAuthorized" type="text" matInput placeholder="PIN Code" formControlName="pincode" required>
                         </mat-form-field>
+
+                        <mat-form-field [ngClass]="{'up-select-readonly': !isAuthorized}" class="col-md-12 up-form-field up-gender" appearance="outline">
+                            <mat-label>Gender</mat-label>
+                            <mat-select formControlName="gender" required>
+                              <mat-option *ngFor="let gender of genderArr" [value]="gender">
+                                {{gender}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
                         <!-- <mat-form-field class="col-md-12 up-form-field" appearance="outline">
                             <mat-label>Allocated Schools</mat-label>
                             <mat-select multiple formControlName="schoolAllocated" required>
@@ -221,7 +253,7 @@
             cloud_upload
         </span>
 
-        <input #userImage type="file" (change)="addUserImage($event)" style="display: none;">
+        <input [readonly]="!isAuthorized" #userImage type="file" (change)="addUserImage($event)" style="display: none;">
     </span>
     <!-- <p *ngIf="!url">User Image</p> -->
 

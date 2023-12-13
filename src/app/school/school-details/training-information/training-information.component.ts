@@ -8,6 +8,7 @@ import { OutreachDialogComponent } from '../outreach-information/outreach-dialog
 import { TrainingDialogComponent } from './training-dialog/training-dialog.component';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-training-information',
@@ -52,6 +53,22 @@ export class  TrainingInformationComponent implements OnInit  {
     //console.log('resp', resp);
     this.dataSource = [resp.message];
     // this.allPOCDetail = resp;
+    }, (err: HttpErrorResponse) => {
+      if(this.isAuthorized && err.error?.message && !err.error?.status) {
+       this.saveTrainer();
+      }
+
+   })
+  }
+
+  saveTrainer() {
+    const payload: Trainer = {
+      dataValidated: 'No',
+      dateofCompletion: '',
+      trainingPartCompleted: 'No'
+    }
+    this.schoolService.saveTrainer(payload, this.schoolDetails.id).subscribe((resp: ResponseDto<Trainer>) => {
+      this.getTrainerBySchoolId();
     })
   }
 

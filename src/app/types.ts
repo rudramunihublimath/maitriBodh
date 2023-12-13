@@ -32,7 +32,8 @@ export interface UserReq {
     address2: string;
     pincode: string;
     dob: string;
-    profileActive?: string;
+    profileActive: string;
+    profileNOTActiveUpdatedby?: string;
     imageName?: string;
 
     reportingmanagerId: number;

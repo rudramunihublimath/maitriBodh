@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { TrainingDialogComponent } from '../school-details/training-information/
 import { UserService } from 'src/app/services/user.service';
 import { OutreachDetailsComponent } from './outreach-details/outreach-details.component';
 import { AddTeamComponent } from './add-team/add-team.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-school-table-view',
@@ -17,9 +19,9 @@ import { AddTeamComponent } from './add-team/add-team.component';
   styleUrls: ['./school-table-view.component.scss']
 })
 export class SchoolTableViewComponent implements OnInit {
-  displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'outreach', 'actions'];
-  displayedFilterColumns = ['position-filter', 'name-filter', 'contactNum-filter', 'city-filter', 'pincode-filter', 'email-filter', 'outReachAllocated-filter', 'outReachHeadAllocated-filter', 'trainingHeadAllocated-filter', 'outreach-filter', 'actions-filter'];
-  dataSource: any[] = [];
+  displayedColumns = ['position', 'name', 'contactNum', 'address', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'outreach', 'actions'];
+  displayedFilterColumns = ['position-filter', 'name-filter', 'contactNum-filter', 'address-filter', 'city-filter','pincode-filter', 'email-filter', 'outReachAllocated-filter', 'outReachHeadAllocated-filter', 'trainingHeadAllocated-filter', 'outreach-filter', 'actions-filter'];
+  dataSource!: MatTableDataSource<any>;
   allSchoolDetail: any[] = [];
   loggedInUserDetails!: UserReq;
   isAuthorized = false;
@@ -29,12 +31,19 @@ export class SchoolTableViewComponent implements OnInit {
   filterBySchoolId = new FormControl('');
   filterBySchoolName = new FormControl('');
   filterByContact= new FormControl('');
+  filterByAddress = new FormControl('');
   filterByCity = new FormControl('');
   filterByPinCode = new FormControl('');
   filterByEmail = new FormControl('');
   filterByOutreachAllocated = new FormControl('');
   filterByOutreachHeadAllocated= new FormControl('');
   filterByTrainingHeadAllocated = new FormControl('');
+
+ // pagination vars
+  pageSizeOptions = [1,2,3];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+
   constructor(
     private schoolService: SchoolService,
     private userService: UserService,
@@ -50,8 +59,8 @@ export class SchoolTableViewComponent implements OnInit {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     if(this.loggedInUserDetails?.nameofMyTeam === 'OutReach') {
-      this.displayedColumns = ['position', 'name', 'contactNum', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'actions'];
-      this.displayedFilterColumns = ['position-filter', 'name-filter', 'contactNum-filter', 'city-filter', 'pincode-filter', 'email-filter', 'outReachAllocated-filter', 'outReachHeadAllocated-filter', 'trainingHeadAllocated-filter', 'actions-filter'];
+      this.displayedColumns = ['position', 'name', 'contactNum', 'address', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'actions'];
+      this.displayedFilterColumns = ['position-filter', 'name-filter', 'contactNum-filter', 'address-filter', 'city-filter', 'pincode-filter', 'email-filter', 'outReachAllocated-filter', 'outReachHeadAllocated-filter', 'trainingHeadAllocated-filter', 'actions-filter'];
     }
 
     this.getAllSchoolByCity()
@@ -81,7 +90,8 @@ export class SchoolTableViewComponent implements OnInit {
     this.schoolService.getAllSchoolByCity(cities).subscribe((resp: any) => {
       this.spinner.hide();
       this.allSchoolDetail = JSON.parse(JSON.stringify(resp));
-      this.dataSource = resp;
+      this.dataSource = new MatTableDataSource(resp);
+      this.dataSource.paginator = this.paginator;
       this.searchSchool();
       this.searchByField();
     })
@@ -98,7 +108,7 @@ export class SchoolTableViewComponent implements OnInit {
 
   searchSchool() {
     this.schoolFilterControl.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.name.toLowerCase().includes(val.toLowerCase()) || usr.city.toLowerCase().includes(val.toLowerCase()) || usr.contactNum1.toLowerCase().includes(val.toLowerCase()) || usr.email.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.name.toLowerCase().includes(val.toLowerCase()) || usr.city.toLowerCase().includes(val.toLowerCase()) || usr.contactNum1.toLowerCase().includes(val.toLowerCase()) || usr.email.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
   }
 
@@ -174,39 +184,85 @@ export class SchoolTableViewComponent implements OnInit {
     // console.log('allSchoolDetail', this.allSchoolDetail)
     this.filterBySchoolId.valueChanges.subscribe(val => {
       // console.log('val', val);
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.id.toString().includes(val)) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.id.toString().includes(val)) : this.allSchoolDetail;
     })
 
     this.filterBySchoolName.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.name.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.name.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByContact.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.contactNum1.includes(val)) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.contactNum1.includes(val)) : this.allSchoolDetail;
+    })
+
+    this.filterByAddress.valueChanges.subscribe(val => {
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr?.address?.toLowerCase()?.includes(val?.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByCity.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.city.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.city.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByPinCode.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.pincode.includes(val)) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.pincode.includes(val)) : this.allSchoolDetail;
     })
 
     this.filterByEmail.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.email.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.email.toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByOutreachAllocated.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.outReachAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.outReachAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByOutreachHeadAllocated.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.outReachHeadAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.outReachHeadAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
 
     this.filterByTrainingHeadAllocated.valueChanges.subscribe(val => {
-      this.dataSource = val ? this.allSchoolDetail.filter(usr => usr.trainingHeadAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
+      this.dataSource.data = val ? this.allSchoolDetail.filter(usr => usr.trainingHeadAllocated.toString().toLowerCase().includes(val.toLowerCase())) : this.allSchoolDetail;
     })
+  }
+
+  uploadSchoolCSV(evt: any) {
+    console.log('evt', evt)
+    // if(evt.target.files && evt.target.files[0]) {
+    //   console.log('evt.target.files', evt.target.files);
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(evt.target.files[0]); //read file as data url
+    //   // console.log('evt.target.files', evt.target.files)
+
+    //   reader.onload = () => {
+    //     // this.url = reader.result;
+    //     // console.log('reader', reader)
+    //     this.uploadCSV(evt.target.files[0]);
+    //   }
+    // }
+
+    if(evt.target.files && evt.target.files.length > 0) {
+      const file : File = evt.target.files.item(0); 
+        console.log(file.name);
+        console.log(file.size);
+        console.log(file.type);
+        const reader: FileReader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = (e) => {
+           const csv: string = reader.result as string;
+           console.log(csv);
+           this.uploadCSV(file);
+        }
+     }
+  }
+
+  uploadCSV(file: any) {
+    console.log('file', file)
+    this.spinner.show();
+    this.schoolService.uploadSchools(file).subscribe(resp => {
+      // console.log('resp', resp)
+      this.spinner.hide();
+      // this.loginService.showSuccess('Profile Added Successfully');
+      this.getAllSchoolByCity()
+    })
+
   }
 }

@@ -5,7 +5,7 @@
     <div class="table-card">
       <div class="table-title">
         <span class="utv-title">MBP Flag</span>
-        <button *ngIf="isAuthorized && !dataSource[0]?.id" (click)="openFlagDetails(false)" class="add-btn" mat-raised-button color="warn">Add Flag</button>
+        <!-- <button *ngIf="isAuthorized && !dataSource[0]?.id" (click)="openFlagDetails(false)" class="add-btn" mat-raised-button color="warn">Add Flag</button> -->
       </div>
       <div class="table-container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">  
@@ -42,16 +42,22 @@
           <!-- Discontinued Date Column -->
           <ng-container matColumnDef="discontinuedDate">
             <th class="text-center" mat-header-cell *matHeaderCellDef> Discontinued Date </th>
-            <td class="text-center" mat-cell *matCellDef="let element"> {{element.discontinuedDate | date: 'longDate'}} </td>
+            <td class="text-center" mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.discontinuedDate; else noDate">
+                {{element.discontinuedDate | date: 'longDate'}} 
+              </span>
+              <ng-template #noDate>
+                -
+              </ng-template>
+            </td>
           </ng-container>
   
           <!-- Reason Validated Column -->
           <ng-container matColumnDef="reasonValidated">
               <th class="text-center" mat-header-cell *matHeaderCellDef> Reason Validated </th>
-              <td class="text-center" mat-cell *matCellDef="let element"> {{element.reasonValidated}} </td>
+              <td class="text-center" mat-cell *matCellDef="let element"> {{element.reasonValidated? element.reasonValidated : '-'}} </td>
           </ng-container>
-          reasonForDiscontinue
-
+          
           <!-- Reason For Discontinue Column -->
           <ng-container matColumnDef="reasonForDiscontinue">
             <th class="" mat-header-cell *matHeaderCellDef> Discontinue Reason</th>
@@ -59,7 +65,7 @@
               <div class="rdc-ellipsis" 
                 matTooltip="{{element.reasonForDiscontinue}}"
               >
-                {{element.reasonForDiscontinue}} 
+                {{element.reasonForDiscontinue ? element.reasonForDiscontinue : '-'}} 
               </div>
             </td>
         </ng-container>
@@ -117,23 +123,33 @@
             <!-- Agreement Completed Date Column -->
             <ng-container matColumnDef="agreementCompletedDate">
                 <th class="text-center" mat-header-cell *matHeaderCellDef> Agreement Completed Date </th>
-                <td class="text-center" mat-cell *matCellDef="let element"> {{element.agreementCompletedDate | date: 'longDate'}} </td>
+                <td class="text-center" mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.agreementCompletedDate; else noDate">
+                    {{element.agreementCompletedDate | date: 'longDate'}} 
+                  </span>
+                  <ng-template #noDate>
+                    -
+                  </ng-template>
+                </td>
             </ng-container>
 
             <!-- Agreement Scan Copy Link Column -->
             <ng-container matColumnDef="agreementScanCopyLink">
                 <th class="text-center" mat-header-cell *matHeaderCellDef> Agreement Link </th>
-                <td class="text-center" mat-cell *matCellDef="let element"> {{element.agreementScanCopyLink}} </td>
+                <td class="text-center" mat-cell *matCellDef="let element"> {{element.agreementScanCopyLink ? element.agreementScanCopyLink : '-'}} </td>
             </ng-container>
 
             <!-- uploaded By UserId Column -->
             <ng-container matColumnDef="uploadedByUserId">
                 <th class="text-center" mat-header-cell *matHeaderCellDef> Uploaded By </th>
                 <td class="text-center" mat-cell *matCellDef="let element"> 
-                  <a class="a-link" *ngIf="element.uploadedByUserId" (click)="navigateToProfile(element.uploadedByUserId)">
+                  <a class="a-link" *ngIf="element.uploadedByUserId; else noLink" (click)="navigateToProfile(element.uploadedByUserId)">
                     <!-- {{element.uploadedByUserId}}  -->
                     {{loggedInUserDetails.firstname}} {{loggedInUserDetails.lastname}}
                   </a> 
+                  <ng-template #noLink>
+                    -
+                  </ng-template>
                 </td>
             </ng-container>
 

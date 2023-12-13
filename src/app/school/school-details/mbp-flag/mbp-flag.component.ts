@@ -9,6 +9,7 @@ import { UserReq, SchoolDetail, MBPFlag, ResponseDto, Agreement } from 'src/app/
 import { AgreementDialogComponent } from './agreement-dialog/agreement-dialog.component';
 import { FlagDialogComponent } from './flag-dialog/flag-dialog.component';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mbp-flag',
@@ -21,13 +22,7 @@ export class MbpFlagComponent implements OnInit {
   agreementDisplayedColumns = ['agreementCompleted', 'agreementCompletedDate', 'agreementScanCopyLink', 'uploadedByUserId', 'actions'];
 
   dataSource: MBPFlag[] = [];
-  agreementDataSource: Agreement[] = [{
-
-    agreementCompleted: 'No',
-    agreementCompletedDate: '',
-    agreementScanCopyLink: '',
-    // uploadedByUserId: ''
-  }];
+  agreementDataSource: Agreement[] = [];
 
   loggedInUserDetails!: UserReq;
 
@@ -70,8 +65,29 @@ export class MbpFlagComponent implements OnInit {
         this.flagDetails = resp.message;
         this.dataSource = [resp.message];
       }
+    }, (err: HttpErrorResponse) => {
+       if(this.isAuthorized && err.error?.message && !err.error?.status) {
+        this.saveFlag();
+       }
 
+    })
+  }
 
+  saveFlag() {
+    const payload: MBPFlag = {
+      schoolActive:'Yes',
+      schoolInterested: 'Yes',
+      dealClosed: 'No',
+      isDiscontinued: 'No',
+      discontinuedDate: '',
+      reasonForDiscontinue: '',
+      reasonValidated: ''
+    }
+    this.schoolService.saveFlag(payload, this.schoolDetails.id).subscribe((resp: any) => {
+      this.getFlagBySchoolId()
+    }, err => {
+      this.spinner.hide();
+      this.loginService.showError('Something went wrong')
     })
   }
 
@@ -82,6 +98,27 @@ export class MbpFlagComponent implements OnInit {
         this.agreementDetails = resp.message;
         this.agreementDataSource = [resp.message];
       }
+    }, (err: HttpErrorResponse) => {
+      if(this.isAuthorized && err.error?.message && !err.error?.status) {
+       this.saveAgreement();
+      }
+
+   })
+  }
+
+  saveAgreement() {
+    const payload: Agreement = {
+      agreementCompleted: 'No',
+      agreementCompletedDate: '',
+      agreementScanCopyLink: '',
+      // uploadedByUserId: ''
+    }
+
+    this.schoolService.saveAgreement(payload, this.schoolDetails.id).subscribe((resp: any) => {
+      this.getAgreementBySchoolId();
+    }, err => {
+      this.spinner.hide();
+      this.loginService.showError('Something went wrong')
     })
   }
 

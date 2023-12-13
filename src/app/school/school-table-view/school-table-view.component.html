@@ -4,7 +4,7 @@
   <mat-card class="table-card">
     <div class="table-title">
       <span class="utv-title">School Details</span>
-      <span class="align-center">
+      <span class="align-center sd-action-section">
         <div class="flex-center mr-4">
           <mat-form-field class="col-md-8 stv-form-field utv w-100" appearance="outline" floatLabel="always" >
             <!-- <mat-label>Filter By First Name</mat-label> -->
@@ -12,6 +12,16 @@
           </mat-form-field>
         </div>
         <button *ngIf="isAuthorized" (click)="addNewSchool()" class="add-btn" mat-raised-button color="warn">Add New School</button>
+        <span class="upload-icon-container" *ngIf="isAuthorized" (click)="schoolCSV.click()">
+          <span class="material-icons material-icons-outlined stv-upload-icon secondary-text"
+            matTooltip="Upload School In Bulk"
+          >
+            upload_file
+            <!-- cloud_upload -->
+          </span>
+          <input [readonly]="!isAuthorized" #schoolCSV type="file" accept=".csv" (change)="uploadSchoolCSV($event)" style="display: none;">
+        </span>
+        
       </span>
     </div>
     <div class="table-container">
@@ -82,6 +92,29 @@
                 >
               </mat-form-field>
             </div>
+          </th>
+        </ng-container>
+
+        <!-- Address Column -->
+        <ng-container matColumnDef="address">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Address </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> {{element?.address ?? '-'}} </td>
+        </ng-container>
+        
+        <!-- Address Filter -->
+        <ng-container matColumnDef="address-filter">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> 
+            <div class="flex-center">
+
+              <mat-form-field class="col-md-6 col-12 stv-form-field w-90" appearance="outline">
+                <!-- <mat-label>City</mat-label> -->
+              <mat-icon matSuffix class="search-icon">search</mat-icon>
+              <input type="text" placeholder="Address" matInput 
+                [formControl]="filterByAddress"
+                
+              >
+            </mat-form-field>
+          </div>
           </th>
         </ng-container>
 
@@ -293,15 +326,18 @@
         <tr mat-header-row *matHeaderRowDef="displayedFilterColumns; sticky: true" class="h-42" ></tr>
         <tr class="h-42" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      <div *ngIf="!dataSource.length" class="no-record-msg">
+
+      <div *ngIf="!dataSource?.data?.length" class="no-record-msg">
         No Records Available 
       </div>
     </div>
-    
-    
-    
-    
-    
+
+    <div class="stv-paginator-container">
+      <mat-paginator showFirstLastButtons [pageSizeOptions]="pageSizeOptions" 
+        aria-label="Select page of school table"
+      >
+      </mat-paginator>
+    </div>
   </mat-card>
 </div>
 

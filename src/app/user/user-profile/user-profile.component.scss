@@ -54,7 +54,9 @@
 .profile-card {
     width: 95%;
     margin: 10px 0px;
-    
+    .of-auto {
+        overflow: auto;
+    }
     .up-form-field {
         position: relative;
         input {
@@ -132,6 +134,49 @@
     padding-top: 20px;
 }
 
+.up-select-readonly {
+    pointer-events: none;
+}
+
+.up-sts-chip {
+    padding: 0;
+    height: 25px;
+    background: #ffffff !important;
+    .active-chip {
+        display: flex;
+        align-items: center;
+        // color: #fff;
+        .active-icon {
+            font-size: 17px;
+            padding-top: 3px;
+        }
+        .active-text {
+            font-size: 12px;
+            margin-left: -6px;
+            letter-spacing: 0.5px;
+        }
+    }
+}
+
+.green-chip {
+    border: 2px solid #008000;
+    .green-text {
+        color: #008000;
+        font-weight: 500;
+    }
+}
+
+.red-chip {
+    border: 2px solid #ff0000;
+    .red-text {
+        color: #ff0000;
+        font-weight: 500;
+    }
+
+}
+
+
+
 ::ng-deep .mli-ht .mat-mdc-list-item-unscoped-content {
     font-size: 13px;
 }
@@ -160,6 +205,11 @@
 
 ::ng-deep .up-gender .mat-mdc-form-field-subscript-wrapper {
     height: 0;
+  }
+
+  ::ng-deep .up-sts-chip .mat-mdc-standard-chip {
+    padding-left: 7px;
+    padding-right: 10px;
   }
 
 
