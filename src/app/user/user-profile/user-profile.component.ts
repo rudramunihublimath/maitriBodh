@@ -333,4 +333,13 @@ export class UserProfileComponent implements OnInit {
     })
   }
 
+
+  navigateToProfile() {
+    if(this.userProfileForm.get('reportingmanagerId')?.value) {
+      const id = this.userProfileForm.get('reportingmanagerId')?.value
+      const link = `/user-profile?id=${id}`;
+      window.open(link, '_blank');
+    }
+  }
+
 }

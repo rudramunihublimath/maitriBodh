@@ -75,6 +75,12 @@
                         <div class="row">
                             <mat-form-field class="col-md-6 up-form-field" appearance="outline">
                                 <mat-label>Manager Id</mat-label>
+                                <mat-icon matSuffix (click)="navigateToProfile()"
+                                [ngClass]="{'up-launch-icon': userProfileForm.get('reportingmanagerId')?.value}"
+                                [matTooltip]="'Open profile in new tab'"
+                                >
+                                    launch
+                                </mat-icon>
                                 <input [readonly]="!isAuthorized" type="text" matInput placeholder="Manager Id" formControlName="reportingmanagerId" required>
                             </mat-form-field>
 
