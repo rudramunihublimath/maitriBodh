@@ -9,6 +9,7 @@ import { RegisterSchoolComponent } from './school/register-school/register-schoo
 import { SchoolDetailsComponent } from './school/school-details/school-details.component';
 import { SchoolTableViewComponent } from './school/school-table-view/school-table-view.component';
 import { authGuard } from './Guard/auth.guard';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes =  [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -20,6 +21,8 @@ const routes: Routes =  [
   { path: 'register-school', component: RegisterSchoolComponent, canActivate:[authGuard()]  },
   { path: 'school-details/:id', component: SchoolDetailsComponent, canActivate:[authGuard()]  },
   { path: 'school', component: SchoolTableViewComponent, canActivate:[authGuard()]  },
+  { path: 'reports', component: ReportsComponent, canActivate:[authGuard()]  },
+  
   { path: '**', component: LoginComponent  },
 ];
 

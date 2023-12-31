@@ -12,7 +12,7 @@
           </mat-form-field>
         </div>
         <button *ngIf="isAuthorized" (click)="addNewSchool()" class="add-btn" mat-raised-button color="warn">Add New School</button>
-        <span class="upload-icon-container" *ngIf="isAuthorized" (click)="schoolCSV.click()">
+        <span class="upload-icon-container" *ngIf="isAdmin" (click)="schoolCSV.click()">
           <span class="material-icons material-icons-outlined stv-upload-icon secondary-text"
             matTooltip="Upload School In Bulk"
           >

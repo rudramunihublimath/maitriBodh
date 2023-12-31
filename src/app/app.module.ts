@@ -39,6 +39,7 @@ import { OutreachDetailsComponent } from './school/school-table-view/outreach-de
 import { SchoolGradeComponent } from './school/school-details/school-grade/school-grade.component';
 import { GradeDialogComponent } from './school/school-details/school-grade/grade-dialog/grade-dialog.component';
 import { AddTeamComponent } from './school/school-table-view/add-team/add-team.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 const INTL_DATE_INPUT_FORMAT = {
@@ -95,6 +96,7 @@ const MAT_DATE_FORMATS: NgxMatDateFormats =  {
     SchoolGradeComponent,
     GradeDialogComponent,
     AddTeamComponent,
+    ReportsComponent,
   ],
   imports: [
     BrowserModule,

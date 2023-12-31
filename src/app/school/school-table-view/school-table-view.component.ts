@@ -25,6 +25,7 @@ export class SchoolTableViewComponent implements OnInit {
   allSchoolDetail: any[] = [];
   loggedInUserDetails!: UserReq;
   isAuthorized = false;
+  isAdmin = false;
 
   schoolFilterControl = new FormControl('');
 
@@ -57,6 +58,7 @@ export class SchoolTableViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
+    this.isAdmin = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool';
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
     if(this.loggedInUserDetails?.nameofMyTeam === 'OutReach') {
       this.displayedColumns = ['position', 'name', 'contactNum', 'address', 'city', 'pincode', 'email', 'outReachAllocated', 'outReachHeadAllocated', 'trainingHeadAllocated', 'actions'];
@@ -239,6 +241,7 @@ export class SchoolTableViewComponent implements OnInit {
   uploadCSV(file: any) {
     this.spinner.show();
     this.schoolService.uploadSchools(file).subscribe(resp => {
+      this.loginService.showSuccess('Schools uploaded successfully.')
       this.getAllSchoolByCity()
       this.spinner.hide();
     })

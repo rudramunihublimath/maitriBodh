@@ -28,6 +28,12 @@
           </mat-icon>
           My Profile ({{loggedInUserDetails?.firstname}} {{loggedInUserDetails?.lastname}})
         </li>
+        <li *ngIf="isAuthorized" class="nav-item-list ft-sz-500" routerLink="/reports">
+          <mat-icon class="material-symbols-outlined nav-item-grp-icon">
+            assignment
+          </mat-icon>
+          Reports
+        </li>
       </ul>
       <span *ngIf="!isUserLoggedIn || (currentRoute === '/home' || currentRoute === '/')" class="nav-tool-items">
         <a class="login-btn" mat-stroked-button color="warn" routerLink="login" routerLinkActive="active">Log in</a>

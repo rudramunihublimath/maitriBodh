@@ -103,4 +103,16 @@ export class LoginService {
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
+
+  downloadReport1(state: string) {
+    const params = new HttpParams().set('state', state);
+    return this.http.get(`${environment.securedBaseUrl}/School/Admin/Report1`, 
+    {
+      params,
+      responseType: 'blob',
+      observe: 'response'
+    }
+    );
+    
+  }
 }

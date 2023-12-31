@@ -1,0 +1,42 @@
+
+<ngx-spinner type="ball-scale-multiple">File Downloading Please wait...</ngx-spinner>
+<div class="flex-center h-100">
+  <mat-card class="report-card">
+    <div class="report-header">
+      <span class="report-title">Reports</span>
+    </div>
+
+    <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              REPORT 1
+            </mat-panel-title>
+            <mat-panel-description>
+              Download all details
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div>
+            <mat-form-field class="col-md-3 col-12 report-form-field" appearance="outline">
+              <mat-label>State</mat-label>
+              <mat-select required
+              (selectionChange)="selectedState($event)"
+              >
+                <mat-option *ngFor="let state of states" [value]="state">
+                  {{state}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+        
+      </mat-accordion>
+
+  </mat-card>
+
+
+  
+
+</div>
+
+  
