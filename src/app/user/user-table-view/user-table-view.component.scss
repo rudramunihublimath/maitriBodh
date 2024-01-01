@@ -120,3 +120,16 @@
 table {
   width: 100%;
 }
+
+.utv-action-section {
+  position: relative;
+  .upload-icon-container {
+    display: flex;
+}
+  .utv-upload-icon {
+    cursor: pointer;
+    margin-left: 8px;
+    margin-bottom: 3px;
+    font-size: 26px;
+  }
+}

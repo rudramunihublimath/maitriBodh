@@ -30,6 +30,7 @@ export class UserTableViewComponent implements OnInit {
   userFilterControl = new FormControl(''); 
 
   isAuthorized = false;
+  isAdmin = false;
   constructor(
     private userService: UserService,
     private loginService: LoginService,
@@ -42,6 +43,7 @@ export class UserTableViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
+    this.isAdmin = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool';
     this.isAuthorized = this.loggedInUserDetails?.nameofMyTeam === 'Central_Mool' || this.loggedInUserDetails?.nameofMyTeam === 'OutReach_Head';
 
     this.getAllUsersById(this.loggedInUserDetails?.id as number); 
@@ -104,12 +106,27 @@ export class UserTableViewComponent implements OnInit {
     // this.userService.emitEmail.next(email);
   }
 
-  // getUserByEmail(email: string) {
-  //   this.spinner.show();
-  //   this.userService.getUserByEmail(email).subscribe((resp: UserReq) => {
-  //     this.userDetail = resp;
-  //     //console.log('this.userDetail', this.userDetail)
-  //     this.spinner.hide();
-  //   })
-  // }
+  uploadSchoolCSV(evt: any) {
+    if(evt.target.files && evt.target.files.length > 0) {
+      const file : File = evt.target.files.item(0); 
+        const reader: FileReader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = (e) => {
+           const csv: string = reader.result as string;
+           this.uploadCSV(file);
+        }
+     }
+  }
+
+  uploadCSV(file: any) {
+    this.spinner.show();
+    this.userService.uploadSchools(file).subscribe(resp => {
+      this.loginService.showSuccess('Schools uploaded successfully.')
+      this.spinner.hide();
+    }, err => {
+      this.loginService.showError(err?.error?.message || 'Something went wrong')
+      this.spinner.hide();
+    })
+
+  }
 }

@@ -48,4 +48,10 @@ export class UserService {
   removeUserImage(userId: number) {
     return this.http.patch(`${environment.securedBaseUrl}/Login/RemoveImage?userId=${userId}`, null);
   }
+
+  uploadSchools(file: any) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return this.http.post(`${environment.securedBaseUrl}/School/ImportSchoolListInBulk`, formData);
+  }
 }

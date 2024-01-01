@@ -244,6 +244,9 @@ export class SchoolTableViewComponent implements OnInit {
       this.loginService.showSuccess('Schools uploaded successfully.')
       this.getAllSchoolByCity()
       this.spinner.hide();
+    }, err => {
+      this.loginService.showError(err?.error?.message || 'Something went wrong')
+      this.spinner.hide();
     })
 
   }

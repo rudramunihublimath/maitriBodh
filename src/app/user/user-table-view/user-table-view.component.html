@@ -4,13 +4,22 @@
   <mat-card class="table-card">
     <div class="table-title">
       <span class="utv-title">Team Details</span>
-      <span class="align-center">
+      <span class="align-center utv-action-section">
         <div class="flex-center mr-4">
           <mat-form-field class="col-md-8 up-form-field utv w-100" appearance="outline" floatLabel="always" >
             <input [formControl]="userFilterControl" type="text" matInput placeholder="Search Member">
           </mat-form-field>
         </div>
         <button *ngIf="isAuthorized" (click)="addNewMember()" class="add-btn" mat-raised-button color="warn">Add New Member</button>
+        <span class="upload-icon-container" *ngIf="isAdmin" (click)="schoolCSV.click()">
+          <span class="material-icons material-icons-outlined utv-upload-icon secondary-text"
+            matTooltip="Upload School In Bulk"
+          >
+            upload_file
+            <!-- cloud_upload -->
+          </span>
+          <input [readonly]="!isAuthorized" #schoolCSV type="file" accept=".csv" (change)="uploadSchoolCSV($event)" style="display: none;">
+        </span>
       </span>
       
     </div>
