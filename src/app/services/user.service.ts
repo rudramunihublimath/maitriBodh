@@ -10,6 +10,8 @@ import { Subject } from 'rxjs';
 export class UserService {
 
   emitEmail: Subject<string> = new Subject<string>();
+  baseUrl =  `${environment.baseUrl}/MBP`;
+  securedBaseUrl = `${environment.baseUrl}/Secured/MBP`;
 
   constructor(
     private http: HttpClient
@@ -17,41 +19,41 @@ export class UserService {
 
   getAllUsersById(id: number) {
     let params = new HttpParams().set('id', id);
-    return this.http.get<UserTableDto[]>(`${environment.securedBaseUrl}/Login/findUserReportingMe`, {params});
+    return this.http.get<UserTableDto[]>(`${this.securedBaseUrl}/Login/findUserReportingMe`, {params});
   }
 
   getUserByMobile(contactNum: string) {
     let params = new HttpParams().set('contactNum', contactNum);
-    return this.http.get(`${environment.securedBaseUrl}/Login/findUserByMobile`, {params});
+    return this.http.get(`${this.securedBaseUrl}/Login/findUserByMobile`, {params});
   }
 
   getUserByEmail(email: string) {
     let params = new HttpParams().set('email', email);
-    return this.http.get<ResponseDto<UserReq>>(`${environment.securedBaseUrl}/Login/findByEmail`, {params});
+    return this.http.get<ResponseDto<UserReq>>(`${this.securedBaseUrl}/Login/findByEmail`, {params});
   }
 
   getUserById(id: string) {
     let params = new HttpParams().set('id', id);
-    return this.http.get<ResponseDto<UserReq>>(`${environment.securedBaseUrl}/Login/findUserId`, {params});
+    return this.http.get<ResponseDto<UserReq>>(`${this.securedBaseUrl}/Login/findUserId`, {params});
   }
 
   updateUser(userDetails: UserReq) {
-    return this.http.put(`${environment.securedBaseUrl}/Login/UpdateUserData`, userDetails);
+    return this.http.put(`${this.securedBaseUrl}/Login/UpdateUserData`, userDetails);
   }
 
   uploadUserImage(userId: number, file: any) {
     const formData = new FormData();
     formData.append("file", file);
-    return this.http.patch(`${environment.securedBaseUrl}/Login/Image?userId=${userId}`, formData);
+    return this.http.patch(`${this.securedBaseUrl}/Login/Image?userId=${userId}`, formData);
   }
 
   removeUserImage(userId: number) {
-    return this.http.patch(`${environment.securedBaseUrl}/Login/RemoveImage?userId=${userId}`, null);
+    return this.http.patch(`${this.securedBaseUrl}/Login/RemoveImage?userId=${userId}`, null);
   }
 
   uploadSchools(file: any) {
     const formData = new FormData();
     formData.append("file", file);
-    return this.http.post(`${environment.securedBaseUrl}/School/ImportSchoolListInBulk`, formData);
+    return this.http.post(`${this.securedBaseUrl}/School/ImportSchoolListInBulk`, formData);
   }
 }

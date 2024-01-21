@@ -12,6 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginService {
 
+  baseUrl =  `${environment.baseUrl}/MBP`;
+  securedBaseUrl = `${environment.baseUrl}/Secured/MBP`;
   userLoginStatus: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -22,35 +24,35 @@ export class LoginService {
   ) { }
 
   login(loginDetails: UserLoginReq) {
-    return this.http.post<ResponseDto<UserReq>>(`${environment.baseUrl}/Login/LoginUser`, loginDetails);
+    return this.http.post<ResponseDto<UserReq>>(`${this.baseUrl}/Login/LoginUser`, loginDetails);
   }
 
   register(registrationDetails: UserReq) {
-    return this.http.post(`${environment.baseUrl}/Login/RegisterUser`, registrationDetails);
+    return this.http.post(`${this.baseUrl}/Login/RegisterUser`, registrationDetails);
   }
 
   getMBPTeam() {
-    return this.http.get(`${environment.securedBaseUrl}/Login/MBPTeam`);
+    return this.http.get(`${this.securedBaseUrl}/Login/MBPTeam`);
   }
 
   getCountries() {
-    return this.http.get(`${environment.securedBaseUrl}/Login/countries`);
+    return this.http.get(`${this.securedBaseUrl}/Login/countries`);
   }
 
   getStates(countryId: number) {
-    return this.http.get(`${environment.securedBaseUrl}/Login/states/${countryId}`);
+    return this.http.get(`${this.securedBaseUrl}/Login/states/${countryId}`);
   }
 
   getCities(stateId: number) {
-    return this.http.get(`${environment.securedBaseUrl}/Login/cities/${stateId}`);
+    return this.http.get(`${this.securedBaseUrl}/Login/cities/${stateId}`);
   }
 
   changePassword(changePasswordData: ChangePassword) {
-    return this.http.put(`${environment.securedBaseUrl}/Login/ChangePassword`, changePasswordData);
+    return this.http.put(`${this.securedBaseUrl}/Login/ChangePassword`, changePasswordData);
   }
   forgotPassword(email: string) {
     const params = new HttpParams().set('email', email);
-    return this.http.get(`${environment.baseUrl}/Login/forgotPWD`, {params});
+    return this.http.get(`${this.baseUrl}/Login/forgotPWD`, {params});
   }
 
   userToken(token: string) {
@@ -106,7 +108,7 @@ export class LoginService {
 
   downloadReport1(state: string) {
     const params = new HttpParams().set('state', state);
-    return this.http.get(`${environment.securedBaseUrl}/School/Admin/Report1`, 
+    return this.http.get(`${this.securedBaseUrl}/School/Admin/Report1`, 
     {
       params,
       responseType: 'blob',

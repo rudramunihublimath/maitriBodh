@@ -4,8 +4,9 @@
 
 export const environment = {
     production: true,
-    baseUrl: 'http://localhost:8081/MBP',
-    securedBaseUrl: 'http://localhost:8081/Secured/MBP'
+    baseUrl: 'http://localhost:8081',
+    // baseUrl: 'http://localhost:8081/MBP',
+    // securedBaseUrl: 'http://localhost:8081/Secured/MBP'
   };
   
   /*
