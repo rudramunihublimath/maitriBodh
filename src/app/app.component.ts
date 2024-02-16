@@ -37,7 +37,6 @@ export class AppComponent implements OnInit{
   }
 
   showNav() {
-    // //console.log('this.currentRoute', this.currentRoute)
     this.loginService.userLoginStatus.subscribe(sts => {
       this.isUserLoggedIn = sts;
       this.loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
