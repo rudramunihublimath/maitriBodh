@@ -48,16 +48,29 @@ export class MeetingDialogComponent implements OnInit {
       mom: [momDetail.id ? momDetail.mom : ''],
       feedback_Whatwentwell: [momDetail.id ? momDetail.feedback_Whatwentwell : ''],
       feedback_Improvement: [momDetail.id ? momDetail.feedback_Improvement : ''],
+      planOfAction: [momDetail.id ? momDetail.planOfAction : ''],
     })
   }
 
   submitMOM() {
     this.spinner.show();
     const payload: SchoolMOM = this.momForm.getRawValue();
-    payload.meetingDateTime = new Date(this.momForm.controls['meetingDateTime']?.value).toISOString();
-    payload.nextAppointment = new Date(this.momForm.controls['nextAppointment']?.value).toISOString();
+    payload.meetingDateTime = this.formatDate(this.momForm.controls['meetingDateTime']?.value);
+    payload.nextAppointment = this.formatDate(this.momForm.controls['nextAppointment']?.value);
     payload.schoolNmReq = {id: this.data.schoolId};
     this.data['id'] ? this.updateMOM(payload) : this.saveMOM(payload);
+  }
+
+  formatDate(date: any) {
+    const month = new Date(date).getMonth() + 1;
+
+    console.log('month', month)
+    const day = new Date(date).getDate();
+    console.log('day', day)
+    const year = new Date(date).getFullYear();
+    console.log('year', year)
+
+    return `${year}-${month < 9 ? '0'+month : month}-${day < 9 ? '0'+day : day}T00:00:00.000Z`;
   }
 
   saveMOM(payload: SchoolMOM) {

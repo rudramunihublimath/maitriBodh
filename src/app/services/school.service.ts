@@ -190,4 +190,18 @@ export class SchoolService {
       formData.append("file", file);
       return this.http.post(`${this.securedBaseUrl}/School/ImportSchoolListInBulk`, formData);
     }
+
+    uploadAgreementLink(schoolId: number, file: any) {
+      const formData = new FormData();
+      formData.append("file", file);
+      return this.http.patch(`${this.securedBaseUrl}/School/UploadAgreementFile?schoolId=${schoolId}`, formData);
+    }
+
+
+    removeAgreementLink(schoolId: number) {
+      let params = new HttpParams();
+      params = params.set('schoolId', schoolId);
+      return this.http.patch(`${this.securedBaseUrl}/School/RemoveAgreementFile`, null, {params});
+      // /Secured/MBP/School/RemoveAgreementFile
+    }
 }

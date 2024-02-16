@@ -10,13 +10,13 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              REPORT 1
+              Export School Data
             </mat-panel-title>
             <mat-panel-description>
               Download all details
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div>
+          <div class="d-flex">
             <mat-form-field class="col-md-3 col-12 report-form-field" appearance="outline">
               <mat-label>State</mat-label>
               <mat-select required
@@ -27,6 +27,25 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+            <!-- <button *ngIf="isReadyToDownload"  class="report-dwnld-btn" mat-raised-button color="warn"
+              (click)="downloadSchoolData()"
+            >
+              Download
+            </button> -->
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (opened)="getReport2()">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              My Allocated Schools
+            </mat-panel-title>
+            <mat-panel-description>
+              List of allocated schools
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="d-flex">
+            
           </div>
         </mat-expansion-panel>
         

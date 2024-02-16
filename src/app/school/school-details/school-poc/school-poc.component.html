@@ -51,6 +51,16 @@
           <th class="text-center" mat-header-cell *matHeaderCellDef> First Contact </th>
           <td class="text-center" mat-cell *matCellDef="let element"> {{element.firstContact === 'Yes' ? 'Yes' : 'No'}} </td>
         </ng-container>
+
+        <!-- Grade Column -->
+        <ng-container matColumnDef="teachingToGrade">
+          <th class="text-center" mat-header-cell *matHeaderCellDef> Grade </th>
+          <td class="text-center" mat-cell *matCellDef="let element"> 
+            <div class="spoc-ellipsis" matTooltip="{{element.teachingToGrade}}">
+              {{element?.teachingToGrade}} 
+            </div>
+          </td>
+        </ng-container>
   
         <!-- Action Column -->
         <ng-container matColumnDef="actions">

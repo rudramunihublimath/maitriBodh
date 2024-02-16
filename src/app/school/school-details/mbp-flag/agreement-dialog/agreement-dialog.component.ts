@@ -134,4 +134,43 @@ export class AgreementDialogComponent implements OnInit {
     ].join('-');
   }
 
+  addAgreementLink(evt: any) {
+    // console.log('evt', evt)
+    if(evt.target.files && evt.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(evt.target.files[0]); //read file as data url
+      // console.log('evt.target.files', evt.target.files)
+
+      reader.onload = () => {
+        // this.url = reader.result;
+        console.log('reader', reader)
+        console.log('reader.result', reader.result)
+        // this.isUserLogoChanged = true;
+        this.uploadAgreementLink(evt.target.files[0]);
+      }
+    }
+  }
+
+  uploadAgreementLink(file: any) {
+    this.spinner.show();
+    this.schoolService.uploadAgreementLink(this.agreementDetails.schoolId as number, file).subscribe(resp => {
+      this.spinner.hide();
+      this.loginService.showSuccess('Agreement Link Added Successfully');
+      // if(this.loggedInUserDetails?.id === this.userDetail?.id) {
+      //   this.getUserById(this.loggedInUserDetails?.id as any);
+      // }
+    }, err => {
+      this.spinner.hide();
+    })
+  }
+  resetAgreementLink() {
+    // this.url = null;
+    this.schoolService.removeAgreementLink(this.agreementDetails.schoolId as number).subscribe(resp => {
+      this.spinner.hide();
+      this.loginService.showSuccess('Agreement Link Removed Successfully');
+    }, err => {
+      this.spinner.hide();
+    })
+  }
+
 }

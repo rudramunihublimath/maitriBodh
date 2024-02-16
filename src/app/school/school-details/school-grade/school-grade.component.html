@@ -6,14 +6,15 @@
       <!-- <span class="utv-title">Point of Contacts</span> -->
       <!-- <button *ngIf="isAuthorized" (click)="openGradeDetails(false)" class="add-btn" mat-raised-button color="warn">Add Grade</button> -->
       <div class="row">
-        <mat-form-field class="col-md-6 col-12 grade-form-field w-100" appearance="outline">
+        <!-- <button *ngIf="isAuthorized" (click)="getGrades()" class="add-btn" mat-raised-button color="warn">Add POC</button> -->
+        <!-- <mat-form-field class="col-md-6 col-12 grade-form-field w-100" appearance="outline">
             <mat-label>Grade Year</mat-label>
             <mat-select (selectionChange)="selectedYear($event)" placeholder="Grade Year" [formControl]="yearControl">
               <mat-option *ngFor="let year of gradeYears" [value]="year">
                 {{year}}
               </mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
     </div>
     </div>
     <div class="table-container">

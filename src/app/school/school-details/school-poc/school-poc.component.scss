@@ -79,6 +79,13 @@
     }
   }
 
+  .spoc-ellipsis {
+    width: 15vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 //   table {
 //     width: 100%;
 //   }

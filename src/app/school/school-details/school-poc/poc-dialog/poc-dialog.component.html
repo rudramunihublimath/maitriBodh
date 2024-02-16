@@ -29,6 +29,14 @@
 
             <div class="row">
                 <mat-form-field class="col-md-4 col-12 poc-form-field" appearance="outline">
+                    <mat-label>Grade</mat-label>
+                    <mat-select formControlName="teachingToGrade" multiple>
+                      <mat-option *ngFor="let grade of grades" [value]="grade">
+                        {{grade}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-4 col-12 poc-form-field" appearance="outline">
                     <mat-label>Email</mat-label>
                     <input type="text" matInput placeholder="Email" formControlName="email" required>
                 </mat-form-field>
@@ -36,13 +44,14 @@
                     <mat-label>Contact Num1</mat-label>
                     <input type="text" matInput placeholder="Contact Num1" formControlName="contactNum1" required>
                 </mat-form-field>
+                
+            </div>
+
+            <div class="row">
                 <mat-form-field class="col-md-4 col-12 poc-form-field" appearance="outline">
                     <mat-label>Contact Num2</mat-label>
                     <input type="text" matInput placeholder="Contact Num2" formControlName="contactNum2">
                 </mat-form-field>
-            </div>
-
-            <div class="row">
                 <mat-form-field class="col-md-4 col-12 poc-form-field" appearance="outline">
                     <mat-label>First Contact</mat-label>
                     <mat-select formControlName="firstContact">

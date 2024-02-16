@@ -56,6 +56,7 @@ export class SchoolMeetingNotesComponent implements OnInit {
   openMOMDetails(isEditMode: boolean, momDetail?: SchoolMOM) {
     const config = new MatDialogConfig(); 
     config.width= "60vw";
+    config.maxHeight="100vh";
     config.disableClose=true;
     config.data = isEditMode ? {schoolId: this.schoolDetails.id, ...momDetail} : {schoolId: this.schoolDetails.id};
     const dialog = this.dialog.open(MeetingDialogComponent, config);

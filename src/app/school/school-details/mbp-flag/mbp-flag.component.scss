@@ -29,6 +29,9 @@
         height: 28px;
         padding: 0 10px;
       }
+      .mbpf-ml-2 {
+        margin-left: 8px;
+      }
     }
     .h-42 {
       height: 42px !important;
@@ -82,6 +85,13 @@
 
 .rdc-ellipsis {
   width: 15vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agreement-link-ellipsis {
+  width: 20vw;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

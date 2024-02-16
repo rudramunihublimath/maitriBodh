@@ -55,6 +55,8 @@ export class ReportsComponent implements OnInit {
       this.blob = new Blob([(resp.body as Blob)], {type: 'application/octet-stream'});
       const downloadURL = window.URL.createObjectURL((resp.body as Blob));
       const link = document.createElement('a');
+      console.log('downloadURL', downloadURL)
+      console.log('fileName', fileName)
       link.href = downloadURL;
       link.download = fileName;
       link.click();
@@ -68,5 +70,11 @@ export class ReportsComponent implements OnInit {
   }
 
 
+  getReport2() {
+    const loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
+    this.loginService.getReport2(loggedInUserDetails.id).subscribe(resp => {
+      console.log('resp', resp);
+    })
+  }
 
 }

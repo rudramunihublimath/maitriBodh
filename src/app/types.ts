@@ -106,6 +106,7 @@ export interface SchoolPOC {
     schoolNameRequest: any;
     id?: number;
     firstContact?: string;
+    teachingToGrade?:  string | Array<string>;
 }
 
 export interface SchoolMOM {

@@ -66,7 +66,7 @@ export class SchoolGradeComponent implements OnInit {
       this.saveGrade();
     }
     this.allGrades = JSON.parse(JSON.stringify(resp));
-    this.dataSource = resp.filter(elt => elt.year === this.currentYear);
+    this.dataSource = resp;
     })
   }
 
@@ -80,7 +80,7 @@ export class SchoolGradeComponent implements OnInit {
   }
 
   selectedYear(evt: MatSelectChange) {
-    this.dataSource = this.allGrades.filter(elt => elt.year == evt.value);
+    this.dataSource = this.allGrades;
   }
 
   openGradeDetails(isEditMode: boolean, gradeDetail?: SchoolGrade) {

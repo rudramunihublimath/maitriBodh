@@ -22,6 +22,7 @@ export class PocDialogComponent implements OnInit {
   header = 'Add POC';
 
   levels = ['Yes', 'No'];
+  grades = ['Grade-1','Grade-2','Grade-3','Grade-4','Grade-5','Grade-6','Grade-7','Grade-8'];
   
   constructor(
     private fb: FormBuilder,
@@ -52,6 +53,7 @@ export class PocDialogComponent implements OnInit {
       linkdinID: [pocDetail.id ? pocDetail.linkdinID : ''],
       email: [pocDetail.id ? pocDetail.email : ''],
       firstContact: [pocDetail.id ? pocDetail.firstContact : ''],
+      teachingToGrade: [pocDetail.id ? pocDetail.teachingToGrade : ''],
     })
   }
 

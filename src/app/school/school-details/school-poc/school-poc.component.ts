@@ -13,7 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SchoolPOCComponent implements OnInit {
 
-  displayedColumns = ['position', 'firstname', 'lastname', 'designation', 'contactNum', 'email', 'firstContact', 'actions'];
+  displayedColumns = ['position', 'firstname', 'lastname', 'designation', 'contactNum', 'email', 'firstContact', 'teachingToGrade', 'actions'];
   // displayFilterColumns = ['positionFilter', 'firstnameFilter', 'lastnameFilter', 'emailFilter', 'actionFilter']
   dataSource: SchoolPOC[] = [];
   allPOCDetail: SchoolPOC[] = [];
@@ -47,6 +47,11 @@ export class SchoolPOCComponent implements OnInit {
     this.spinner.hide();
     //console.log('resp', resp);
     this.dataSource = resp;
+    this.dataSource.forEach(elt => {
+      if(elt?.teachingToGrade?.length) {
+        elt.teachingToGrade = elt.teachingToGrade.toString();
+      }
+    })
     this.isPrimaryPOCAvaialable = resp?.some(elt => elt.firstContact === 'Yes');
     // this.allPOCDetail = resp;
     })
