@@ -38,6 +38,19 @@
     }
 }
 
+.table-container {
+    height: 100%;
+    overflow: auto;
+  }
+
+.h-42 {
+    height: 42px !important;
+    font-size: 12px;
+  }
+  .report2-header-row {
+    background: lightsalmon; //#f3b570;
+  }
+
 ::ng-deep .report-form-field.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
     font-size: 12px !important;
     top: 25px !important;

@@ -138,11 +138,13 @@
                 <th class="" mat-header-cell *matHeaderCellDef> Agreement Link </th>
                 <!-- class="text-center" -->
                 <td class="" mat-cell *matCellDef="let element"> 
-                  <div class="agreement-link-ellipsis"
-                    matTooltip="{{element.agreementScanCopyLink}}"
-                  >
-                    {{element.agreementScanCopyLink ? element.agreementScanCopyLink : '-'}} 
-                  </div>
+                  <a class="a-link" href="{{element.agreementScanCopyLink}}" target="_blank">
+                    <div class="agreement-link-ellipsis"
+                      matTooltip="{{element.agreementScanCopyLink}}"
+                    >
+                      {{element.agreementScanCopyLink}} 
+                    </div>
+                  </a>
                 </td>
             </ng-container>
 

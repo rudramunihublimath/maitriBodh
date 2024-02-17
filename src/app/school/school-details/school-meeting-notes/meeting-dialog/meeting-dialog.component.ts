@@ -63,12 +63,8 @@ export class MeetingDialogComponent implements OnInit {
 
   formatDate(date: any) {
     const month = new Date(date).getMonth() + 1;
-
-    console.log('month', month)
     const day = new Date(date).getDate();
-    console.log('day', day)
     const year = new Date(date).getFullYear();
-    console.log('year', year)
 
     return `${year}-${month < 9 ? '0'+month : month}-${day < 9 ? '0'+day : day}T00:00:00.000Z`;
   }

@@ -44,7 +44,7 @@ export class GradeDialogComponent implements OnInit {
   initializeForm() {
     const gradeDetail = this.data;
     this.gradeForm = this.fb.group({
-      year: [gradeDetail.id ? gradeDetail.year : ''],
+      // year: [gradeDetail.id ? gradeDetail.year : ''],
       gradeName: [gradeDetail.id ? gradeDetail.gradeName : ''],
       totalStudentCount: [gradeDetail.id ? gradeDetail.totalStudentCount : ''],
       booksGivenCount: [gradeDetail.id ? gradeDetail.booksGivenCount : ''],

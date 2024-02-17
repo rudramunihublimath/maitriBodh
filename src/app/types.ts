@@ -163,3 +163,9 @@ export interface SchoolGrade {
     booksGivenCount?: string;
     schoolNmReq2?: any;
 }
+
+export interface Report2Dto {
+    id: number;
+    name: string;
+    nextAppointment: string;
+}

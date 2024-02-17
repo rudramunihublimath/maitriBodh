@@ -120,6 +120,6 @@ export class LoginService {
 
   getReport2(id: number) {
     const params = new HttpParams().set('user_id', id);
-    return this.http.get(`${this.securedBaseUrl}/School/Admin/Report2`, {params});
+    return this.http.get<any>(`${this.securedBaseUrl}/School/Admin/Report2`, {params});
   }
 }

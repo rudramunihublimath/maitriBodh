@@ -13,22 +13,15 @@
         <form [formGroup]="gradeForm" class="school-grade-form-container">
         
             <div class="row">
-                <mat-form-field class="col-md-6 col-12 school-grade-form-field" appearance="outline">
-                    <mat-label>Year</mat-label>
-                    <input type="number" matInput placeholder="Year" formControlName="year" required>
-                </mat-form-field>
-                <mat-form-field class="col-md-6 col-12 school-grade-form-field" appearance="outline">
+                <mat-form-field class="col-md-4 col-12 school-grade-form-field" appearance="outline">
                     <mat-label>Grade Name</mat-label>
                     <input type="text" matInput placeholder="Grade Name" formControlName="gradeName" required>
                 </mat-form-field>
-            </div>
-
-            <div class="row">
-                <mat-form-field class="col-md-6 col-12 school-grade-form-field" appearance="outline">
+                <mat-form-field class="col-md-4 col-12 school-grade-form-field" appearance="outline">
                     <mat-label>Total Student</mat-label>
                     <input type="number" matInput placeholder="Total Student" formControlName="totalStudentCount" required>
                 </mat-form-field>
-                <mat-form-field class="col-md-6 col-12 school-grade-form-field" appearance="outline">
+                <mat-form-field class="col-md-4 col-12 school-grade-form-field" appearance="outline">
                     <mat-label>Total Given Books</mat-label>
                     <input type="number" matInput placeholder="Total Given Books" formControlName="booksGivenCount" required>
                 </mat-form-field>

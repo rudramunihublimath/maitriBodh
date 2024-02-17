@@ -4,6 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpResponse } from '@angular/common/http';
+import { Report2Dto, ResponseDto } from '../types';
 
 @Component({
   selector: 'app-reports',
@@ -16,6 +17,13 @@ export class ReportsComponent implements OnInit {
   states: Array<string> = [];
   state = new FormControl('');
   blob!: Blob;
+  isReadyToDownload = false;
+  reportUrl!: any;
+  fileName!: string;
+
+  // table
+  displayedColumns = ['id', 'schoolName', 'nextAppointment'];
+  report2DataSource: Report2Dto[] = [];
 
   constructor(
     private loginService: LoginService,
@@ -41,6 +49,18 @@ export class ReportsComponent implements OnInit {
     }
   }
 
+  createSchoolReportFileName() {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+
+    return `SchoolAdminReport_${year}-${month < 9 ? '0'+month : month}-${day < 9 ? '0'+day : day}_${hour < 9 ? '0'+hour : hour}:${minutes < 9 ? '0'+minutes : minutes}:${seconds < 9 ? '0'+seconds : seconds}.xlsx`;
+  }
+
   downloadReport1(state: string) {
     this.spinner.show();
     this.loginService.downloadReport1(state).subscribe((resp: HttpResponse<Blob>) => {
@@ -49,19 +69,17 @@ export class ReportsComponent implements OnInit {
       const contentDisposition = resp.headers.get('content-disposition') || '';
 
       // Extract the file name
+      // SchoolAdminReport_2024-02-17_12:30:59.xlsx
       const matches = /filename=([^;]+)/ig.exec(contentDisposition) || '';
-      const fileName = (matches[1] || 'untitled').trim();
+      const fileName = (matches[1] || this.createSchoolReportFileName()).trim();
 
       this.blob = new Blob([(resp.body as Blob)], {type: 'application/octet-stream'});
       const downloadURL = window.URL.createObjectURL((resp.body as Blob));
-      const link = document.createElement('a');
-      console.log('downloadURL', downloadURL)
-      console.log('fileName', fileName)
-      link.href = downloadURL;
-      link.download = fileName;
-      link.click();
+      this.isReadyToDownload = true;
+      this.reportUrl = downloadURL;
+      this.fileName = fileName;
+      
 
-      this.loginService.showSuccess('File Downloaded Successfully');
       this.spinner.hide();
 
     }, err => {
@@ -69,11 +87,20 @@ export class ReportsComponent implements OnInit {
     })
   }
 
+  downloadSchoolData() {
+      const link = document.createElement('a');
+      link.href = this.reportUrl;
+      link.download = this.fileName;
+      link.click();
+      this.loginService.showSuccess('File Downloaded Successfully');
+  }
+
 
   getReport2() {
     const loggedInUserDetails = JSON.parse(this.loginService.getUserDetails());
-    this.loginService.getReport2(loggedInUserDetails.id).subscribe(resp => {
+    this.loginService.getReport2(loggedInUserDetails.id).subscribe((resp: ResponseDto<any>) => {
       console.log('resp', resp);
+      this.report2DataSource = resp.message;
     })
   }
 
