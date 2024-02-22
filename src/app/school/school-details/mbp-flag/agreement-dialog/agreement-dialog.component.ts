@@ -153,8 +153,11 @@ export class AgreementDialogComponent implements OnInit {
 
   uploadAgreementLink(file: any) {
     this.spinner.show();
-    this.schoolService.uploadAgreementLink(this.agreementDetails.schoolId as number, file).subscribe(resp => {
+    this.schoolService.uploadAgreementLink(this.agreementDetails.schoolId as number, file).subscribe((resp:any) => {
       this.spinner.hide();
+      if(resp['status']) {
+        this.agreementForm.controls['agreementScanCopyLink'].patchValue(resp['fullPath']);
+      }
       this.loginService.showSuccess('Agreement Link Added Successfully');
       // if(this.loggedInUserDetails?.id === this.userDetail?.id) {
       //   this.getUserById(this.loggedInUserDetails?.id as any);
