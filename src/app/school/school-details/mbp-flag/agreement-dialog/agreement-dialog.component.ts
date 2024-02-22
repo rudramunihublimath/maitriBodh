@@ -167,10 +167,22 @@ export class AgreementDialogComponent implements OnInit {
     // this.url = null;
     this.schoolService.removeAgreementLink(this.agreementDetails.schoolId as number).subscribe(resp => {
       this.spinner.hide();
+      this.agreementForm.controls['agreementScanCopyLink'].reset();
       this.loginService.showSuccess('Agreement Link Removed Successfully');
     }, err => {
+      this.agreementForm.controls['agreementScanCopyLink'].reset();
+      this.loginService.showError('Something went wrong')
       this.spinner.hide();
     })
+  }
+
+  navigateToFile() {
+    const url = this.agreementForm.controls['agreementScanCopyLink'].value;
+    if(url) {
+      window.open(url, '_blank');
+    } else {
+      this.loginService.showError('Something went wrong')
+    }
   }
 
 }

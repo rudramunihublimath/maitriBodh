@@ -45,6 +45,32 @@
                     <input readonly type="text" matInput placeholder="Agreement Scan Copy Link" formControlName="agreementScanCopyLink" 
                         [required]="agreementForm.controls['agreementCompleted'].value === 'Yes'"
                     >
+                    <span matSuffix class="ad-link-icon-wrapper">
+                        <mat-icon *ngIf="agreementForm.controls['agreementScanCopyLink']?.value"
+                            class="ad-link-icon launch-icon" matSuffix
+                            matTooltip="Open Link"
+                            (click)="navigateToFile()"
+                        >
+                            launch
+                        </mat-icon>
+                        <span>
+                            <span *ngIf="!agreementForm.controls['agreementScanCopyLink']?.value">
+                                <mat-icon *ngIf="isAuthorized" class="ad-link-icon upload-icon" matSuffix
+                                matTooltip="Upload Agreement Link" (click)="agreementLink.click()"
+                                >
+                                    cloud_upload
+                                </mat-icon>
+                              <input [readonly]="!isAuthorized" #agreementLink type="file" accept="image/jpeg,image/gif,image/png,application/pdf" (change)="addAgreementLink($event)" style="display: none;">
+                            </span>
+                            <mat-icon *ngIf="isAuthorized && agreementForm.controls['agreementScanCopyLink']?.value" (click)="resetAgreementLink()" class="ad-link-icon reset-icon" matSuffix
+                                matTooltip="Reset Agreement Link"
+                            >
+                                refresh
+                            </mat-icon>
+                        </span>
+
+                    </span>
+
                 </mat-form-field>
 
                 <mat-form-field class="col-md-6 col-12 agreement-form-field" appearance="outline"
@@ -59,15 +85,6 @@
 
         </form>
         <div *ngIf="isAuthorized" class="col-md-12 text-center btn-container">
-            
-            <span>
-                <span>
-                  <button *ngIf="isAuthorized" (click)="agreementLink.click()" class="save-btn" mat-raised-button color="warn">Upload Agreement Link</button>
-                  <input [readonly]="!isAuthorized" #agreementLink type="file" accept="image/jpeg,image/gif,image/png,application/pdf" (change)="addAgreementLink($event)" style="display: none;">
-                </span>
-                <button *ngIf="isAuthorized" (click)="resetAgreementLink()" class="save-btn mlr-14" mat-raised-button color="warn">Reset Agreement Link</button>
-            </span>
-
             <button (click)="submitAgreement()" class="save-btn" mat-flat-button color="warn">Save</button>
         </div>
     </section>
