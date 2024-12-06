@@ -42,10 +42,10 @@
                     *ngIf="agreementForm.controls['agreementCompleted'].value === 'Yes'"
                 >
                     <mat-label>Agreement Scan Copy Link</mat-label>
-                    <input readonly type="text" matInput placeholder="Agreement Scan Copy Link" formControlName="agreementScanCopyLink" 
+                    <input type="text" matInput placeholder="Agreement Scan Copy Link" formControlName="agreementScanCopyLink" 
                         [required]="agreementForm.controls['agreementCompleted'].value === 'Yes'"
                     >
-                    <span matSuffix class="ad-link-icon-wrapper">
+                    <!-- <span matSuffix class="ad-link-icon-wrapper">
                         <mat-icon *ngIf="agreementForm.controls['agreementScanCopyLink']?.value"
                             class="ad-link-icon launch-icon" matSuffix
                             matTooltip="Open Link"
@@ -69,7 +69,7 @@
                             </mat-icon>
                         </span>
 
-                    </span>
+                    </span> -->
 
                 </mat-form-field>
 
